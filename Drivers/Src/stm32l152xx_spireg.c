@@ -131,7 +131,7 @@ uint8_t SPI_TXBuffBsy(SPI_Handle_st* pSPI_Handle)
 		return 0;
 }
 
-SPI_Write2DataReg(SPI_Handle_st* pSPI_Handle, uint8_t data, uint8_t dff)
+void SPI_Write2DataReg(SPI_Handle_st* pSPI_Handle, uint8_t data, uint8_t dff)
 {
 	if(dff)
 	pSPI_Handle->pSPIX->SPI_DR = (uint16_t)data;
