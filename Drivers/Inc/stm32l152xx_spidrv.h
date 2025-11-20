@@ -25,4 +25,6 @@ void SPI_WriteFaultCheck(uint8_t status);
 
 void SPI_Init(SPI_Handle_st *pSPI_Handle);													// Initialize based on user input
 
+uint16_t SPI_XferByte(SPI_Handle_st *pSPI_Handle, uint8_t data, uint8_t dff);
+
 #endif /* INC_STM32L152XX_SPIDRV_H_ */

@@ -27,7 +27,12 @@ uint8_t SPI_WriteSingle(SPI_Handle_st* pSPI_Handle, uint8_t data, uint8_t dff)
 
 	while(1)
 	{
-		if(SPI_TXBuffBsy(pSPI_Handle))
+		if(SPI_ErrCheck(pSPI_Handle))
+		{
+			SPI_WriteFaultCheck(1);
+			return 0xFF;
+		}
+		else if(SPI_TXBuffBsy(pSPI_Handle))
 		{
 			cnt_wait4_mt_txbuf++;										// Increment counter for TX buffer timeout
 		}
@@ -59,10 +64,19 @@ void SPI_WriteFaultCheck(uint8_t status)
 	}
 }
 
-uint16_t SPI_ReadSingle(SPI_Handle_st *pSPI_Handle)
+uint16_t SPI_ReadSingle(SPI_Handle_st* pSPI_Handle)
 {
 	if(!SPI_RXBuffMT(pSPI_Handle))
 		return SPI_ReadDataReg(pSPI_Handle);
 	else
 		return 0xFF;
+}
+
+uint16_t SPI_XferByte(SPI_Handle_st* pSPI_Handle, uint8_t data, uint8_t dff)
+{
+
+	if(!SPI_WriteSingle(pSPI_Handle, data, dff))
+		return(SPI_ReadSingle(pSPI_Handle));
+	else
+		return 0xFFFF;
 }

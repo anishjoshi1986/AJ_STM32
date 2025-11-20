@@ -156,3 +156,16 @@ uint16_t SPI_ReadDataReg(SPI_Handle_st* pSPI_Handle)
 {
 	return (uint16_t)pSPI_Handle->pSPIX->SPI_DR;
 }
+
+uint8_t SPI_ErrCheck(SPI_Handle_st* pSPI_Handle)
+{
+	uint16_t packed = pSPI_Handle->pSPIX->SPI_SR;
+	SPI_SR_REG SPIX_SR;
+
+	SPI_Unpack_SR(&SPIX_SR, packed);
+
+	if(!SPIX_SR.OVR || !SPIX_SR.MODF || !SPIX_SR.CRCERR || !SPIX_SR.UDR)
+		return 1;
+	else
+		return 0;
+}

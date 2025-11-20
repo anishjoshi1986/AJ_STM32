@@ -141,4 +141,6 @@ uint8_t SPI_RXBuffMT(SPI_Handle_st* pSPI_Handle);
 
 uint16_t SPI_ReadDataReg(SPI_Handle_st* pSPI_Handle);
 
+uint8_t SPI_ErrCheck(SPI_Handle_st* pSPI_Handle);
+
 #endif
