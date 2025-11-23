@@ -1,12 +1,11 @@
 /*
- * stm32l152_gPIOdrv.c
+ * stm32l152_gpiodrv.c
  *
  *  Created on: Sep 3, 2025
  *      Author: anish
  */
 
 #include <stm32l152xx_gpiodrv.h>
-#include <stm32l152xx.h>
 
 // --------------------------------------------------------------------------------------------------------//
 // GPIO clock control

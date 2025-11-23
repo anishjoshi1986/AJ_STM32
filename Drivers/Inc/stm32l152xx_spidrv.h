@@ -1,15 +1,36 @@
 /*
- * stm32l152xx_spireg.h
+ * stm32l152xx_spidrv.h
  *
  *  Created on: Sep 1, 2025
  *      Author: anish
  */
 
-#ifndef STM32L152XX_SPIREG_H_
-#define STM32L152XX_SPIREG_H_
+#ifndef STM32L152XX_SPIDRV_H_
+#define STM32L152XX_SPIDRV_H_
 
-#include <stdint.h>
 #include "stm32l152xx.h"
+
+// --------------------------------------------------------------------------------------------------------//
+// SPI register address and macros
+// --------------------------------------------------------------------------------------------------------//
+
+// SPI base addresses and pointers
+#define SPI1					(APB2 + 0x3000U)
+#define SPI2					(APB1 + 0x3800U)
+#define SPI3					(APB1 + 0x3C00U)
+
+#define pSPI1					(SPI_RegDef_st *)SPI1
+#define pSPI2					(SPI_RegDef_st *)SPI2
+#define pSPI3					(SPI_RegDef_st *)SPI3
+
+// Macros to enable/disable SPI clocks
+#define SPI1_CLK_EN()			(pRCC->APB2ENR |= 1 << 12)		// Peripheral clock enable for SPI peripherals
+#define SPI2_CLK_EN()			(pRCC->APB1ENR |= 1 << 14)
+#define SPI3_CLK_EN()			(pRCC->APB1ENR |= 1 << 15)
+
+#define SPI1_CLK_DIS()			(pRCC->APB2ENR &= ~(1 << 12))	// Peripheral clock disable for SPI peripherals
+#define SPI2_CLK_DIS()			(pRCC->APB1ENR &= ~(1 << 14))
+#define SPI3_CLK_DIS()			(pRCC->APB1ENR &= ~(1 << 15))
 
 // SPI config macros
 #define SPI_BUSTYPE_FDX		0
@@ -18,10 +39,8 @@
 #define SPI_RXONLY			1
 
 // --------------------------------------------------------------------------------------------------------//
-// SPI peripheral address on APB2 & reg struct - found from memory map/reg boundary addresses in RM
-// --------------------------------------------------------------------------------------------------------//
-
 // SPI register structs
+// --------------------------------------------------------------------------------------------------------//
 
 typedef struct
 {
@@ -107,40 +126,21 @@ typedef struct
 
 }SPI_Handle_st;
 
-// SPI base addresses and pointers
-#define SPI1					(APB2 + 0x3000U)
-#define SPI2					(APB1 + 0x3800U)
-#define SPI3					(APB1 + 0x3C00U)
-
-#define pSPI1					(SPI_RegDef_st *)SPI1
-#define pSPI2					(SPI_RegDef_st *)SPI2
-#define pSPI3					(SPI_RegDef_st *)SPI3
-
-// Macros to enable/disable SPI clocks
-#define SPI1_CLK_EN()			(pRCC->APB2ENR |= 1 << 12)		// Peripheral clock enable for SPI peripherals
-#define SPI2_CLK_EN()			(pRCC->APB1ENR |= 1 << 14)
-#define SPI3_CLK_EN()			(pRCC->APB1ENR |= 1 << 15)
-
-#define SPI1_CLK_DIS()			(pRCC->APB2ENR &= ~(1 << 12))	// Peripheral clock disable for SPI peripherals
-#define SPI2_CLK_DIS()			(pRCC->APB1ENR &= ~(1 << 14))
-#define SPI3_CLK_DIS()			(pRCC->APB1ENR &= ~(1 << 15))
+// --------------------------------------------------------------------------------------------------------//
+// SPI register level functions
+// --------------------------------------------------------------------------------------------------------//
 
 uint16_t SPI_Pack_CR1(SPI_CR1_REG *SPIX_CR1);
-
 void SPI_Unpack_SR(SPI_SR_REG* SPIX_SR, uint16_t packed);
 
 void SPI_ClkCtrl(SPI_Handle_st* pSPI_Handle, uint8_t ClkCmd);
-
 void SPI_Init(SPI_Handle_st* pSPI_Handle);
 
 uint8_t SPI_Bsy(SPI_Handle_st* pSPI_Handle);
+uint8_t SPI_RXMT(SPI_Handle_st* pSPI_Handle);
+uint8_t SPI_ErrCheck(SPI_Handle_st* pSPI_Handle);
 
 uint8_t SPI_Write(SPI_Handle_st* pSPI_Handle, uint8_t data, uint8_t dff);
-
 uint16_t SPI_Read(SPI_Handle_st* pSPI_Handle);
-
-uint8_t SPI_RXMT(SPI_Handle_st* pSPI_Handle);
-
-uint8_t SPI_ErrCheck(SPI_Handle_st* pSPI_Handle);
 
 #endif

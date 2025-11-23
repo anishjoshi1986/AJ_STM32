@@ -1,15 +1,52 @@
 /*
- * LEDToggle_Ex01.c
+ * SPI_Comms.c
  *
- *  Created on: Sep 11, 2025
+ *  Created on: Nov 9, 2025
  *      Author: anish
  */
 
+#include "stm32l152xx_spidrv.h"
+#include "stm32l152xx_gpiodrv.h"
 
-#include "stm32l152xx.h"
-#include "stm32l152xx_gPIOdrv.h"
+void spi_comms(void);
+void led(void);
 
 int main(void)
+{
+	spi_comms();
+
+	led();
+
+	return 0;
+}
+
+void EXTI0_IRQHandler (void)
+{
+	if(pEXTI->PR & 1)
+		pEXTI->PR |= 1;
+
+	GPIO_TogglePin(pGPIOB, GPIO_PIN_7);
+}
+
+void spi_comms()
+{
+	SPI_Handle_st SPI2_Gyro;
+
+	SPI2_Gyro.pSPIX = pSPI1;
+	SPI2_Gyro.SPI_Cfg.master = TRUE;
+	SPI2_Gyro.SPI_Cfg.bustype = SPI_BUSTYPE_FDX;
+	SPI2_Gyro.SPI_Cfg.rxonly = FALSE;
+	SPI2_Gyro.SPI_Cfg.speed = 2;
+	SPI2_Gyro.SPI_Cfg.dff = FALSE;
+	SPI2_Gyro.SPI_Cfg.cpha = TRUE;
+	SPI2_Gyro.SPI_Cfg.cpol = FALSE;
+	SPI2_Gyro.SPI_Cfg.ssm = FALSE;
+
+	SPI_Init(&SPI2_Gyro);
+	SPI_ClkCtrl(&SPI2_Gyro, SET);
+}
+
+void led()
 {
 	GPIO_Handle_st DiscoBoard_LD3;
 	GPIO_Handle_st DiscoBoard_LD4;
@@ -35,7 +72,6 @@ int main(void)
 
 	GPIO_ClkCtrl(DiscoBoard_LD3.pGPIOX, SET);
 	GPIO_ClkCtrl(DiscoBoard_LD4.pGPIOX, SET);
-
 	GPIO_Init(&DiscoBoard_LD3);
 	GPIO_Init(&DiscoBoard_LD4);
 	GPIO_Init(&PushButton_Inp);
@@ -44,7 +80,6 @@ int main(void)
 
 	while(1)
 	{
-		/*
 		if(GPIO_ReadPin(pGPIOA, GPIO_PIN_0))
 		{
 			GPIO_WritePin(pGPIOB, GPIO_PIN_6, 1);
@@ -55,16 +90,5 @@ int main(void)
 			GPIO_WritePin(pGPIOB, GPIO_PIN_7, 1);
 			GPIO_WritePin(pGPIOB, GPIO_PIN_6, 0);
 		}
-		 */
 	}
-
-	return 0;
-}
-
-void EXTI0_IRQHandler (void)
-{
-	if(pEXTI->PR & 1)
-		pEXTI->PR |= 1;
-
-	GPIO_TogglePin(pGPIOB, GPIO_PIN_7);
 }

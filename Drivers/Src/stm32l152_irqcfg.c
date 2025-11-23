@@ -5,7 +5,6 @@
  *      Author: anish
  */
 
-#include <stdint.h>
 #include <stm32l152xx.h>
 
 void IRQConfig(uint8_t IRQn, uint8_t En)
