@@ -30,20 +30,21 @@ void EXTI0_IRQHandler (void)
 
 void spi_comms()
 {
-	SPI_Handle_st SPI2_Gyro;
+	SPI_Handle_st SPI_Gyro;
 
-	SPI2_Gyro.pSPIX = pSPI1;
-	SPI2_Gyro.SPI_Cfg.master = TRUE;
-	SPI2_Gyro.SPI_Cfg.bustype = SPI_BUSTYPE_FDX;
-	SPI2_Gyro.SPI_Cfg.rxonly = FALSE;
-	SPI2_Gyro.SPI_Cfg.speed = 2;
-	SPI2_Gyro.SPI_Cfg.dff = FALSE;
-	SPI2_Gyro.SPI_Cfg.cpha = TRUE;
-	SPI2_Gyro.SPI_Cfg.cpol = FALSE;
-	SPI2_Gyro.SPI_Cfg.ssm = FALSE;
+	SPI_Gyro.pSPIX = pSPI1;
+	SPI_Gyro.SPI_Cfg.master = TRUE;
+	SPI_Gyro.SPI_Cfg.bustype = SPI_BUSTYPE_FDX;
+	SPI_Gyro.SPI_Cfg.rxonly = FALSE;
+	SPI_Gyro.SPI_Cfg.speed = 7;
+	SPI_Gyro.SPI_Cfg.dff = FALSE;
+	SPI_Gyro.SPI_Cfg.cpha = TRUE;
+	SPI_Gyro.SPI_Cfg.cpol = FALSE;
+	SPI_Gyro.SPI_Cfg.ssm = FALSE;
+	SPI_Gyro.SPI_Cfg.crcen = FALSE;
 
-	SPI_Init(&SPI2_Gyro);
-	SPI_ClkCtrl(&SPI2_Gyro, SET);
+	SPI_ClkCtrl(&SPI_Gyro, SET);
+	SPI_Init(&SPI_Gyro);
 }
 
 void led()

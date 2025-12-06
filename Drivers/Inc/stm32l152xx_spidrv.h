@@ -116,6 +116,7 @@ typedef struct
 	uint8_t cpha;
 	uint8_t cpol;
 	uint8_t ssm;							// Slave select management - sw/hw slave select
+	uint8_t crcen;							// CRC Enable
 
 }SPI_Cfg_st;
 

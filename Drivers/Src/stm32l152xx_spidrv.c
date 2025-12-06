@@ -121,6 +121,8 @@ void SPI_Init(SPI_Handle_st* pSPI_Handle)
 
 	SPI1_CR1.CPHA = pSPI_Handle->SPI_Cfg.cpha;
 
+//	SPI1_CR1.CRCEN = pSPI_Handle->SPI_Cfg.crcen;
+
 	pSPI_Handle->pSPIX->SPI_CR1 = SPI_Pack_CR1(&SPI1_CR1);
 
 }
