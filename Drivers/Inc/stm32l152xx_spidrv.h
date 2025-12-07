@@ -136,6 +136,7 @@ void SPI_Unpack_SR(SPI_SR_REG* SPIX_SR, uint16_t packed);
 
 void SPI_ClkCtrl(SPI_Handle_st* pSPI_Handle, uint8_t ClkCmd);
 void SPI_Init(SPI_Handle_st* pSPI_Handle);
+void SPI_Reset(SPI_Handle_st* pSPI_Handle);
 
 uint8_t SPI_Bsy(SPI_Handle_st* pSPI_Handle);
 uint8_t SPI_RXMT(SPI_Handle_st* pSPI_Handle);

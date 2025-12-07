@@ -142,11 +142,11 @@ void GPIO_ClkCtrl(GPIO_Handle_st *pGPIO_Handle, uint8_t ClkCmd);							// Clock 
 
 void GPIO_Reset(GPIO_Handle_st *pGPIO_Handle);											// Peripheral reset
 
-uint8_t GPIO_ReadPin(GPIO_Handle_st *pGPIO_Handle, uint8_t pin);							// Read n Write pins													// Read, write pin
+uint8_t GPIO_ReadPin(GPIO_Handle_st *pGPIO_Handle);							// Read n Write pins													// Read, write pin
 uint16_t GPIO_ReadPort(GPIO_Handle_st *pGPIO_Handle);
-void GPIO_WritePin(GPIO_Handle_st *pGPIO_Handle, uint8_t pin, uint8_t value);
+void GPIO_WritePin(GPIO_Handle_st *pGPIO_Handle, uint8_t value);
 void GPIO_WritePort(GPIO_Handle_st *pGPIO_Handle, uint16_t value);
-void GPIO_TogglePin(GPIO_Handle_st *pGPIO_Handle, uint8_t pin);
+void GPIO_TogglePin(GPIO_Handle_st *pGPIO_Handle);
 
 void GPIO_Init(GPIO_Handle_st *pGPIO_Handle);										// Initialize based on user input
 

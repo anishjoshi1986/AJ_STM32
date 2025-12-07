@@ -216,11 +216,11 @@ void GPIO_Reset(GPIO_Handle_st *pGPIO_Handle)
 // GPIO Read n Write
 // --------------------------------------------------------------------------------------------------------//
 
-uint8_t GPIO_ReadPin(GPIO_Handle_st *pGPIO_Handle, uint8_t pin)
+uint8_t GPIO_ReadPin(GPIO_Handle_st *pGPIO_Handle)
 {
 	uint8_t value;
 
-	value = (uint8_t)((pGPIO_Handle->pGPIOX->IDR >> pin) & (1));
+	value = (uint8_t)((pGPIO_Handle->pGPIOX->IDR >> pGPIO_Handle->GPIO_PinCfg.pin) & (1));
 
 	return value;
 }
@@ -234,14 +234,14 @@ uint16_t GPIO_ReadPort(GPIO_Handle_st *pGPIO_Handle)
 	return value;
 }
 
-void GPIO_WritePin(GPIO_Handle_st *pGPIO_Handle, uint8_t pin, uint8_t value)
+void GPIO_WritePin(GPIO_Handle_st *pGPIO_Handle, uint8_t value)
 {
 	if(value)
 	{
-		pGPIO_Handle->pGPIOX->ODR |= 1 << pin;
+		pGPIO_Handle->pGPIOX->ODR |= 1 << pGPIO_Handle->GPIO_PinCfg.pin;
 	} else
 	{
-		pGPIO_Handle->pGPIOX->ODR &= ~(1 << pin);
+		pGPIO_Handle->pGPIOX->ODR &= ~(1 << pGPIO_Handle->GPIO_PinCfg.pin);
 	}
 }
 
@@ -250,9 +250,9 @@ void GPIO_WritePort(GPIO_Handle_st *pGPIO_Handle, uint16_t value)
 	pGPIO_Handle->pGPIOX->ODR = value;
 }
 
-void GPIO_TogglePin(GPIO_Handle_st *pGPIO_Handle, uint8_t pin)
+void GPIO_TogglePin(GPIO_Handle_st *pGPIO_Handle)
 {
-	pGPIO_Handle->pGPIOX->ODR ^= (1 << pin);
+	pGPIO_Handle->pGPIOX->ODR ^= (1 << pGPIO_Handle->GPIO_PinCfg.pin);
 }
 
 void GPIO_AltFnSetup(GPIO_Handle_st *pGPIO_Handle, uint8_t pin, uint8_t altfn)

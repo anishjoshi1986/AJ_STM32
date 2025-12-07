@@ -91,39 +91,70 @@ void SPI_ClkCtrl(SPI_Handle_st* pSPI_Handle, uint8_t ClkCmd)
 
 void SPI_Init(SPI_Handle_st* pSPI_Handle)
 {
-	SPI_CR1_REG SPI1_CR1;
+	SPI_Reset(pSPI_Handle);
 
-	SPI1_CR1.MSTR = pSPI_Handle->SPI_Cfg.master;
+	SPI_CR1_REG SPI_CR1_temp;
 
 	// Configure comms type
 	if(pSPI_Handle->SPI_Cfg.bustype == SPI_BUSTYPE_FDX)							// Full Duplex
 	{
-		SPI1_CR1.BIDIMODE = 0;
+		SPI_CR1_temp.BIDIMODE = 0;
+		SPI_CR1_temp.RXONLY = 0;
 	}
 	else if(pSPI_Handle->SPI_Cfg.bustype == SPI_BUSTYPE_HDX)					// Half Duplex
 	{
-		SPI1_CR1.BIDIMODE = 1;
+		SPI_CR1_temp.BIDIMODE = 1;
+		SPI_CR1_temp.RXONLY = 0;
 	}
 	else if(pSPI_Handle->SPI_Cfg.bustype == SPI_BUSTYPE_SX)						// Simplex
 	{
-		SPI1_CR1.BIDIMODE = 0;
+		SPI_CR1_temp.BIDIMODE = 0;
 		if(pSPI_Handle->SPI_Cfg.rxonly)											// If device is to be used only in receive mode
 		{
-			SPI1_CR1.RXONLY = 1;
+			SPI_CR1_temp.RXONLY = 1;
 		}
 	}
 
-	SPI1_CR1.BR = pSPI_Handle->SPI_Cfg.speed;
+	SPI_CR1_temp.CRCEN = pSPI_Handle->SPI_Cfg.crcen;
 
-	SPI1_CR1.DFF = pSPI_Handle->SPI_Cfg.dff;									// Data frame format
+	SPI_CR1_temp.CRCNEXT = 0;
 
-	SPI1_CR1.CPOL = pSPI_Handle->SPI_Cfg.cpol;
+	SPI_CR1_temp.DFF = pSPI_Handle->SPI_Cfg.dff;									// Data frame format
 
-	SPI1_CR1.CPHA = pSPI_Handle->SPI_Cfg.cpha;
+	SPI_CR1_temp.SSM = pSPI_Handle->SPI_Cfg.ssm;
 
-//	SPI1_CR1.CRCEN = pSPI_Handle->SPI_Cfg.crcen;
+	SPI_CR1_temp.SSI = 0;
 
-	pSPI_Handle->pSPIX->SPI_CR1 = SPI_Pack_CR1(&SPI1_CR1);
+	SPI_CR1_temp.LSBFIRST = 0;
+
+	SPI_CR1_temp.SPE = 1;
+
+	SPI_CR1_temp.BR = pSPI_Handle->SPI_Cfg.speed;
+
+	SPI_CR1_temp.MSTR = pSPI_Handle->SPI_Cfg.master;
+
+	SPI_CR1_temp.CPOL = pSPI_Handle->SPI_Cfg.cpol;
+
+	SPI_CR1_temp.CPHA = pSPI_Handle->SPI_Cfg.cpha;
+
+	pSPI_Handle->pSPIX->SPI_CR1 = SPI_Pack_CR1(&SPI_CR1_temp);
+
+}
+
+void SPI_Reset(SPI_Handle_st* pSPI_Handle)
+{
+	SPI_CR1_REG SPI_CR1_temp;
+
+	SPI_CR1_temp.MSTR = 0;
+	SPI_CR1_temp.BIDIMODE = 0;
+	SPI_CR1_temp.RXONLY = 0;
+	SPI_CR1_temp.BR = 0;
+	SPI_CR1_temp.DFF = 0;									// Data frame format
+	SPI_CR1_temp.CPOL = 0;
+	SPI_CR1_temp.CPHA = 0;
+	SPI_CR1_temp.CRCEN = 0;
+
+	pSPI_Handle->pSPIX->SPI_CR1 = SPI_Pack_CR1(&SPI_CR1_temp);
 
 }
 
