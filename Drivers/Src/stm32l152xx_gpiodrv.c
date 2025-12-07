@@ -135,7 +135,6 @@ void GPIO_Init(GPIO_Handle_st *pGPIO_Handle)
 
 		SYSCFG_CLK_EN();
 
-
 	}
 
 	temp = 0;
@@ -255,12 +254,12 @@ void GPIO_TogglePin(GPIO_Handle_st *pGPIO_Handle)
 	pGPIO_Handle->pGPIOX->ODR ^= (1 << pGPIO_Handle->GPIO_PinCfg.pin);
 }
 
-void GPIO_AltFnSetup(GPIO_Handle_st *pGPIO_Handle, uint8_t pin, uint8_t altfn)
+void GPIO_AltFnSetup(GPIO_Handle_st *pGPIO_Handle)
 {
 	uint32_t temp1;
 	uint32_t temp2;
 
-	temp1 = pin / 8;
-	temp2 = pin % 8;
-	pGPIO_Handle->pGPIOX->AFR[temp1] |= altfn << temp2;
+	temp1 = pGPIO_Handle->GPIO_PinCfg.pin / 8;
+	temp2 = pGPIO_Handle->GPIO_PinCfg.pin % 8;
+	pGPIO_Handle->pGPIOX->AFR[temp1] |= pGPIO_Handle->GPIO_PinCfg.altfn << 4*temp2;
 }

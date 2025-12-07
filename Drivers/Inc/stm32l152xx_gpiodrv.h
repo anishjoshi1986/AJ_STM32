@@ -150,6 +150,6 @@ void GPIO_TogglePin(GPIO_Handle_st *pGPIO_Handle);
 
 void GPIO_Init(GPIO_Handle_st *pGPIO_Handle);										// Initialize based on user input
 
-void GPIO_AltFnSetup(GPIO_Handle_st *pGPIO_Handle, uint8_t pin, uint8_t altfn);
+void GPIO_AltFnSetup(GPIO_Handle_st *pGPIO_Handle);
 
 #endif /* STM32L152XX_GPIODRV_H_ */

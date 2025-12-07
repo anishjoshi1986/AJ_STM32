@@ -55,6 +55,35 @@ void spi_comms()
 
 	SPI_ClkCtrl(&SPI_Gyro, SET);
 	SPI_Init(&SPI_Gyro);
+
+	GPIO_Handle_st SPI_SCK;
+	GPIO_Handle_st SPI_MISO;
+	GPIO_Handle_st SPI_MOSI;
+
+	SPI_SCK.pGPIOX = pGPIOA;
+	SPI_SCK.GPIO_PinCfg.pin = GPIO_PIN_5;
+	SPI_SCK.GPIO_PinCfg.altfn = GPIO_MODE_ALTFN;
+	SPI_SCK.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
+	SPI_SCK.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
+
+	SPI_MISO.pGPIOX = pGPIOA;
+	SPI_MISO.GPIO_PinCfg.pin = GPIO_PIN_6;
+	SPI_MISO.GPIO_PinCfg.altfn = GPIO_MODE_ALTFN;
+	SPI_MISO.GPIO_PinCfg.otype = GPIO_PUPD_PD;
+	SPI_MISO.GPIO_PinCfg.pupd = GPIO_PUPD_PD;
+
+	SPI_MOSI.pGPIOX = pGPIOA;
+	SPI_MOSI.GPIO_PinCfg.pin = GPIO_PIN_7;
+	SPI_MOSI.GPIO_PinCfg.altfn = GPIO_MODE_ALTFN;
+	SPI_MOSI.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
+	SPI_MOSI.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
+
+	GPIO_ClkCtrl(&SPI_SCK, SET);
+	GPIO_ClkCtrl(&SPI_MISO, SET);
+	GPIO_ClkCtrl(&SPI_MOSI, SET);
+	GPIO_Init(&SPI_SCK);
+	GPIO_Init(&SPI_MISO);
+	GPIO_Init(&SPI_MOSI);
 }
 
 void led()
@@ -84,6 +113,4 @@ void led()
 	GPIO_Init(&PushButton_Inp);
 
 	IRQConfig(IRQ_NO_EXTI0, SET);
-
-	GPIO_WritePin(&DiscoBoard_LD3, 1);
 }
