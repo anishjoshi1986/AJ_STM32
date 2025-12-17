@@ -205,7 +205,7 @@ uint8_t SPI_ErrCheck(SPI_Handle_st* pSPI_Handle)
 // SPI read write
 // --------------------------------------------------------------------------------------------------------//
 
-uint8_t SPI_Write(SPI_Handle_st* pSPI_Handle, uint8_t data, uint8_t dff)
+uint8_t SPI_Write(SPI_Handle_st* pSPI_Handle, uint8_t data)
 {
 	uint8_t cnt_spibsy = 0;
 	uint8_t timeout_thres = 254;
@@ -217,7 +217,7 @@ uint8_t SPI_Write(SPI_Handle_st* pSPI_Handle, uint8_t data, uint8_t dff)
 			return 1;
 	}
 
-	if(dff)
+	if(pSPI_Handle->SPI_Cfg.dff)
 		pSPI_Handle->pSPIX->SPI_DR = (uint16_t)data;
 	else
 		pSPI_Handle->pSPIX->SPI_DR = data;

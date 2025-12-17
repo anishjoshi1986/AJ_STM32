@@ -142,7 +142,7 @@ uint8_t SPI_Bsy(SPI_Handle_st* pSPI_Handle);
 uint8_t SPI_RXMT(SPI_Handle_st* pSPI_Handle);
 uint8_t SPI_ErrCheck(SPI_Handle_st* pSPI_Handle);
 
-uint8_t SPI_Write(SPI_Handle_st* pSPI_Handle, uint8_t data, uint8_t dff);
+uint8_t SPI_Write(SPI_Handle_st* pSPI_Handle, uint8_t data);
 uint16_t SPI_Read(SPI_Handle_st* pSPI_Handle);
 
 #endif
