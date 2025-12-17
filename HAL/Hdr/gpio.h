@@ -8,7 +8,7 @@
 #ifndef STM32L152XX_GPIODRV_H_
 #define STM32L152XX_GPIODRV_H_
 
-#include "stm32l152xx.h"
+#include "../Hdr/stm32_reg.h"
 
 // --------------------------------------------------------------------------------------------------------//
 // GPIO peripheral address on AHB & reg struct - found from memory map/reg boundary addresses in RM

@@ -5,7 +5,7 @@
  *      Author: anish
  */
 
-#include <stm32l152xx.h>
+#include "../Hdr/stm32_reg.h"
 
 void IRQConfig(uint8_t IRQn, uint8_t En)
 {
