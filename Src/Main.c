@@ -5,8 +5,8 @@
  *      Author: anish
  */
 
-#include "../HAL/Hdr/gpio.h"
-#include "../HAL/Hdr/spi.h"
+#include "../HAL/Hdr/gpio_hal.h"
+#include "../HAL/Hdr/spi_hal.h"
 
 GPIO_Handle_st DiscoBoard_LD3;
 GPIO_Handle_st DiscoBoard_LD4;

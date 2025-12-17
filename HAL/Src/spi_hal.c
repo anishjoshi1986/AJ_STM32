@@ -5,7 +5,7 @@
  *      Author: anish
  */
 
-#include "../Hdr/spi.h"
+#include "../Hdr/spi_hal.h"
 
 // --------------------------------------------------------------------------------------------------------//
 // SPI pack/unpack registers

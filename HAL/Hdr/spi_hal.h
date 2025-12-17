@@ -8,7 +8,7 @@
 #ifndef STM32L152XX_SPIDRV_H_
 #define STM32L152XX_SPIDRV_H_
 
-#include "../Hdr/stm32_reg.h"
+#include "stm32_hal.h"
 
 // --------------------------------------------------------------------------------------------------------//
 // SPI register address and macros
