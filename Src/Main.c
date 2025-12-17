@@ -5,8 +5,8 @@
  *      Author: anish
  */
 
-#include "stm32l152xx_spidrv.h"
-#include "stm32l152xx_gpiodrv.h"
+#include <stm32l152xx_gpio.h>
+#include <stm32l152xx_spi.h>
 
 GPIO_Handle_st DiscoBoard_LD3;
 GPIO_Handle_st DiscoBoard_LD4;

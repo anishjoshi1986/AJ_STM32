@@ -5,7 +5,7 @@
  *      Author: anish
  */
 
-#include <stm32l152xx_spidrv.h>
+#include <stm32l152xx_spi.h>
 
 // --------------------------------------------------------------------------------------------------------//
 // SPI pack/unpack registers
