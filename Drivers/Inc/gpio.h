@@ -1,14 +1,14 @@
 /*
- * stm32l152_gpiodrv.h
+ * gpio.h
  *
  *  Created on: Sep 3, 2025
  *      Author: anish
  */
 
-#ifndef STM32L152XX_GPIODRV_H_
-#define STM32L152XX_GPIODRV_H_
+#ifndef GPIO_H_
+#define GPIO_H_
 
-#include "stm32l152xx.h"
+#include "stm32.h"
 
 // --------------------------------------------------------------------------------------------------------//
 // GPIO peripheral address on AHB & reg struct - found from memory map/reg boundary addresses in RM

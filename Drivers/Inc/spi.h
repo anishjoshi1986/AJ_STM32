@@ -1,14 +1,14 @@
 /*
- * stm32l152xx_spidrv.h
+ * spi.h
  *
  *  Created on: Sep 1, 2025
  *      Author: anish
  */
 
-#ifndef STM32L152XX_SPIDRV_H_
-#define STM32L152XX_SPIDRV_H_
+#ifndef SPI_H_
+#define SPI_H_
 
-#include "stm32l152xx.h"
+#include "stm32.h"
 
 // --------------------------------------------------------------------------------------------------------//
 // SPI register address and macros
