@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-#define __vo					volatile
+#define __vo	volatile
 
 // --------------------------------------------------------------------------------------------------------//
 // Generic macros
