@@ -8,7 +8,7 @@
 #ifndef GPIO_H_
 #define GPIO_H_
 
-#include "stm32.h"
+#include "../../HAL/Inc/stm32.h"
 
 // --------------------------------------------------------------------------------------------------------//
 // GPIO peripheral address on AHB & reg struct - found from memory map/reg boundary addresses in RM
