@@ -8,7 +8,20 @@
 #ifndef GYROI3G4250D_HAL_H_
 #define GYROI3G4250D_HAL_H_
 
-#define WHO_AM_I	0x0F
+#define WHO_AM_I_ADDR			0x000FU
+#define CTRL_REG1_ADDR			0x0020U
+#define CTRL_REG2_ADDR			0x0021U
+#define CTRL_REG3_ADDR			0x0022U
+#define CTRL_REG4_ADDR			0x0023U
+#define CTRL_REG5_ADDR			0x0024U
+#define STATUS_REG_ADDR 		0x0027U
+#define FIFO_CTRL_REG_ADDR 		0x002EU
+#define FIFO_SRC_REG_ADDR		0x002FU
+#define INT1_CFG_ADDR			0x0030U
+#define INT1_SRC_ADDR			0x0031U
+
+
+int8_t INT1_DURATION;
 
 typedef struct
 {
@@ -80,5 +93,46 @@ typedef struct
 	uint8_t XDA;
 
 }STATUS_REG;
+
+typedef struct
+{
+	uint8_t FM[3];
+	uint8_t WTM[4];
+
+}FIFO_CTRL_REG;
+
+typedef struct
+{
+	uint8_t WTM;
+	uint8_t OVRN;
+	uint8_t EMPTY;
+	uint8_t FSS[5];
+}FIFO_SRC_REG;
+
+typedef struct
+{
+	uint8_t AND_OR;
+	uint8_t LIR;
+	uint8_t ZHIE;
+	uint8_t ZLIE;
+	uint8_t YHIE;
+	uint8_t YLIE;
+	uint8_t XHIE;
+	uint8_t XLIE;
+
+}INT1_CFG;
+
+typedef struct
+{
+	uint8_t reserved;
+	uint8_t IA;
+	uint8_t ZH;
+	uint8_t ZL;
+	uint8_t YH;
+	uint8_t YL;
+	uint8_t XH;
+	uint8_t XL;
+
+}INT1_SRC;
 
 #endif /* HAL_HDR_GYRO_HAL_H_ */
