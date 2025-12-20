@@ -5,8 +5,8 @@
  *      Author: anish
  */
 
-#include "spi_hal.h"
+#include "../../HAL/Hdr/spi_hal.h"
 
 uint16_t x;
 SPI_Handle_st SPI_Gyro;
-x = SPI_Read(*SPI_Gyro);
+//x = SPI_Read(&SPI_Gyro);

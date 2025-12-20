@@ -5,8 +5,8 @@
  *      Author: anish
  */
 
-#ifndef HDR_SPI_DRV_H_
-#define HDR_SPI_DRV_H_
+#ifndef SPI_DRV_H_
+#define SPI_DRV_H_
 
 
 

@@ -5,8 +5,8 @@
  *      Author: anish
  */
 
-#ifndef STM32L152XX_GPIODRV_H_
-#define STM32L152XX_GPIODRV_H_
+#ifndef GPIO_HAL_H_
+#define GPIO_HAL_H_
 
 #include "stm32_hal.h"
 

@@ -5,8 +5,8 @@
  *      Author: anish
  */
 
-#ifndef STM32L152XX_SPIDRV_H_
-#define STM32L152XX_SPIDRV_H_
+#ifndef SPI_HAL_H_
+#define SPI_HAL_H_
 
 #include "stm32_hal.h"
 

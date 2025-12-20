@@ -5,8 +5,8 @@
  *      Author: anish
  */
 
-#ifndef STM32L152XX_H_
-#define STM32L152XX_H_
+#ifndef STM32_HAL_H_
+#define STM32_HAL_H_
 
 #include <stdint.h>
 
