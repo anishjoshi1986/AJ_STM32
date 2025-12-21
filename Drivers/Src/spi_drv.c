@@ -9,7 +9,7 @@
 
 uint16_t dummy()
 {
-	SPI_Handle_st SPI_Gyro;
+	STM32_SPIHandle_st SPI_Gyro;
 
 	/*
 	SPI_Gyro.pSPIX = pSPI1;
@@ -23,6 +23,6 @@ uint16_t dummy()
 	SPI_Gyro.SPI_Cfg.ssm = FALSE;
 	SPI_Gyro.SPI_Cfg.crcen = FALSE;
 */
-	return (SPI_Read(&SPI_Gyro));
+	return (STM32_SPI_Read(&SPI_Gyro));
 
 }

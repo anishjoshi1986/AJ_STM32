@@ -40,7 +40,7 @@ void EXTI0_IRQHandler (void)
 
 void spi_comms()
 {
-	SPI_Handle_st SPI_Gyro;
+	STM32_SPIHandle_st SPI_Gyro;
 
 	SPI_Gyro.pSPIX = pSPI1;
 	SPI_Gyro.SPI_Cfg.master = TRUE;
@@ -53,8 +53,8 @@ void spi_comms()
 	SPI_Gyro.SPI_Cfg.ssm = FALSE;
 	SPI_Gyro.SPI_Cfg.crcen = FALSE;
 
-	SPI_ClkCtrl(&SPI_Gyro, SET);
-	SPI_Init(&SPI_Gyro);
+	STM32_SPI_ClkCtrl(&SPI_Gyro, SET);
+	STM32_SPI_Init(&SPI_Gyro);
 
 	GPIO_Handle_st SPI_SCK;
 	GPIO_Handle_st SPI_MISO;

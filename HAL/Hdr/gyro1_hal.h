@@ -1,27 +1,29 @@
 /*
- * gyro_hal.h
+ * gyro1_hal.h
  *
  *  Created on: Dec 20, 2025
  *      Author: anish
  */
 
-#ifndef GYROI3G4250D_HAL_H_
-#define GYROI3G4250D_HAL_H_
+#ifndef GYRO1_HAL_H_
+#define GYRO1_HAL_H_
 
-#define WHO_AM_I_ADDR			0x000FU
-#define CTRL_REG1_ADDR			0x0020U
-#define CTRL_REG2_ADDR			0x0021U
-#define CTRL_REG3_ADDR			0x0022U
-#define CTRL_REG4_ADDR			0x0023U
-#define CTRL_REG5_ADDR			0x0024U
-#define STATUS_REG_ADDR 		0x0027U
-#define FIFO_CTRL_REG_ADDR 		0x002EU
-#define FIFO_SRC_REG_ADDR		0x002FU
-#define INT1_CFG_ADDR			0x0030U
-#define INT1_SRC_ADDR			0x0031U
+#include <stdint.h>
+
+#define GYRO1_WHO_AM_I_ADDR				0x000FU
+#define GYRO1_CTRL_REG1_ADDR			0x0020U
+#define GYRO1_CTRL_REG2_ADDR			0x0021U
+#define GYRO1_CTRL_REG3_ADDR			0x0022U
+#define GYRO1_CTRL_REG4_ADDR			0x0023U
+#define GYRO1_CTRL_REG5_ADDR			0x0024U
+#define GYRO1_STATUS_REG_ADDR 			0x0027U
+#define GYRO1_FIFO_CTRL_REG_ADDR 		0x002EU
+#define GYRO1_FIFO_SRC_REG_ADDR			0x002FU
+#define GYRO1_INT1_CFG_ADDR				0x0030U
+#define GYRO1_INT1_SRC_ADDR				0x0031U
 
 
-int8_t INT1_DURATION;
+int8_t GYRO1_INT1_DURATION;
 
 typedef struct
 {
@@ -32,7 +34,7 @@ typedef struct
 	uint8_t Yen;
 	uint8_t Xen;
 
-}CTRL_REG1;
+}GYRO1_CTRL_REG1;
 
 typedef struct
 {
@@ -40,20 +42,20 @@ typedef struct
 	uint8_t HPM[2];
 	uint8_t HPCF[4];
 
-}CTRL_REG2;
+}GYRO1_CTRL_REG2;
 
 typedef struct
 {
 	uint8_t I1_Int1;
 	uint8_t I1_Boot;
 	uint8_t H_Lactive;
-	uint8_T PP_OD;
+	uint8_t PP_OD;
 	uint8_t I2_DRDY;
-	uint8_T I2_WTM;
+	uint8_t I2_WTM;
 	uint8_t I2_ORun;
 	uint8_t I2_Empty;
 
-}CTRL_REG3;
+}GYRO1_CTRL_REG3;
 
 typedef struct
 {
@@ -66,7 +68,7 @@ typedef struct
 	uint8_t ST0;
 	uint8_t SIM;
 
-}CTRL_REG4;
+}GYRO1_CTRL_REG4;
 
 typedef struct
 {
@@ -79,7 +81,7 @@ typedef struct
 	uint8_t Out_Sel1;
 	uint8_t Out_Sel0;
 
-}CTRL_REG5;
+}GYRO1_CTRL_REG5;
 
 typedef struct
 {
@@ -92,14 +94,14 @@ typedef struct
 	uint8_t YDA;
 	uint8_t XDA;
 
-}STATUS_REG;
+}GYRO1_STATUS_REG;
 
 typedef struct
 {
 	uint8_t FM[3];
 	uint8_t WTM[4];
 
-}FIFO_CTRL_REG;
+}GYRO1_FIFO_CTRL_REG;
 
 typedef struct
 {
@@ -107,7 +109,7 @@ typedef struct
 	uint8_t OVRN;
 	uint8_t EMPTY;
 	uint8_t FSS[5];
-}FIFO_SRC_REG;
+}GYRO1_FIFO_SRC_REG;
 
 typedef struct
 {
@@ -120,7 +122,7 @@ typedef struct
 	uint8_t XHIE;
 	uint8_t XLIE;
 
-}INT1_CFG;
+}GYRO1_INT1_CFG;
 
 typedef struct
 {
@@ -133,6 +135,10 @@ typedef struct
 	uint8_t XH;
 	uint8_t XL;
 
-}INT1_SRC;
+}GYRO1_INT1_SRC;
+
+
+uint8_t Pack_Gyro1_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1);
+void Unpack_Gyro1_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1, uint8_t packed);
 
 #endif /* HAL_HDR_GYRO_HAL_H_ */
