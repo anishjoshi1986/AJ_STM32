@@ -27,118 +27,145 @@ int8_t GYRO1_INT1_DURATION;
 
 typedef struct
 {
-	uint8_t DR[2];
-	uint8_t BW[2];
-	uint8_t PD;
-	uint8_t Zen;
-	uint8_t Yen;
-	uint8_t Xen;
+	uint8_t DR : 2;
+	uint8_t BW : 2;
+	uint8_t PD : 1;
+	uint8_t Zen : 1;
+	uint8_t Yen : 1;
+	uint8_t Xen : 1;
 
 }GYRO1_CTRL_REG1;
 
 typedef struct
 {
-	uint8_t reserved[2];
-	uint8_t HPM[2];
-	uint8_t HPCF[4];
+	uint8_t reserved : 2;
+	uint8_t HPM : 2;
+	uint8_t HPCF : 4;
 
 }GYRO1_CTRL_REG2;
 
 typedef struct
 {
-	uint8_t I1_Int1;
-	uint8_t I1_Boot;
-	uint8_t H_Lactive;
-	uint8_t PP_OD;
-	uint8_t I2_DRDY;
-	uint8_t I2_WTM;
-	uint8_t I2_ORun;
-	uint8_t I2_Empty;
+	uint8_t I1_Int1 : 1;
+	uint8_t I1_Boot : 1;
+	uint8_t H_Lactive : 1;
+	uint8_t PP_OD : 1;
+	uint8_t I2_DRDY : 1;
+	uint8_t I2_WTM : 1;
+	uint8_t I2_ORun : 1;
+	uint8_t I2_Empty : 1;
 
 }GYRO1_CTRL_REG3;
 
 typedef struct
 {
-	uint8_t reserved1;
-	uint8_t BLE;
-	uint8_t FS1;
-	uint8_t FS0;
-	uint8_t reserved2;
-	uint8_t ST1;
-	uint8_t ST0;
-	uint8_t SIM;
+	uint8_t reserved1 : 1;
+	uint8_t BLE : 1;
+	uint8_t FS1 : 1;
+	uint8_t FS0 : 1;
+	uint8_t reserved2 : 1;
+	uint8_t ST1 : 1;
+	uint8_t ST0 : 1;
+	uint8_t SIM : 1;
 
 }GYRO1_CTRL_REG4;
 
 typedef struct
 {
-	uint8_t BOOT;
-	uint8_t FIFO_EN;
-	uint8_t reserved1;
-	uint8_t HPen;
-	uint8_t INT_Sel1;
-	uint8_t INT_Sel0;
-	uint8_t Out_Sel1;
-	uint8_t Out_Sel0;
+	uint8_t BOOT : 1;
+	uint8_t FIFO_EN : 1;
+	uint8_t reserved1 : 1;
+	uint8_t HPen : 1;
+	uint8_t INT_Sel1 : 1;
+	uint8_t INT_Sel0 : 1;
+	uint8_t Out_Sel1 : 1;
+	uint8_t Out_Sel0 : 1;
 
 }GYRO1_CTRL_REG5;
 
 typedef struct
 {
-	uint8_t ZYXOR;
-	uint8_t ZOR;
-	uint8_t YOR;
-	uint8_t XOR;
-	uint8_t ZYXDA;
-	uint8_t ZDA;
-	uint8_t YDA;
-	uint8_t XDA;
+	uint8_t ZYXOR : 1;
+	uint8_t ZOR : 1;
+	uint8_t YOR : 1;
+	uint8_t XOR : 1;
+	uint8_t ZYXDA : 1;
+	uint8_t ZDA : 1;
+	uint8_t YDA : 1;
+	uint8_t XDA : 1;
 
 }GYRO1_STATUS_REG;
 
 typedef struct
 {
-	uint8_t FM[3];
-	uint8_t WTM[4];
+	uint8_t FM : 3;
+	uint8_t WTM : 5;
 
 }GYRO1_FIFO_CTRL_REG;
 
 typedef struct
 {
-	uint8_t WTM;
-	uint8_t OVRN;
-	uint8_t EMPTY;
-	uint8_t FSS[5];
+	uint8_t WTM : 1;
+	uint8_t OVRN : 1;
+	uint8_t EMPTY : 1;
+	uint8_t FSS : 5;
 }GYRO1_FIFO_SRC_REG;
 
 typedef struct
 {
-	uint8_t AND_OR;
-	uint8_t LIR;
-	uint8_t ZHIE;
-	uint8_t ZLIE;
-	uint8_t YHIE;
-	uint8_t YLIE;
-	uint8_t XHIE;
-	uint8_t XLIE;
+	uint8_t AND_OR : 1;
+	uint8_t LIR : 1;
+	uint8_t ZHIE : 1;
+	uint8_t ZLIE : 1;
+	uint8_t YHIE : 1;
+	uint8_t YLIE : 1;
+	uint8_t XHIE : 1;
+	uint8_t XLIE : 1;
 
 }GYRO1_INT1_CFG;
 
 typedef struct
 {
-	uint8_t reserved;
-	uint8_t IA;
-	uint8_t ZH;
-	uint8_t ZL;
-	uint8_t YH;
-	uint8_t YL;
-	uint8_t XH;
-	uint8_t XL;
+	uint8_t reserved : 1;
+	uint8_t IA : 1;
+	uint8_t ZH : 1;
+	uint8_t ZL : 1;
+	uint8_t YH : 1;
+	uint8_t YL : 1;
+	uint8_t XH : 1;
+	uint8_t XL : 1;
 
 }GYRO1_INT1_SRC;
 
 
-uint8_t Pack_Gyro1_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1);
-void Unpack_Gyro1_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1, uint8_t packed);
+uint8_t Gyro1_Pack_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1);
+void Gyro1_Unpack_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1, uint8_t packed);
+
+uint8_t Gyro1_Pack_CTRL_REG2(GYRO1_CTRL_REG2 *CTRL_REG2);
+void Gyro1_Unpack_CTRL_REG2(GYRO1_CTRL_REG2 *CTRL_REG2, uint8_t packed);
+
+uint8_t Gyro1_Pack_CTRL_REG3(GYRO1_CTRL_REG3 *CTRL_REG3);
+void Gyro1_Unpack_CTRL_REG3(GYRO1_CTRL_REG3 *CTRL_REG3, uint8_t packed);
+
+uint8_t Gyro1_Pack_CTRL_REG4(GYRO1_CTRL_REG4 *CTRL_REG4);
+void Gyro1_Unpack_CTRL_REG4(GYRO1_CTRL_REG4 *CTRL_REG4, uint8_t packed);
+
+uint8_t Gyro1_Pack_CTRL_REG5(GYRO1_CTRL_REG5 *CTRL_REG5);
+void Gyro1_Unpack_CTRL_REG5(GYRO1_CTRL_REG5 *CTRL_REG5, uint8_t packed);
+
+uint8_t Gyro1_Pack_STATUS_REG(GYRO1_STATUS_REG *STATUS_REG);
+void Gyro1_Unpack_STATUS_REG(GYRO1_STATUS_REG *STATUS_REG, uint8_t packed);
+
+uint8_t Gyro1_Pack_FIFO_CTRL_REG(GYRO1_FIFO_CTRL_REG *FIFO_CTRL_REG);
+void Gyro1_Unpack_FIFO_CTRL_REG(GYRO1_FIFO_CTRL_REG *FIFO_CTRL_REG, uint8_t packed);
+
+uint8_t Gyro1_Pack_FIFO_SRC_REG(GYRO1_FIFO_SRC_REG *FIFO_SRC_REG);
+void Gyro1_Unpack_FIFO_SRC_REG(GYRO1_FIFO_SRC_REG *FIFO_SRC_REG, uint8_t packed);
+
+uint8_t Gyro1_Pack_INT1_CFG(GYRO1_INT1_CFG *INT1_CFG);
+void Gyro1_Unpack_INT1_CFG(GYRO1_INT1_CFG *INT1_CFG, uint8_t packed);
+
+uint8_t Gyro1_Pack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC);
+void Gyro1_Unpack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC, uint8_t packed);
 
 #endif /* HAL_HDR_GYRO_HAL_H_ */

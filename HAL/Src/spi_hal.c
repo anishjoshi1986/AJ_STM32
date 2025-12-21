@@ -15,35 +15,35 @@ uint16_t STM32_Pack_CR1(STM32_CR1_REG* SPIX_CR1)
 {
 	uint16_t packed = 0;
 
-	packed |= (SPIX_CR1->BIDIMODE & 0x1) << 15;
-	packed |= (SPIX_CR1->BIDIOE & 0x1) << 14;
-	packed |= (SPIX_CR1->CRCEN & 0x1) << 13;
-	packed |= (SPIX_CR1->CRCNEXT & 0x1) << 12;
-	packed |= (SPIX_CR1->DFF & 0x1) << 11;
-	packed |= (SPIX_CR1->RXONLY & 0x1) << 10;
-	packed |= (SPIX_CR1->SSM & 0x1) << 9;
-	packed |= (SPIX_CR1->SSI & 0x1) << 8;
-	packed |= (SPIX_CR1->LSBFIRST & 0x1) << 7;
-	packed |= (SPIX_CR1->SPE & 0x1) << 6;
-	packed |= (SPIX_CR1->BR & 0x7) << 3;
-	packed |= (SPIX_CR1->MSTR & 0x1) << 2;
-	packed |= (SPIX_CR1->CPOL & 0x1) << 1;
-	packed |= (SPIX_CR1->CPHA & 0x1) << 0;
+	packed |= (SPIX_CR1->BIDIMODE & 0x01) << 15;
+	packed |= (SPIX_CR1->BIDIOE & 0x01) << 14;
+	packed |= (SPIX_CR1->CRCEN & 0x01) << 13;
+	packed |= (SPIX_CR1->CRCNEXT & 0x01) << 12;
+	packed |= (SPIX_CR1->DFF & 0x01) << 11;
+	packed |= (SPIX_CR1->RXONLY & 0x01) << 10;
+	packed |= (SPIX_CR1->SSM & 0x01) << 9;
+	packed |= (SPIX_CR1->SSI & 0x01) << 8;
+	packed |= (SPIX_CR1->LSBFIRST & 0x01) << 7;
+	packed |= (SPIX_CR1->SPE & 0x01) << 6;
+	packed |= (SPIX_CR1->BR & 0x07) << 3;
+	packed |= (SPIX_CR1->MSTR & 0x01) << 2;
+	packed |= (SPIX_CR1->CPOL & 0x01) << 1;
+	packed |= (SPIX_CR1->CPHA & 0x01) << 0;
 
 	return packed;
 }
 
 void STM32_Unpack_SR(STM32_SR_REG* SPIX_SR, uint16_t packed)
 {
-	SPIX_SR->FRE = (packed >> 8) & 0x1;
-	SPIX_SR->BSY = (packed >> 7) & 0x1;
-	SPIX_SR->OVR = (packed >> 6) & 0x1;
-	SPIX_SR->MODF = (packed >> 5) & 0x1;
-	SPIX_SR->CRCERR = (packed >> 4) & 0x1;
-	SPIX_SR->UDR = (packed >> 3) & 0x1;
-	SPIX_SR->CHSIDE = (packed >> 2) & 0x1;
-	SPIX_SR->TXE = (packed >> 1) & 0x1;
-	SPIX_SR->RXNE = (packed >> 0) & 0x1;
+	SPIX_SR->FRE = (packed >> 8) & 0x01;
+	SPIX_SR->BSY = (packed >> 7) & 0x01;
+	SPIX_SR->OVR = (packed >> 6) & 0x01;
+	SPIX_SR->MODF = (packed >> 5) & 0x01;
+	SPIX_SR->CRCERR = (packed >> 4) & 0x01;
+	SPIX_SR->UDR = (packed >> 3) & 0x01;
+	SPIX_SR->CHSIDE = (packed >> 2) & 0x01;
+	SPIX_SR->TXE = (packed >> 1) & 0x01;
+	SPIX_SR->RXNE = (packed >> 0) & 0x01;
 }
 
 // --------------------------------------------------------------------------------------------------------//
