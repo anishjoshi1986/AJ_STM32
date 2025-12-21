@@ -7,22 +7,24 @@
 
 #include "../../HAL/Hdr/spi_hal.h"
 
-uint16_t dummy()
+uint16_t SPI_Read(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg)
 {
-	STM32_SPIHandle_st SPI_Gyro;
+	STM32_SPI_Write(pSPI_Handle, device_reg);
 
-	/*
-	SPI_Gyro.pSPIX = pSPI1;
-	SPI_Gyro.SPI_Cfg.master = TRUE;
-	SPI_Gyro.SPI_Cfg.bustype = SPI_BUSTYPE_HDX;
-	SPI_Gyro.SPI_Cfg.rxonly = FALSE;
-	SPI_Gyro.SPI_Cfg.speed = 7;
-	SPI_Gyro.SPI_Cfg.dff = FALSE;
-	SPI_Gyro.SPI_Cfg.cpha = TRUE;
-	SPI_Gyro.SPI_Cfg.cpol = TRUE;
-	SPI_Gyro.SPI_Cfg.ssm = FALSE;
-	SPI_Gyro.SPI_Cfg.crcen = FALSE;
-*/
-	return (STM32_SPI_Read(&SPI_Gyro));
+	return(STM32_SPI_Read(pSPI_Handle));
 
+}
+
+uint8_t SPI_Write(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, uint16_t value)
+{
+	STM32_SPI_Write(pSPI_Handle, device_reg);
+	STM32_SPI_Write(pSPI_Handle, value);
+
+	STM32_SPI_Write(pSPI_Handle, device_reg);
+	return(value == STM32_SPI_Read(pSPI_Handle));
+}
+
+uint16_t SPI_ReadFIFO(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg)
+{
+	return 0;
 }
