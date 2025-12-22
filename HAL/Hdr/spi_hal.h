@@ -1,5 +1,5 @@
 /*
- * stm32l152xx_spidrv.h
+ * spi_hal.h
  *
  *  Created on: Sep 1, 2025
  *      Author: anish

@@ -5,7 +5,7 @@
  *      Author: anish
  */
 
-#include "../Hdr/gyro1_hal.h"
+#include "../../Drivers/Hdr/gyro1_hal.h"
 
 uint8_t Gyro1_Pack_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1)
 {
@@ -250,5 +250,54 @@ void Gyro1_Unpack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC, uint8_t packed)
 	INT1_SRC->YL = (packed >> 2) & 0x01;
 	INT1_SRC->XH = (packed >> 1) & 0x01;
 	INT1_SRC->XL = (packed >> 0) & 0x01;
+
+}
+
+uint16_t Gyro1_Read(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg)
+{
+	STM32_SPI_Write(pSPI_Handle, device_reg);
+
+	return(STM32_SPI_Read(pSPI_Handle));
+
+}
+
+uint8_t Gyro1_Write(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, uint16_t value)
+{
+	STM32_SPI_Write(pSPI_Handle, device_reg);
+	STM32_SPI_Write(pSPI_Handle, value);
+
+	STM32_SPI_Write(pSPI_Handle, device_reg);
+	return(value == STM32_SPI_Read(pSPI_Handle));
+}
+
+uint8_t Gyro1_ReadFIFO(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, int16_t *buf)
+{
+    uint8_t samples = (uint8_t)Gyro1_Read(pSPI_Handle, device_reg) & 0x1F; // 0b 0001 1111 Lower 5 bits = sample count
+
+    for (uint8_t i = 0; i < samples; i++)
+    {
+        uint8_t raw[6];
+        Gyro1_BurstRead(pSPI_Handle, OUT_X_L | 0xC0, raw, 6);
+        // Read 6 bytes (X_L, X_H, Y_L, Y_H, Z_L, Z_H) with auto-increment (bits 5, 6 = 1) --> 0xC0 = 0b1100 0000
+        // Refer to section 3.2.4 from gyro datasheet
+
+        buf[i * 3 + 0] = (int16_t)((raw[1] << 8) | raw[0]); // X axis reading
+        buf[i * 3 + 1] = (int16_t)((raw[3] << 8) | raw[2]); // Y axis reading
+        buf[i * 3 + 2] = (int16_t)((raw[5] << 8) | raw[4]); // Z axis reading
+        // Shifting *_H byte by 8 bits to the left converts it from an 8 to 16 bit int
+        // For e.g. if X_H = 11111111, then it becomes 11111111 00000000 with an 8 bit shift to the left
+        // Then the operation of X_H | X_L places the contents of the X_L into the lower 8 bits and creates a 16 bit X reading
+    }
+	return 0;
+}
+
+void Gyro1_BurstRead(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg, uint8_t *data, uint8_t len)
+{
+	STM32_SPI_Write(pSPI_Handle, device_reg);
+
+    for (uint8_t i = 0; i < len; i++)
+    {
+        data[i] = (uint8_t)STM32_SPI_Read(pSPI_Handle);
+    }
 
 }

@@ -8,6 +8,7 @@
 #ifndef GYRO1_HAL_H_
 #define GYRO1_HAL_H_
 
+#include "../../HAL/Hdr/spi_hal.h"
 #include <stdint.h>
 
 #define GYRO1_WHO_AM_I_ADDR				0x000FU
@@ -21,6 +22,8 @@
 #define GYRO1_FIFO_SRC_REG_ADDR			0x002FU
 #define GYRO1_INT1_CFG_ADDR				0x0030U
 #define GYRO1_INT1_SRC_ADDR				0x0031U
+
+#define OUT_X_L							0x0000U
 
 #define GYRO1_WHO_AM_I_EXP				0x00D3U
 
@@ -168,5 +171,10 @@ void Gyro1_Unpack_INT1_CFG(GYRO1_INT1_CFG *INT1_CFG, uint8_t packed);
 
 uint8_t Gyro1_Pack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC);
 void Gyro1_Unpack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC, uint8_t packed);
+
+uint16_t Gyro1_Read(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg);
+uint8_t Gyro1_ReadFIFO(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, int16_t *buf);
+uint8_t Gyro1_Write(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, uint16_t value);
+void Gyro1_BurstRead(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg, uint8_t *data, uint8_t len);
 
 #endif /* HAL_HDR_GYRO_HAL_H_ */
