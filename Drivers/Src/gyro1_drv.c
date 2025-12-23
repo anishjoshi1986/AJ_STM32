@@ -1,11 +1,11 @@
 /*
- * gyroI3G4250_hal.c
+ * gyro1_drv.c
  *
  *  Created on: Dec 20, 2025
  *      Author: anish
  */
 
-#include "../../Drivers/Hdr/gyro1_hal.h"
+#include "../Hdr/gyro1_drv.h"
 
 uint8_t Gyro1_Pack_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1)
 {
@@ -277,7 +277,7 @@ uint8_t Gyro1_ReadFIFO(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, int
     for (uint8_t i = 0; i < samples; i++)
     {
         uint8_t raw[6];
-        Gyro1_BurstRead(pSPI_Handle, OUT_X_L | 0xC0, raw, 6);
+        Gyro1_BurstRead(pSPI_Handle, OUT_X_L_ADDR | 0xC0, raw, 6);
         // Read 6 bytes (X_L, X_H, Y_L, Y_H, Z_L, Z_H) with auto-increment (bits 5, 6 = 1) --> 0xC0 = 0b1100 0000
         // Refer to section 3.2.4 from gyro datasheet
 
@@ -300,4 +300,11 @@ void Gyro1_BurstRead(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg, uint8_
         data[i] = (uint8_t)STM32_SPI_Read(pSPI_Handle);
     }
 
+}
+
+uint8_t Gyro1_ErrCheck(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg)
+{
+	Gyro1_Read(pSPI_Handle, device_reg);
+
+	return 0;
 }

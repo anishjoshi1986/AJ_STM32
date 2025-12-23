@@ -1,12 +1,12 @@
 /*
- * gyro1_hal.h
+ * gyro1_drv.h
  *
  *  Created on: Dec 20, 2025
  *      Author: anish
  */
 
-#ifndef GYRO1_HAL_H_
-#define GYRO1_HAL_H_
+#ifndef GYRO1_DRV_H_
+#define GYRO1_DRV_H_
 
 #include "../../HAL/Hdr/spi_hal.h"
 #include <stdint.h>
@@ -23,7 +23,12 @@
 #define GYRO1_INT1_CFG_ADDR				0x0030U
 #define GYRO1_INT1_SRC_ADDR				0x0031U
 
-#define OUT_X_L							0x0000U
+#define OUT_X_L_ADDR					0x0028U
+#define OUT_X_H_ADDR					0x0029U
+#define OUT_Y_L_ADDR					0x002AU
+#define OUT_Y_H_ADDR					0x002BU
+#define OUT_Z_L_ADDR					0x002CU
+#define OUT_Z_H_ADDR					0x002DU
 
 #define GYRO1_WHO_AM_I_EXP				0x00D3U
 
@@ -173,8 +178,13 @@ uint8_t Gyro1_Pack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC);
 void Gyro1_Unpack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC, uint8_t packed);
 
 uint16_t Gyro1_Read(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg);
+
 uint8_t Gyro1_ReadFIFO(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, int16_t *buf);
+
 uint8_t Gyro1_Write(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, uint16_t value);
+
 void Gyro1_BurstRead(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg, uint8_t *data, uint8_t len);
+
+uint8_t Gyro1_ErrCheck(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg);
 
 #endif /* HAL_HDR_GYRO_HAL_H_ */
