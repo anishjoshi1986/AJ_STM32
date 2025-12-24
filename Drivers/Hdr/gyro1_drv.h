@@ -32,8 +32,6 @@
 
 #define GYRO1_WHO_AM_I_EXP				0x00D3U
 
-int8_t GYRO1_INT1_DURATION;
-
 typedef struct
 {
 	uint8_t DR : 2;
