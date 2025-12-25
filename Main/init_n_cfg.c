@@ -7,67 +7,162 @@
 
 #include "init_n_cfg.h"
 
-STM32_SPIHandle_st SPI_Gyro;
+#ifndef ENABLE
+#define ENABLE 1
+#endif
+
+#ifndef DISABLE
+#define DISABLE 0
+#endif
+
+STM32_SPIHandle_st SPI1_Handle;
+STM32_GPIOHandle_st SPI1_SCK;
+STM32_GPIOHandle_st SPI1_MISO;
+STM32_GPIOHandle_st SPI1_MOSI;
+STM32_GPIOHandle_st SPI1_Gyro1_CS;
+
+Gyro1Handle_st Gyro1_Handle;
+
+STM32_GPIOHandle_st DiscoBoard_LD3;
+STM32_GPIOHandle_st DiscoBoard_LD4;
+STM32_GPIOHandle_st PushButton_Inp;
 
 void init_stm32spi()
 
 {
 
-	SPI_Gyro.pSPIX = pSPI1;
-	SPI_Gyro.SPI_Cfg.master = TRUE;
-	SPI_Gyro.SPI_Cfg.bustype = SPI_BUSTYPE_HDX;
-	SPI_Gyro.SPI_Cfg.rxonly = FALSE;
-	SPI_Gyro.SPI_Cfg.speed = 7;
-	SPI_Gyro.SPI_Cfg.dff = FALSE;
-	SPI_Gyro.SPI_Cfg.cpha = TRUE;
-	SPI_Gyro.SPI_Cfg.cpol = TRUE;
-	SPI_Gyro.SPI_Cfg.ssm = FALSE;
-	SPI_Gyro.SPI_Cfg.crcen = FALSE;
+	SPI1_Handle.pSPIX = pSPI1;
+	SPI1_Handle.SPI_Cfg.master = TRUE;
+	SPI1_Handle.SPI_Cfg.bustype = SPI_BUSTYPE_HDX;
+	SPI1_Handle.SPI_Cfg.rxonly = FALSE;
+	SPI1_Handle.SPI_Cfg.speed = 7;
+	SPI1_Handle.SPI_Cfg.dff = FALSE;
+	SPI1_Handle.SPI_Cfg.cpha = TRUE;
+	SPI1_Handle.SPI_Cfg.cpol = TRUE;
+	SPI1_Handle.SPI_Cfg.ssm = FALSE;
+	SPI1_Handle.SPI_Cfg.crcen = FALSE;
 
-	STM32_SPI_ClkCtrl(&SPI_Gyro, SET);
-	STM32_SPI_Init(&SPI_Gyro);
+	STM32_SPI_ClkCtrl(&SPI1_Handle, SET);
+	STM32_SPI_Init(&SPI1_Handle);
 
-	GPIO_Handle_st SPI_SCK;
-	GPIO_Handle_st SPI_MISO;
-	GPIO_Handle_st SPI_MOSI;
+	SPI1_SCK.pGPIOX = pGPIOA;
+	SPI1_SCK.GPIO_PinCfg.pin = GPIO_PIN_5;
+	SPI1_SCK.GPIO_PinCfg.mode = GPIO_MODE_ALTFN;
+	SPI1_SCK.GPIO_PinCfg.altfn = 5;
+	SPI1_SCK.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
+	SPI1_SCK.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
 
-	SPI_SCK.pGPIOX = pGPIOA;
-	SPI_SCK.GPIO_PinCfg.pin = GPIO_PIN_5;
-	SPI_SCK.GPIO_PinCfg.mode = GPIO_MODE_ALTFN;
-	SPI_SCK.GPIO_PinCfg.altfn = 5;
-	SPI_SCK.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
-	SPI_SCK.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
+	SPI1_MISO.pGPIOX = pGPIOA;
+	SPI1_MISO.GPIO_PinCfg.pin = GPIO_PIN_6;
+	SPI1_MISO.GPIO_PinCfg.mode = GPIO_MODE_ALTFN;
+	SPI1_MISO.GPIO_PinCfg.altfn = 5;
+	SPI1_MISO.GPIO_PinCfg.otype = GPIO_PUPD_PD;
+	SPI1_MISO.GPIO_PinCfg.pupd = GPIO_PUPD_PD;
 
-	SPI_MISO.pGPIOX = pGPIOA;
-	SPI_MISO.GPIO_PinCfg.pin = GPIO_PIN_6;
-	SPI_MISO.GPIO_PinCfg.mode = GPIO_MODE_ALTFN;
-	SPI_MISO.GPIO_PinCfg.altfn = 5;
-	SPI_MISO.GPIO_PinCfg.otype = GPIO_PUPD_PD;
-	SPI_MISO.GPIO_PinCfg.pupd = GPIO_PUPD_PD;
+	SPI1_MOSI.pGPIOX = pGPIOA;
+	SPI1_MOSI.GPIO_PinCfg.pin = GPIO_PIN_7;
+	SPI1_MOSI.GPIO_PinCfg.mode = GPIO_MODE_ALTFN;
+	SPI1_MOSI.GPIO_PinCfg.altfn = 5;
+	SPI1_MOSI.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
+	SPI1_MOSI.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
 
-	SPI_MOSI.pGPIOX = pGPIOA;
-	SPI_MOSI.GPIO_PinCfg.pin = GPIO_PIN_7;
-	SPI_MOSI.GPIO_PinCfg.mode = GPIO_MODE_ALTFN;
-	SPI_MOSI.GPIO_PinCfg.altfn = 5;
-	SPI_MOSI.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
-	SPI_MOSI.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
-
-	GPIO_ClkCtrl(&SPI_SCK, SET);
-	GPIO_ClkCtrl(&SPI_MISO, SET);
-	GPIO_ClkCtrl(&SPI_MOSI, SET);
-	GPIO_Init(&SPI_SCK);
-	GPIO_Init(&SPI_MISO);
-	GPIO_Init(&SPI_MOSI);
+	GPIO_ClkCtrl(&SPI1_SCK, SET);
+	GPIO_ClkCtrl(&SPI1_MISO, SET);
+	GPIO_ClkCtrl(&SPI1_MOSI, SET);
+	GPIO_Init(&SPI1_SCK);
+	GPIO_Init(&SPI1_MISO);
+	GPIO_Init(&SPI1_MOSI);
 
 }
 
 void init_gyro1()
 {
-	if(Gyro1_Write(&SPI_Gyro, GYRO1_CTRL_REG1_ADDR, 0x07))
-	{
+	Gyro1_Handle.pGPIO_Handle = &SPI1_Gyro1_CS;
+	Gyro1_Handle.pSPI_Handle = &SPI1_Handle;
 
-	} else
-	{
+	GYRO1_CTRL_REG1 CTRL_REG1;
+	GYRO1_CTRL_REG2 CTRL_REG2;
+	GYRO1_CTRL_REG3 CTRL_REG3;
+	GYRO1_CTRL_REG4 CTRL_REG4;
+	GYRO1_CTRL_REG5 CTRL_REG5;
 
-	}
+	CTRL_REG1.DR = 0x03;
+	CTRL_REG1.BW = 0x03;
+	CTRL_REG1.PD = DISABLE;
+	CTRL_REG1.Zen = ENABLE;
+	CTRL_REG1.Yen = ENABLE;
+	CTRL_REG1.Xen = ENABLE;
+
+	CTRL_REG2.HPM = 0x00;
+	CTRL_REG2.HPCF = 0x00;
+
+	CTRL_REG3.I1_Int1 = DISABLE;
+	CTRL_REG3.I1_Boot = ENABLE;
+	CTRL_REG3.H_Lactive = 0;
+	CTRL_REG3.PP_OD = 0;
+	CTRL_REG3.I2_DRDY = DISABLE;
+	CTRL_REG3.I2_WTM = ENABLE;
+	CTRL_REG3.I2_ORun = ENABLE;
+	CTRL_REG3.I2_Empty = ENABLE;
+
+	CTRL_REG4.BLE = 0x00;
+	CTRL_REG4.FS = 0x00;
+	CTRL_REG4.ST = 0x00;
+	CTRL_REG4.SIM = 0x00;
+
+	CTRL_REG5.BOOT = 0x00;
+	CTRL_REG5.FIFO_EN = ENABLE;
+	CTRL_REG5.HPen = ENABLE;
+	CTRL_REG5.INT_Sel = 0x01;
+	CTRL_REG5.Out_Sel = 0x01;
+
+	uint8_t Gyro1_Init_Status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG1_ADDR, Gyro1_Pack_CTRL_REG1(&CTRL_REG1)) ||
+			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG2_ADDR, Gyro1_Pack_CTRL_REG2(&CTRL_REG2)) ||
+			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG3_ADDR, Gyro1_Pack_CTRL_REG3(&CTRL_REG3)) ||
+			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG4_ADDR, Gyro1_Pack_CTRL_REG4(&CTRL_REG4)) ||
+			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG5_ADDR, Gyro1_Pack_CTRL_REG5(&CTRL_REG5));
+
+	uint8_t err;
+	if(!Gyro1_Init_Status)
+		err = 1;
 }
+
+void init_stm32gpio()
+{
+	PushButton_Inp.pGPIOX = pGPIOA;
+	PushButton_Inp.GPIO_PinCfg.pin = GPIO_PIN_0;
+	PushButton_Inp.GPIO_PinCfg.mode = GPIO_MODE_INTRE;
+	PushButton_Inp.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
+	PushButton_Inp.GPIO_PinCfg.pupd = GPIO_PUPD_PD;
+
+	DiscoBoard_LD3.pGPIOX = pGPIOB;
+	DiscoBoard_LD3.GPIO_PinCfg.pin = GPIO_PIN_7;
+	DiscoBoard_LD3.GPIO_PinCfg.mode = GPIO_MODE_OUT;
+	DiscoBoard_LD3.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
+	DiscoBoard_LD3.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
+
+	DiscoBoard_LD4.pGPIOX = pGPIOB;
+	DiscoBoard_LD4.GPIO_PinCfg.pin = GPIO_PIN_6;
+	DiscoBoard_LD4.GPIO_PinCfg.mode = GPIO_MODE_OUT;
+	DiscoBoard_LD4.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
+	DiscoBoard_LD4.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
+
+	GPIO_ClkCtrl(&DiscoBoard_LD3, SET);
+	GPIO_ClkCtrl(&DiscoBoard_LD4, SET);
+	GPIO_Init(&DiscoBoard_LD3);
+	GPIO_Init(&DiscoBoard_LD4);
+	GPIO_Init(&PushButton_Inp);
+
+	IRQConfig(IRQ_NO_EXTI0, SET);
+
+}
+
+void EXTI0_IRQHandler (void)
+{
+	if(pEXTI->PR & 1)
+		pEXTI->PR |= 1;
+
+	GPIO_TogglePin(&DiscoBoard_LD4);
+	GPIO_TogglePin(&DiscoBoard_LD3);
+}
+

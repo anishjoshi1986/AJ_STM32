@@ -83,10 +83,8 @@ uint8_t Gyro1_Pack_CTRL_REG4(GYRO1_CTRL_REG4 *CTRL_REG4)
 	uint8_t packed = 0;
 
 	packed |= (CTRL_REG4->BLE & 0x01) << 6;
-	packed |= (CTRL_REG4->FS1 & 0x01) << 5;
-	packed |= (CTRL_REG4->FS0 & 0x01) << 4;
-	packed |= (CTRL_REG4->ST1 & 0x01) << 2;
-	packed |= (CTRL_REG4->ST0 & 0x01) << 1;
+	packed |= (CTRL_REG4->FS & 0x03) << 4;
+	packed |= (CTRL_REG4->ST & 0x03) << 1;
 	packed |= (CTRL_REG4->SIM & 0x01) << 0;
 
 	return packed;
@@ -95,10 +93,8 @@ uint8_t Gyro1_Pack_CTRL_REG4(GYRO1_CTRL_REG4 *CTRL_REG4)
 void Gyro1_Unpack_CTRL_REG4(GYRO1_CTRL_REG4 *CTRL_REG4, uint8_t packed)
 {
 	CTRL_REG4->BLE = (packed >> 6) & 0x01;
-	CTRL_REG4->FS1 = (packed >> 5) & 0x01;
-	CTRL_REG4->FS0 = (packed >> 4) & 0x01;
-	CTRL_REG4->ST1 = (packed >> 2) & 0x01;
-	CTRL_REG4->ST0 = (packed >> 1) & 0x01;
+	CTRL_REG4->FS = (packed >> 4) & 0x03;
+	CTRL_REG4->ST = (packed >> 1) & 0x03;
 	CTRL_REG4->SIM = (packed >> 0) & 0x01;
 
 }
@@ -110,10 +106,8 @@ uint8_t Gyro1_Pack_CTRL_REG5(GYRO1_CTRL_REG5 *CTRL_REG5)
 	packed |= (CTRL_REG5->BOOT & 0x01) << 7;
 	packed |= (CTRL_REG5->FIFO_EN & 0x01) << 6;
 	packed |= (CTRL_REG5->HPen & 0x01) << 4;
-	packed |= (CTRL_REG5->INT_Sel1 & 0x01) << 3;
-	packed |= (CTRL_REG5->INT_Sel0 & 0x01) << 2;
-	packed |= (CTRL_REG5->Out_Sel1 & 0x01) << 1;
-	packed |= (CTRL_REG5->Out_Sel0 & 0x01) << 0;
+	packed |= (CTRL_REG5->INT_Sel & 0x03) << 2;
+	packed |= (CTRL_REG5->Out_Sel & 0x03) << 0;
 
 	return packed;
 }
@@ -123,10 +117,8 @@ void Gyro1_Unpack_CTRL_REG5(GYRO1_CTRL_REG5 *CTRL_REG5, uint8_t packed)
 	CTRL_REG5->BOOT = (packed >> 7) & 0x01;
 	CTRL_REG5->FIFO_EN = (packed >> 6) & 0x01;
 	CTRL_REG5->HPen = (packed >> 4) & 0x01;
-	CTRL_REG5->INT_Sel1 = (packed >> 3) & 0x01;
-	CTRL_REG5->INT_Sel0 = (packed >> 2) & 0x01;
-	CTRL_REG5->Out_Sel1 = (packed >> 1) & 0x01;
-	CTRL_REG5->Out_Sel0 = (packed >> 0) & 0x01;
+	CTRL_REG5->INT_Sel = (packed >> 2) & 0x03;
+	CTRL_REG5->Out_Sel = (packed >> 0) & 0x03;
 
 }
 
@@ -253,31 +245,31 @@ void Gyro1_Unpack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC, uint8_t packed)
 
 }
 
-uint16_t Gyro1_Read(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg)
+uint16_t Gyro1_Read(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg)
 {
-	STM32_SPI_Write(pSPI_Handle, device_reg);
+	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
 
-	return(STM32_SPI_Read(pSPI_Handle));
+	return(STM32_SPI_Read(pGyro1_Handle->pSPI_Handle));
 
 }
 
-uint8_t Gyro1_Write(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, uint16_t value)
+uint8_t Gyro1_Write(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg, uint16_t value)
 {
-	STM32_SPI_Write(pSPI_Handle, device_reg);
-	STM32_SPI_Write(pSPI_Handle, value);
+	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
+	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, value);
 
-	STM32_SPI_Write(pSPI_Handle, device_reg);
-	return(value == STM32_SPI_Read(pSPI_Handle));
+	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
+	return(value == STM32_SPI_Read(pGyro1_Handle->pSPI_Handle));
 }
 
-uint8_t Gyro1_ReadFIFO(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, int16_t *buf)
+uint8_t Gyro1_ReadFIFO(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg, int16_t *buf)
 {
-    uint8_t samples = (uint8_t)Gyro1_Read(pSPI_Handle, device_reg) & 0x1F; // 0b 0001 1111 Lower 5 bits = sample count
+    uint8_t samples = (uint8_t)Gyro1_Read(pGyro1_Handle, device_reg) & 0x1F; // 0b 0001 1111 Lower 5 bits = sample count
 
     for (uint8_t i = 0; i < samples; i++)
     {
         uint8_t raw[6];
-        Gyro1_BurstRead(pSPI_Handle, OUT_X_L_ADDR | 0xC0, raw, 6);
+        Gyro1_BurstRead(pGyro1_Handle, OUT_X_L_ADDR | 0xC0, raw, 6);
         // Read 6 bytes (X_L, X_H, Y_L, Y_H, Z_L, Z_H) with auto-increment (bits 5, 6 = 1) --> 0xC0 = 0b1100 0000
         // Refer to section 3.2.4 from gyro datasheet
 
@@ -291,20 +283,20 @@ uint8_t Gyro1_ReadFIFO(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, int
 	return 0;
 }
 
-void Gyro1_BurstRead(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg, uint8_t *data, uint8_t len)
+void Gyro1_BurstRead(Gyro1Handle_st* pGyro1_Handle, uint8_t device_reg, uint8_t *data, uint8_t len)
 {
-	STM32_SPI_Write(pSPI_Handle, device_reg);
+	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
 
     for (uint8_t i = 0; i < len; i++)
     {
-        data[i] = (uint8_t)STM32_SPI_Read(pSPI_Handle);
+        data[i] = (uint8_t)STM32_SPI_Read(pGyro1_Handle->pSPI_Handle);
     }
 
 }
 
-uint8_t Gyro1_ErrCheck(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg)
+uint8_t Gyro1_ErrCheck(Gyro1Handle_st* pGyro1_Handle, uint8_t device_reg)
 {
-	Gyro1_Read(pSPI_Handle, device_reg);
+	Gyro1_Read(pGyro1_Handle, device_reg);
 
 	return 0;
 }

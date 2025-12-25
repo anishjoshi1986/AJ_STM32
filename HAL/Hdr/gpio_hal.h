@@ -26,7 +26,7 @@ typedef struct
 	__vo uint32_t AFR[2];
 	__vo uint32_t BRR;
 
-}GPIO_RegDef_st;
+}STM32_GPIORegDef_st;
 
 #define GPIOA					(AHB + 0x0000U)
 #define GPIOB					(AHB + 0x0400U)
@@ -37,14 +37,14 @@ typedef struct
 #define GPIOF					(AHB + 0x1800U)
 #define GPIOG					(AHB + 0x1C00U)
 
-#define pGPIOA					(GPIO_RegDef_st *)GPIOA
-#define pGPIOB					(GPIO_RegDef_st *)GPIOB
-#define pGPIOC					(GPIO_RegDef_st *)GPIOC
-#define pGPIOD					(GPIO_RegDef_st *)GPIOD
-#define pGPIOE					(GPIO_RegDef_st *)GPIOE
-#define pGPIOH					(GPIO_RegDef_st *)GPIOH
-#define pGPIOF					(GPIO_RegDef_st *)GPIOF
-#define pGPIOG					(GPIO_RegDef_st *)GPIOG
+#define pGPIOA					(STM32_GPIORegDef_st *)GPIOA
+#define pGPIOB					(STM32_GPIORegDef_st *)GPIOB
+#define pGPIOC					(STM32_GPIORegDef_st *)GPIOC
+#define pGPIOD					(STM32_GPIORegDef_st *)GPIOD
+#define pGPIOE					(STM32_GPIORegDef_st *)GPIOE
+#define pGPIOH					(STM32_GPIORegDef_st *)GPIOH
+#define pGPIOF					(STM32_GPIORegDef_st *)GPIOF
+#define pGPIOG					(STM32_GPIORegDef_st *)GPIOG
 
 #define GPIOA_CLK_EN()			(pRCC->AHBENR |= 1 << 0)		// Peripheral clock enable for GPIO peripherals
 #define GPIOB_CLK_EN()			(pRCC->AHBENR |= 1 << 1)
@@ -125,31 +125,31 @@ typedef struct
 	uint8_t pupd;
 	uint8_t altfn;
 
-}GPIO_PinCfg_st;
+}STM32_GPIOPinCfg_st;
 
 typedef struct
 {
-	GPIO_RegDef_st *pGPIOX;						// Pointer to the base address of the gpio reg
-	GPIO_PinCfg_st GPIO_PinCfg;					// Pointer to pin config struct
+	STM32_GPIORegDef_st *pGPIOX;						// Pointer to the base address of the gpio reg
+	STM32_GPIOPinCfg_st GPIO_PinCfg;					// Pointer to pin config struct
 
-}GPIO_Handle_st;
+}STM32_GPIOHandle_st;
 
 // --------------------------------------------------------------------------------------------------------//
 // APIs for managing GPIO
 // --------------------------------------------------------------------------------------------------------//
 
-void GPIO_ClkCtrl(GPIO_Handle_st *pGPIO_Handle, uint8_t ClkCmd);							// Clock enable
+void GPIO_ClkCtrl(STM32_GPIOHandle_st *pGPIO_Handle, uint8_t ClkCmd);							// Clock enable
 
-void GPIO_Reset(GPIO_Handle_st *pGPIO_Handle);											// Peripheral reset
+void GPIO_Reset(STM32_GPIOHandle_st *pGPIO_Handle);											// Peripheral reset
 
-uint8_t GPIO_ReadPin(GPIO_Handle_st *pGPIO_Handle);							// Read n Write pins													// Read, write pin
-uint16_t GPIO_ReadPort(GPIO_Handle_st *pGPIO_Handle);
-void GPIO_WritePin(GPIO_Handle_st *pGPIO_Handle, uint8_t value);
-void GPIO_WritePort(GPIO_Handle_st *pGPIO_Handle, uint16_t value);
-void GPIO_TogglePin(GPIO_Handle_st *pGPIO_Handle);
+uint8_t GPIO_ReadPin(STM32_GPIOHandle_st *pGPIO_Handle);							// Read n Write pins													// Read, write pin
+uint16_t GPIO_ReadPort(STM32_GPIOHandle_st *pGPIO_Handle);
+void GPIO_WritePin(STM32_GPIOHandle_st *pGPIO_Handle, uint8_t value);
+void GPIO_WritePort(STM32_GPIOHandle_st *pGPIO_Handle, uint16_t value);
+void GPIO_TogglePin(STM32_GPIOHandle_st *pGPIO_Handle);
 
-void GPIO_Init(GPIO_Handle_st *pGPIO_Handle);										// Initialize based on user input
+void GPIO_Init(STM32_GPIOHandle_st *pGPIO_Handle);										// Initialize based on user input
 
-void GPIO_AltFnSetup(GPIO_Handle_st *pGPIO_Handle);
+void GPIO_AltFnSetup(STM32_GPIOHandle_st *pGPIO_Handle);
 
 #endif /* STM32L152XX_GPIODRV_H_ */

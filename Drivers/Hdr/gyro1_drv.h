@@ -9,6 +9,7 @@
 #define GYRO1_DRV_H_
 
 #include "../../HAL/Hdr/spi_hal.h"
+#include "../../HAL/Hdr/gpio_hal.h"
 #include <stdint.h>
 
 #define GYRO1_WHO_AM_I_ADDR				0x000FU
@@ -68,11 +69,9 @@ typedef struct
 {
 	uint8_t reserved1 : 1;
 	uint8_t BLE : 1;
-	uint8_t FS1 : 1;
-	uint8_t FS0 : 1;
+	uint8_t FS : 2;
 	uint8_t reserved2 : 1;
-	uint8_t ST1 : 1;
-	uint8_t ST0 : 1;
+	uint8_t ST : 2;
 	uint8_t SIM : 1;
 
 }GYRO1_CTRL_REG4;
@@ -83,10 +82,8 @@ typedef struct
 	uint8_t FIFO_EN : 1;
 	uint8_t reserved1 : 1;
 	uint8_t HPen : 1;
-	uint8_t INT_Sel1 : 1;
-	uint8_t INT_Sel0 : 1;
-	uint8_t Out_Sel1 : 1;
-	uint8_t Out_Sel0 : 1;
+	uint8_t INT_Sel : 2;
+	uint8_t Out_Sel : 2;
 
 }GYRO1_CTRL_REG5;
 
@@ -144,6 +141,12 @@ typedef struct
 
 }GYRO1_INT1_SRC;
 
+typedef struct
+{
+	STM32_SPIHandle_st* pSPI_Handle;
+	STM32_GPIOHandle_st* pGPIO_Handle;
+
+}Gyro1Handle_st;
 
 uint8_t Gyro1_Pack_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1);
 void Gyro1_Unpack_CTRL_REG1(GYRO1_CTRL_REG1 *CTRL_REG1, uint8_t packed);
@@ -175,14 +178,11 @@ void Gyro1_Unpack_INT1_CFG(GYRO1_INT1_CFG *INT1_CFG, uint8_t packed);
 uint8_t Gyro1_Pack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC);
 void Gyro1_Unpack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC, uint8_t packed);
 
-uint16_t Gyro1_Read(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg);
 
-uint8_t Gyro1_ReadFIFO(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, int16_t *buf);
-
-uint8_t Gyro1_Write(STM32_SPIHandle_st* pSPI_Handle, uint16_t device_reg, uint16_t value);
-
-void Gyro1_BurstRead(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg, uint8_t *data, uint8_t len);
-
-uint8_t Gyro1_ErrCheck(STM32_SPIHandle_st* pSPI_Handle, uint8_t device_reg);
+uint16_t Gyro1_Read(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg);
+void Gyro1_BurstRead(Gyro1Handle_st* pGyro1_Handle, uint8_t device_reg, uint8_t *data, uint8_t len);
+uint8_t Gyro1_ReadFIFO(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg, int16_t *buf);
+uint8_t Gyro1_Write(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg, uint16_t value);
+uint8_t Gyro1_ErrCheck(Gyro1Handle_st* pGyro1_Handle, uint8_t device_reg);
 
 #endif /* HAL_HDR_GYRO_HAL_H_ */
