@@ -5,7 +5,7 @@
  *      Author: anish
  */
 
-#include "../Hdr/stm32_hal.h"
+#include "../Hdr/interrupt_hal.h"
 
 void IRQConfig(uint8_t IRQn, uint8_t En)
 {

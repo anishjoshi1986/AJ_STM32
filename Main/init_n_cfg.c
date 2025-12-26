@@ -6,6 +6,7 @@
  */
 
 #include "init_n_cfg.h"
+#include "../HAL/Hdr/interrupt_hal.h"
 
 #ifndef ENABLE
 #define ENABLE 1

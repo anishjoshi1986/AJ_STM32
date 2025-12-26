@@ -62,32 +62,8 @@ typedef struct
 #define RCC						(AHB + 0x3800U)
 #define pRCC					((RCC_RegDef_st *)RCC)
 
-// --------------------------------------------------------------------------------------------------------//
-// EXTI register definition
-// --------------------------------------------------------------------------------------------------------//
-typedef struct
-{
-	__vo uint32_t IMR;
-	__vo uint32_t EMR;
-	__vo uint32_t RTSR;
-	__vo uint32_t FTSR;
-	__vo uint32_t SWIER;
-	__vo uint32_t PR;
-}EXTI_RegDef_st;
-
-#define EXTI					(APB2 + 0x0400)
-#define pEXTI					((EXTI_RegDef_st *)EXTI)
-
 #define SYSCFG_CLK_EN()			(pRCC->APB2ENR |= 1)					// Clock En/Dis
 #define SYSCFG_CLK_DIS()		(pRCC->APB2ENR &= ~1)
-
-#define IRQ_NO_EXTI0			6										// Interrupt positions in NVIC
-#define IRQ_NO_EXTI1			7
-#define IRQ_NO_EXTI2			8
-#define IRQ_NO_EXTI3			9
-#define IRQ_NO_EXTI4			10
-#define IRQ_NO_EXTI9_5			23
-#define IRQ_NO_EXTI15_10		40
 
 // --------------------------------------------------------------------------------------------------------//
 // SYSCFG register definition
@@ -101,25 +77,5 @@ typedef struct
 
 #define SYSCFG					(APB2 + 0x0000)
 #define pSYSCFG					((SYSCFG_RegDef_st *)SYSCFG)
-
-// --------------------------------------------------------------------------------------------------------//
-// Cortex M3 NVIC register definition
-// --------------------------------------------------------------------------------------------------------//
-#define NVIC_ISER0				(__vo uint32_t *)0xE000E100U
-#define NVIC_ISER1				(__vo uint32_t *)0xE000E104U
-#define NVIC_ISER2				(__vo uint32_t *)0xE000E108U
-
-#define NVIC_ICER0				(__vo uint32_t *)0xE000E180U
-#define NVIC_ICER1				(__vo uint32_t *)0xE000E184U
-#define NVIC_ICER2				(__vo uint32_t *)0xE000E188U
-
-#define NVIC_IPR0				(__vo uint32_t *)0xE000E400U
-
-// --------------------------------------------------------------------------------------------------------//
-// Set Cortex M3 interrupts
-// --------------------------------------------------------------------------------------------------------//
-void IRQConfig(uint8_t IRQn, uint8_t En);
-void IRQPriorityConfig(uint8_t IRQn, uint8_t IRQPriority);
-
 
 #endif /* STM32L152XX_H_ */
