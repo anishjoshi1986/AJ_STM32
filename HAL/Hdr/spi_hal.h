@@ -123,7 +123,7 @@ typedef struct
 typedef struct
 {
 	STM32_SPIRegDef_st *pSPIX;				// Pointer to the base address of the gpio reg
-	STM32_SPICfg_st SPI_Cfg;					// Pointer to pin config struct
+	STM32_SPICfg_st SPI_Cfg;				// Pointer to pin config struct
 
 }STM32_SPIHandle_st;
 

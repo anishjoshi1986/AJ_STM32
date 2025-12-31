@@ -20,6 +20,8 @@
 #define FALSE		0
 #define SET			TRUE
 #define RESET		FALSE
+#define ENABLE		TRUE
+#define DISABLE		FALSE
 
 // ----------------------------------------------------------------------------------------------------//
 // Base addresses of different memory sections - found from memory map in STM32L15xRC datasheet
@@ -64,6 +66,8 @@ typedef struct
 
 #define SYSCFG_CLK_EN()			(pRCC->APB2ENR |= 1)					// Clock En/Dis
 #define SYSCFG_CLK_DIS()		(pRCC->APB2ENR &= ~1)
+
+#define HSI_4_SYSCLK()			(pRCC->CFGR |= 1)						// Select HSI clock to drive SYSCLK
 
 // --------------------------------------------------------------------------------------------------------//
 // SYSCFG register definition
