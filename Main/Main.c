@@ -9,6 +9,7 @@
 
 int main(void)
 {
+	init_stm32timer();
 	init_stm32spi();
 	init_stm32gpio();
 	init_gyro1();

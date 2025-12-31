@@ -84,7 +84,7 @@ typedef struct
 typedef struct
 {
 	uint8_t mode;
-	uint8_t preload;
+	uint8_t reload;
 	uint8_t freq;
 }STM32_BTIMx_Cfg_st;
 
@@ -99,5 +99,6 @@ uint16_t STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1);
 void STM32_Unpack_BTIMx_CNT(STM32_BTIMx_CR1 *BTIMx_CR1, uint16_t packed);
 
 void STM32_BTIMx_ClkCtrl(STM32_BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd);
+void STM32_BTIMx_Init(STM32_BTIMx_Handle_st *pBTIMx_Handle);
 
 #endif /* HAL_HDR_TIMER_HAL_H_ */

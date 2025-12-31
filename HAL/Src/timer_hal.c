@@ -49,3 +49,8 @@ void STM32_BTIMx_ClkCtrl(STM32_BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd)
 	}
 
 }
+
+void STM32_BTIMx_Init(STM32_BTIMx_Handle_st *pBTIMx_Handle)
+{
+
+}

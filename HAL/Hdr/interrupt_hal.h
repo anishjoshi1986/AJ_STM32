@@ -34,7 +34,8 @@ typedef struct
 #define IRQ_NO_EXTI9_5			23
 #define IRQ_NO_EXTI15_10		40
 
-#define IRQ_NO_TIM2				28
+#define IRQ_NO_TIM6				43
+#define IRQ_NO_TIM7				44
 
 // --------------------------------------------------------------------------------------------------------//
 // Cortex M3 NVIC register definition

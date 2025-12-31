@@ -8,14 +8,6 @@
 #include "init_n_cfg.h"
 #include "../HAL/Hdr/interrupt_hal.h"
 
-#ifndef ENABLE
-#define ENABLE 1
-#endif
-
-#ifndef DISABLE
-#define DISABLE 0
-#endif
-
 STM32_SPIHandle_st SPI1_Handle;
 STM32_GPIOHandle_st SPI1_SCK;
 STM32_GPIOHandle_st SPI1_MISO;
@@ -123,9 +115,8 @@ void init_gyro1()
 			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG4_ADDR, Gyro1_Pack_CTRL_REG4(&CTRL_REG4)) ||
 			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG5_ADDR, Gyro1_Pack_CTRL_REG5(&CTRL_REG5));
 
-	uint8_t err;
-	if(!Gyro1_Init_Status)
-		err = 1;
+	uint8_t err = !Gyro1_Init_Status;
+
 }
 
 void init_stm32gpio()
@@ -156,6 +147,21 @@ void init_stm32gpio()
 
 	IRQConfig(IRQ_NO_EXTI0, SET);
 
+}
+
+void init_stm32timer()
+{
+	STM32_BTIMx_Handle_st TS_TIM6;
+
+	TS_TIM6.pBTIMx = pTIM6;
+	TS_TIM6.BTIMx_Cfg.freq = 1/PERIOD_10MS;
+	TS_TIM6.BTIMx_Cfg.mode = 0;
+	TS_TIM6.BTIMx_Cfg.reload = 0;
+
+	STM32_BTIMx_ClkCtrl(&TS_TIM6, ENABLE);
+	STM32_BTIMx_Init(&TS_TIM6);
+
+	IRQConfig(IRQ_NO_TIM6, SET);
 }
 
 void EXTI0_IRQHandler (void)

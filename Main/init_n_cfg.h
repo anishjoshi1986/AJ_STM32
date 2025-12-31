@@ -11,9 +11,11 @@
 #include "../Drivers/Hdr/gyro1_drv.h"
 #include "../HAL/Hdr/gpio_hal.h"
 #include "../HAL/Hdr/spi_hal.h"
+#include "../HAL/Hdr/timer_hal.h"
 
 void init_stm32spi();
 void init_stm32gpio();
 void init_gyro1();
+void init_stm32timer();
 
 #endif /* MAIN_INIT_N_CFG_H_ */

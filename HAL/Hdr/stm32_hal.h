@@ -40,6 +40,13 @@
 #define AHB						0x40020000U
 
 // ----------------------------------------------------------------------------------------------------//
+// Base addresses of different buses - found from memory map/reg boundary addresses in RM
+// ----------------------------------------------------------------------------------------------------//
+#define PERIOD_100MS			0.1F
+#define PERIOD_10MS				0.01F
+#define PERIOD_1MS				0.001F
+
+// ----------------------------------------------------------------------------------------------------//
 // RCC peripheral address on AHB & reg struct - found from memory map/reg boundary addresses in RM
 // ----------------------------------------------------------------------------------------------------//
 typedef struct
