@@ -13,6 +13,7 @@
 #include "../HAL/Hdr/spi_hal.h"
 #include "../HAL/Hdr/timer_hal.h"
 
+void init_stm32clk();
 void init_stm32spi();
 void init_stm32gpio();
 void init_gyro1();

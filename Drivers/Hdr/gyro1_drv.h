@@ -143,8 +143,8 @@ typedef struct
 
 typedef struct
 {
-	STM32_SPIHandle_st* pSPI_Handle;
-	STM32_GPIOHandle_st* pGPIO_Handle;
+	SPIHandle_st* pSPI_Handle;
+	GPIOHandle_st* pGPIO_Handle;
 
 }Gyro1Handle_st;
 

@@ -63,18 +63,18 @@ typedef struct
 
 typedef struct
 {
-	__vo uint32_t TIMx_CR1;
-	__vo uint32_t TIMx_CR2;
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
 	__vo uint32_t Reserved1;
-	__vo uint32_t TIMx_DIER;
-	__vo uint32_t TIMx_SR;
-	__vo uint32_t TIMx_EGR;
+	__vo uint32_t DIER;
+	__vo uint32_t SR;
+	__vo uint32_t EGR;
 	__vo uint32_t Reserved2;
 	__vo uint32_t Reserved3;
 	__vo uint32_t Reserved4;
-	__vo uint32_t TIMx_CNT;
-	__vo uint32_t TIMx_PSC;
-	__vo uint32_t TIMx_ARR;
+	__vo uint32_t CNT;
+	__vo uint32_t PSC;
+	__vo uint32_t ARR;
 
 }STM32_BTIMx_RegDef_st;
 

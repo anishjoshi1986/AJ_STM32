@@ -14,15 +14,6 @@
 // SPI register address and macros
 // --------------------------------------------------------------------------------------------------------//
 
-// SPI base addresses and pointers
-#define SPI1					(APB2 + 0x3000U)
-#define SPI2					(APB1 + 0x3800U)
-#define SPI3					(APB1 + 0x3C00U)
-
-#define pSPI1					(STM32_SPIRegDef_st *)SPI1
-#define pSPI2					(STM32_SPIRegDef_st *)SPI2
-#define pSPI3					(STM32_SPIRegDef_st *)SPI3
-
 // Macros to enable/disable SPI clocks
 #define SPI1_CLK_EN()			(pRCC->APB2ENR |= 1 << 12)		// Peripheral clock enable for SPI peripherals
 #define SPI2_CLK_EN()			(pRCC->APB1ENR |= 1 << 14)
@@ -90,15 +81,15 @@ typedef struct
 
 typedef struct
 {
-	__vo uint32_t SPI_CR1;
-	__vo uint32_t SPI_CR2;
-	__vo uint32_t SPI_SR;
-	__vo uint32_t SPI_DR;
-	__vo uint32_t SPI_CRCPR;
-	__vo uint32_t SPI_RXCRCR;
-	__vo uint32_t SPI_TXCRCR;
-	__vo uint32_t SPI_I2SCFGR;
-	__vo uint32_t SPI_I2SPR;
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
+	__vo uint32_t SR;
+	__vo uint32_t DR;
+	__vo uint32_t CRCPR;
+	__vo uint32_t RXCRCR;
+	__vo uint32_t TXCRCR;
+	__vo uint32_t I2SCFGR;
+	__vo uint32_t I2SPR;
 
 }STM32_SPIRegDef_st;
 
@@ -118,14 +109,23 @@ typedef struct
 	uint8_t ssm;							// Slave select management - sw/hw slave select
 	uint8_t crcen;							// CRC Enable
 
-}STM32_SPICfg_st;
+}SPICfg_st;
 
 typedef struct
 {
 	STM32_SPIRegDef_st *pSPIX;				// Pointer to the base address of the gpio reg
-	STM32_SPICfg_st SPI_Cfg;				// Pointer to pin config struct
+	SPICfg_st SPI_Cfg;						// Pointer to pin config struct
 
-}STM32_SPIHandle_st;
+}SPIHandle_st;
+
+// SPI base addresses and pointers
+#define SPI1					(APB2 + 0x3000U)
+#define SPI2					(APB1 + 0x3800U)
+#define SPI3					(APB1 + 0x3C00U)
+
+#define pSPI1					(STM32_SPIRegDef_st *)SPI1
+#define pSPI2					(STM32_SPIRegDef_st *)SPI2
+#define pSPI3					(STM32_SPIRegDef_st *)SPI3
 
 // --------------------------------------------------------------------------------------------------------//
 // SPI register level functions
@@ -134,15 +134,15 @@ typedef struct
 uint16_t STM32_Pack_CR1(STM32_CR1_REG *SPIX_CR1);
 void STM32_Unpack_SR(STM32_SR_REG* SPIX_SR, uint16_t packed);
 
-void STM32_SPI_ClkCtrl(STM32_SPIHandle_st* pSPI_Handle, uint8_t ClkCmd);
-void STM32_SPI_Init(STM32_SPIHandle_st* pSPI_Handle);
-void STM32_SPI_Reset(STM32_SPIHandle_st* pSPI_Handle);
+void SPI_ClkCtrl(SPIHandle_st* pSPI_Handle, uint8_t ClkCmd);
+void SPI_Init(SPIHandle_st* pSPI_Handle);
+void SPI_Reset(SPIHandle_st* pSPI_Handle);
 
-uint8_t STM32_SPI_Bsy(STM32_SPIHandle_st* pSPI_Handle);
-uint8_t STM32_SPI_RXMT(STM32_SPIHandle_st* pSPI_Handle);
-uint8_t STM32_SPI_ErrCheck(STM32_SPIHandle_st* pSPI_Handle);
+uint8_t SPI_Bsy(SPIHandle_st* pSPI_Handle);
+uint8_t SPI_RXMT(SPIHandle_st* pSPI_Handle);
+uint8_t SPI_ErrCheck(SPIHandle_st* pSPI_Handle);
 
-uint8_t STM32_SPI_Write(STM32_SPIHandle_st* pSPI_Handle, uint8_t data);
-uint16_t STM32_SPI_Read(STM32_SPIHandle_st* pSPI_Handle);
+uint8_t SPI_Write(SPIHandle_st* pSPI_Handle, uint8_t data);
+uint16_t SPI_Read(SPIHandle_st* pSPI_Handle);
 
 #endif

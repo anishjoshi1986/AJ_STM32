@@ -52,5 +52,7 @@ void STM32_BTIMx_ClkCtrl(STM32_BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd)
 
 void STM32_BTIMx_Init(STM32_BTIMx_Handle_st *pBTIMx_Handle)
 {
-
+	// Determine SYSCLK
+	// Unpack RCC_CFGR and get values of APB1 and AHB prescalers to determine input for TIMx_CLK
+	// Check if PLL is not ON
 }

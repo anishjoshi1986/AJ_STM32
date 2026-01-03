@@ -12,7 +12,7 @@
 // GPIO clock control
 // --------------------------------------------------------------------------------------------------------//
 
-void GPIO_ClkCtrl(STM32_GPIOHandle_st *pGPIO_Handle, uint8_t ClkCmd)
+void GPIO_ClkCtrl(GPIOHandle_st *pGPIO_Handle, uint8_t ClkCmd)
 {
 	if(ClkCmd == SET)
 	{
@@ -91,7 +91,7 @@ void GPIO_ClkCtrl(STM32_GPIOHandle_st *pGPIO_Handle, uint8_t ClkCmd)
 // GPIO init
 // --------------------------------------------------------------------------------------------------------//
 
-void GPIO_Init(STM32_GPIOHandle_st *pGPIO_Handle)
+void GPIO_Init(GPIOHandle_st *pGPIO_Handle)
 {
 	uint32_t temp;
 
@@ -176,7 +176,7 @@ void GPIO_Init(STM32_GPIOHandle_st *pGPIO_Handle)
 // GPIO reset
 // --------------------------------------------------------------------------------------------------------//
 
-void GPIO_Reset(STM32_GPIOHandle_st *pGPIO_Handle)
+void GPIO_Reset(GPIOHandle_st *pGPIO_Handle)
 {
 	if(pGPIO_Handle->pGPIOX == pGPIOA)
 		{
@@ -216,7 +216,7 @@ void GPIO_Reset(STM32_GPIOHandle_st *pGPIO_Handle)
 // GPIO Read n Write
 // --------------------------------------------------------------------------------------------------------//
 
-uint8_t GPIO_ReadPin(STM32_GPIOHandle_st *pGPIO_Handle)
+uint8_t GPIO_ReadPin(GPIOHandle_st *pGPIO_Handle)
 {
 	uint8_t value;
 
@@ -225,7 +225,7 @@ uint8_t GPIO_ReadPin(STM32_GPIOHandle_st *pGPIO_Handle)
 	return value;
 }
 
-uint16_t GPIO_ReadPort(STM32_GPIOHandle_st *pGPIO_Handle)
+uint16_t GPIO_ReadPort(GPIOHandle_st *pGPIO_Handle)
 {
 	uint16_t value;
 
@@ -234,7 +234,7 @@ uint16_t GPIO_ReadPort(STM32_GPIOHandle_st *pGPIO_Handle)
 	return value;
 }
 
-void GPIO_WritePin(STM32_GPIOHandle_st *pGPIO_Handle, uint8_t value)
+void GPIO_WritePin(GPIOHandle_st *pGPIO_Handle, uint8_t value)
 {
 	if(value)
 	{
@@ -245,17 +245,17 @@ void GPIO_WritePin(STM32_GPIOHandle_st *pGPIO_Handle, uint8_t value)
 	}
 }
 
-void GPIO_WritePort(STM32_GPIOHandle_st *pGPIO_Handle, uint16_t value)
+void GPIO_WritePort(GPIOHandle_st *pGPIO_Handle, uint16_t value)
 {
 	pGPIO_Handle->pGPIOX->ODR = value;
 }
 
-void GPIO_TogglePin(STM32_GPIOHandle_st *pGPIO_Handle)
+void GPIO_TogglePin(GPIOHandle_st *pGPIO_Handle)
 {
 	pGPIO_Handle->pGPIOX->ODR ^= (1 << pGPIO_Handle->GPIO_PinCfg.pin);
 }
 
-void GPIO_AltFnSetup(STM32_GPIOHandle_st *pGPIO_Handle)
+void GPIO_AltFnSetup(GPIOHandle_st *pGPIO_Handle)
 {
 	uint32_t temp1;
 	uint32_t temp2;

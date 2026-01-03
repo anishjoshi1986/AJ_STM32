@@ -247,19 +247,19 @@ void Gyro1_Unpack_INT1_SRC(GYRO1_INT1_SRC *INT1_SRC, uint8_t packed)
 
 uint16_t Gyro1_Read(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg)
 {
-	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
+	SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
 
-	return(STM32_SPI_Read(pGyro1_Handle->pSPI_Handle));
+	return(SPI_Read(pGyro1_Handle->pSPI_Handle));
 
 }
 
 uint8_t Gyro1_Write(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg, uint16_t value)
 {
-	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
-	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, value);
+	SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
+	SPI_Write(pGyro1_Handle->pSPI_Handle, value);
 
-	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
-	return(value == STM32_SPI_Read(pGyro1_Handle->pSPI_Handle));
+	SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
+	return(value == SPI_Read(pGyro1_Handle->pSPI_Handle));
 }
 
 uint8_t Gyro1_ReadFIFO(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg, int16_t *buf)
@@ -285,11 +285,11 @@ uint8_t Gyro1_ReadFIFO(Gyro1Handle_st* pGyro1_Handle, uint16_t device_reg, int16
 
 void Gyro1_BurstRead(Gyro1Handle_st* pGyro1_Handle, uint8_t device_reg, uint8_t *data, uint8_t len)
 {
-	STM32_SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
+	SPI_Write(pGyro1_Handle->pSPI_Handle, device_reg);
 
     for (uint8_t i = 0; i < len; i++)
     {
-        data[i] = (uint8_t)STM32_SPI_Read(pGyro1_Handle->pSPI_Handle);
+        data[i] = (uint8_t)SPI_Read(pGyro1_Handle->pSPI_Handle);
     }
 
 }

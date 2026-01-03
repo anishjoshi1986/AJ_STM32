@@ -125,31 +125,31 @@ typedef struct
 	uint8_t pupd;
 	uint8_t altfn;
 
-}STM32_GPIOPinCfg_st;
+}GPIOPinCfg_st;
 
 typedef struct
 {
 	STM32_GPIORegDef_st *pGPIOX;						// Pointer to the base address of the gpio reg
-	STM32_GPIOPinCfg_st GPIO_PinCfg;					// Pointer to pin config struct
+	GPIOPinCfg_st GPIO_PinCfg;					// Pointer to pin config struct
 
-}STM32_GPIOHandle_st;
+}GPIOHandle_st;
 
 // --------------------------------------------------------------------------------------------------------//
 // APIs for managing GPIO
 // --------------------------------------------------------------------------------------------------------//
 
-void GPIO_ClkCtrl(STM32_GPIOHandle_st *pGPIO_Handle, uint8_t ClkCmd);							// Clock enable
+void GPIO_ClkCtrl(GPIOHandle_st *pGPIO_Handle, uint8_t ClkCmd);							// Clock enable
 
-void GPIO_Reset(STM32_GPIOHandle_st *pGPIO_Handle);											// Peripheral reset
+void GPIO_Reset(GPIOHandle_st *pGPIO_Handle);											// Peripheral reset
 
-uint8_t GPIO_ReadPin(STM32_GPIOHandle_st *pGPIO_Handle);							// Read n Write pins													// Read, write pin
-uint16_t GPIO_ReadPort(STM32_GPIOHandle_st *pGPIO_Handle);
-void GPIO_WritePin(STM32_GPIOHandle_st *pGPIO_Handle, uint8_t value);
-void GPIO_WritePort(STM32_GPIOHandle_st *pGPIO_Handle, uint16_t value);
-void GPIO_TogglePin(STM32_GPIOHandle_st *pGPIO_Handle);
+uint8_t GPIO_ReadPin(GPIOHandle_st *pGPIO_Handle);							// Read n Write pins													// Read, write pin
+uint16_t GPIO_ReadPort(GPIOHandle_st *pGPIO_Handle);
+void GPIO_WritePin(GPIOHandle_st *pGPIO_Handle, uint8_t value);
+void GPIO_WritePort(GPIOHandle_st *pGPIO_Handle, uint16_t value);
+void GPIO_TogglePin(GPIOHandle_st *pGPIO_Handle);
 
-void GPIO_Init(STM32_GPIOHandle_st *pGPIO_Handle);										// Initialize based on user input
+void GPIO_Init(GPIOHandle_st *pGPIO_Handle);										// Initialize based on user input
 
-void GPIO_AltFnSetup(STM32_GPIOHandle_st *pGPIO_Handle);
+void GPIO_AltFnSetup(GPIOHandle_st *pGPIO_Handle);
 
 #endif /* STM32L152XX_GPIODRV_H_ */

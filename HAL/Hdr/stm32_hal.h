@@ -9,19 +9,7 @@
 #define STM32_HAL_H_
 
 #include <stdint.h>
-
-#define __vo					volatile
-
-// --------------------------------------------------------------------------------------------------------//
-// Generic macros
-// --------------------------------------------------------------------------------------------------------//
-
-#define TRUE		1
-#define FALSE		0
-#define SET			TRUE
-#define RESET		FALSE
-#define ENABLE		TRUE
-#define DISABLE		FALSE
+#include "generic_macros.h"
 
 // ----------------------------------------------------------------------------------------------------//
 // Base addresses of different memory sections - found from memory map in STM32L15xRC datasheet
@@ -38,13 +26,6 @@
 #define APB1					0x40000000U
 #define APB2					0x40010000U
 #define AHB						0x40020000U
-
-// ----------------------------------------------------------------------------------------------------//
-// Base addresses of different buses - found from memory map/reg boundary addresses in RM
-// ----------------------------------------------------------------------------------------------------//
-#define PERIOD_100MS			0.1F
-#define PERIOD_10MS				0.01F
-#define PERIOD_1MS				0.001F
 
 // ----------------------------------------------------------------------------------------------------//
 // RCC peripheral address on AHB & reg struct - found from memory map/reg boundary addresses in RM
@@ -71,10 +52,10 @@ typedef struct
 #define RCC						(AHB + 0x3800U)
 #define pRCC					((RCC_RegDef_st *)RCC)
 
-#define SYSCFG_CLK_EN()			(pRCC->APB2ENR |= 1)					// Clock En/Dis
-#define SYSCFG_CLK_DIS()		(pRCC->APB2ENR &= ~1)
+typedef struct
+{
 
-#define HSI_4_SYSCLK()			(pRCC->CFGR |= 1)						// Select HSI clock to drive SYSCLK
+}RCC_CR;
 
 // --------------------------------------------------------------------------------------------------------//
 // SYSCFG register definition
@@ -88,5 +69,9 @@ typedef struct
 
 #define SYSCFG					(APB2 + 0x0000)
 #define pSYSCFG					((SYSCFG_RegDef_st *)SYSCFG)
+
+#define SYSCFG_CLK_EN()			(pRCC->APB2ENR |= 1)					// Clock En/Dis
+#define SYSCFG_CLK_DIS()		(pRCC->APB2ENR &= ~1)
+
 
 #endif /* STM32L152XX_H_ */

@@ -8,17 +8,23 @@
 #include "init_n_cfg.h"
 #include "../HAL/Hdr/interrupt_hal.h"
 
-STM32_SPIHandle_st SPI1_Handle;
-STM32_GPIOHandle_st SPI1_SCK;
-STM32_GPIOHandle_st SPI1_MISO;
-STM32_GPIOHandle_st SPI1_MOSI;
-STM32_GPIOHandle_st SPI1_Gyro1_CS;
+SPIHandle_st SPI1_Handle;
+GPIOHandle_st SPI1_SCK;
+GPIOHandle_st SPI1_MISO;
+GPIOHandle_st SPI1_MOSI;
+GPIOHandle_st SPI1_Gyro1_CS;
 
 Gyro1Handle_st Gyro1_Handle;
 
-STM32_GPIOHandle_st DiscoBoard_LD3;
-STM32_GPIOHandle_st DiscoBoard_LD4;
-STM32_GPIOHandle_st PushButton_Inp;
+GPIOHandle_st DiscoBoard_LD3;
+GPIOHandle_st DiscoBoard_LD4;
+GPIOHandle_st PushButton_Inp;
+
+void init_stm32clk()
+{
+	// Set all clock frequencies
+
+}
 
 void init_stm32spi()
 
@@ -35,8 +41,8 @@ void init_stm32spi()
 	SPI1_Handle.SPI_Cfg.ssm = FALSE;
 	SPI1_Handle.SPI_Cfg.crcen = FALSE;
 
-	STM32_SPI_ClkCtrl(&SPI1_Handle, SET);
-	STM32_SPI_Init(&SPI1_Handle);
+	SPI_ClkCtrl(&SPI1_Handle, SET);
+	SPI_Init(&SPI1_Handle);
 
 	SPI1_SCK.pGPIOX = pGPIOA;
 	SPI1_SCK.GPIO_PinCfg.pin = GPIO_PIN_5;
