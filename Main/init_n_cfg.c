@@ -5,6 +5,7 @@
  *      Author: anish
  */
 
+#include <stdio.h>
 #include "init_n_cfg.h"
 #include "../HAL/Hdr/interrupt_hal.h"
 
@@ -122,6 +123,7 @@ void init_gyro1()
 			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG5_ADDR, Gyro1_Pack_CTRL_REG5(&CTRL_REG5));
 
 	uint8_t err = !Gyro1_Init_Status;
+	printf("%d",err);
 
 }
 

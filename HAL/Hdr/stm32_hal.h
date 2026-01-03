@@ -47,10 +47,10 @@ typedef struct
 	__vo uint32_t APB1LPENR;
 	__vo uint32_t CSR;
 
-}RCC_RegDef_st;
+}STM32_RCCRegDef_st;
 
 #define RCC						(AHB + 0x3800U)
-#define pRCC					((RCC_RegDef_st *)RCC)
+#define pRCC					((STM32_RCCRegDef_st *)RCC)
 
 typedef struct
 {
@@ -65,10 +65,10 @@ typedef struct
 	__vo uint32_t MEMRMP;
 	__vo uint32_t PMC;
 	__vo uint32_t EXTICR[4];
-}SYSCFG_RegDef_st;
+}STM32_SYSCFGRegDef_st;
 
 #define SYSCFG					(APB2 + 0x0000)
-#define pSYSCFG					((SYSCFG_RegDef_st *)SYSCFG)
+#define pSYSCFG					((STM32_SYSCFGRegDef_st *)SYSCFG)
 
 #define SYSCFG_CLK_EN()			(pRCC->APB2ENR |= 1)					// Clock En/Dis
 #define SYSCFG_CLK_DIS()		(pRCC->APB2ENR &= ~1)
