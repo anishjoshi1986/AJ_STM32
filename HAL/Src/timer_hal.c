@@ -30,7 +30,7 @@ void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, uint16_t packed)
 
 }
 
-void STM32_BTIMx_ClkCtrl(STM32_BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd)
+void BTIMx_ClkCtrl(BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd)
 {
 	if(ClkCmd == ENABLE)
 	{
@@ -50,7 +50,7 @@ void STM32_BTIMx_ClkCtrl(STM32_BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd)
 
 }
 
-void STM32_BTIMx_Init(STM32_BTIMx_Handle_st *pBTIMx_Handle)
+void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle)
 {
 	// Determine SYSCLK
 	// Unpack RCC_CFGR and get values of APB1 and AHB prescalers to determine input for TIMx_CLK

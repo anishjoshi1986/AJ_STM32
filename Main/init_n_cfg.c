@@ -159,15 +159,15 @@ void init_stm32gpio()
 
 void init_stm32timer()
 {
-	STM32_BTIMx_Handle_st TS_TIM6;
+	BTIMx_Handle_st TS_TIM6;
 
 	TS_TIM6.pBTIMx = pTIM6;
 	TS_TIM6.BTIMx_Cfg.freq = 1/PERIOD_10MS;
 	TS_TIM6.BTIMx_Cfg.mode = 0;
 	TS_TIM6.BTIMx_Cfg.reload = 0;
 
-	STM32_BTIMx_ClkCtrl(&TS_TIM6, ENABLE);
-	STM32_BTIMx_Init(&TS_TIM6);
+	BTIMx_ClkCtrl(&TS_TIM6, ENABLE);
+	BTIMx_Init(&TS_TIM6);
 
 	IRQConfig(IRQ_NO_TIM6, SET);
 }

@@ -22,36 +22,36 @@
 
 typedef struct
 {
-	uint8_t ARPE;
-	uint8_t OPM;
-	uint8_t URS;
-	uint8_t UDIS;
-	uint8_t CEN;
+	uint8_t ARPE : 1;
+	uint8_t OPM : 1;
+	uint8_t URS : 1;
+	uint8_t UDIS : 1;
+	uint8_t CEN : 1;
 
 }STM32_BTIMx_CR1;
 
 typedef struct
 {
-	uint8_t UDE;
-	uint8_t UIE;
+	uint8_t UDE : 1;
+	uint8_t UIE : 1;
 
 }STM32_BTIMx_DIER;
 
 typedef struct
 {
-	uint8_t UIF;
+	uint8_t UIF : 1;
 
 }STM32_BTIMx_SR;
 
 typedef struct
 {
-	uint16_t CNT;
+	uint16_t CNT : 1;
 
 }STM32_BTIMx_CNT;
 
 typedef struct
 {
-	uint16_t PSC;
+	uint16_t PSC : 1;
 
 }STM32_BTIMx_PSC;
 
@@ -86,19 +86,19 @@ typedef struct
 	uint8_t mode;
 	uint8_t reload;
 	uint8_t freq;
-}STM32_BTIMx_Cfg_st;
+}BTIMx_Cfg_st;
 
 typedef struct
 {
 	STM32_BTIMx_RegDef_st *pBTIMx;
-	STM32_BTIMx_Cfg_st BTIMx_Cfg;
+	BTIMx_Cfg_st BTIMx_Cfg;
 
-}STM32_BTIMx_Handle_st;
+}BTIMx_Handle_st;
 
 uint16_t STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1);
 void STM32_Unpack_BTIMx_CNT(STM32_BTIMx_CR1 *BTIMx_CR1, uint16_t packed);
 
-void STM32_BTIMx_ClkCtrl(STM32_BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd);
-void STM32_BTIMx_Init(STM32_BTIMx_Handle_st *pBTIMx_Handle);
+void BTIMx_ClkCtrl(BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd);
+void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle);
 
 #endif /* HAL_HDR_TIMER_HAL_H_ */

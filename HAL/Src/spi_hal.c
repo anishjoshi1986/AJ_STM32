@@ -11,7 +11,7 @@
 // STM32 SPI pack/unpack registers
 // --------------------------------------------------------------------------------------------------------//
 
-uint16_t STM32_Pack_CR1(STM32_CR1_REG* SPIX_CR1)
+uint16_t STM32_Pack_SPI_CR1(STM32_SPI_CR1* SPIX_CR1)
 {
 	uint16_t packed = 0;
 
@@ -33,7 +33,7 @@ uint16_t STM32_Pack_CR1(STM32_CR1_REG* SPIX_CR1)
 	return packed;
 }
 
-void STM32_Unpack_SR(STM32_SR_REG* SPIX_SR, uint16_t packed)
+void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR, uint16_t packed)
 {
 	SPIX_SR->FRE = (packed >> 8) & 0x01;
 	SPIX_SR->BSY = (packed >> 7) & 0x01;
@@ -93,7 +93,7 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 {
 	SPI_Reset(pSPI_Handle);
 
-	STM32_CR1_REG SPI_CR1_temp;
+	STM32_SPI_CR1 SPI_CR1_temp;
 
 	// Configure comms type
 	if(pSPI_Handle->SPI_Cfg.bustype == SPI_BUSTYPE_FDX)							// Full Duplex
@@ -137,13 +137,13 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 
 	SPI_CR1_temp.CPHA = pSPI_Handle->SPI_Cfg.cpha;
 
-	pSPI_Handle->pSPIX->CR1 = STM32_Pack_CR1(&SPI_CR1_temp);
+	pSPI_Handle->pSPIX->CR1 = STM32_Pack_SPI_CR1(&SPI_CR1_temp);
 
 }
 
 void SPI_Reset(SPIHandle_st* pSPI_Handle)
 {
-	STM32_CR1_REG SPI_CR1_temp;
+	STM32_SPI_CR1 SPI_CR1_temp;
 
 	SPI_CR1_temp.MSTR = 0;
 	SPI_CR1_temp.BIDIMODE = 0;
@@ -154,7 +154,7 @@ void SPI_Reset(SPIHandle_st* pSPI_Handle)
 	SPI_CR1_temp.CPHA = 0;
 	SPI_CR1_temp.CRCEN = 0;
 
-	pSPI_Handle->pSPIX->CR1 = STM32_Pack_CR1(&SPI_CR1_temp);
+	pSPI_Handle->pSPIX->CR1 = STM32_Pack_SPI_CR1(&SPI_CR1_temp);
 
 }
 
@@ -165,9 +165,9 @@ void SPI_Reset(SPIHandle_st* pSPI_Handle)
 uint8_t SPI_Bsy(SPIHandle_st* pSPI_Handle)
 {
 	uint16_t packed = pSPI_Handle->pSPIX->SR;
-	STM32_SR_REG SPIX_SR;
+	STM32_SPI_SR SPIX_SR;
 
-	STM32_Unpack_SR(&SPIX_SR, packed);
+	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
 
 	if(!(SPIX_SR.TXE) || SPIX_SR.BSY)
 		return 1;
@@ -178,9 +178,9 @@ uint8_t SPI_Bsy(SPIHandle_st* pSPI_Handle)
 uint8_t SPI_RXMT(SPIHandle_st* pSPI_Handle)
 {
 	uint16_t packed = pSPI_Handle->pSPIX->SR;
-	STM32_SR_REG SPIX_SR;
+	STM32_SPI_SR SPIX_SR;
 
-	STM32_Unpack_SR(&SPIX_SR, packed);
+	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
 
 	if(!SPIX_SR.RXNE)
 		return 1;
@@ -191,9 +191,9 @@ uint8_t SPI_RXMT(SPIHandle_st* pSPI_Handle)
 uint8_t SPI_ErrCheck(SPIHandle_st* pSPI_Handle)
 {
 	uint16_t packed = pSPI_Handle->pSPIX->SR;
-	STM32_SR_REG SPIX_SR;
+	STM32_SPI_SR SPIX_SR;
 
-	STM32_Unpack_SR(&SPIX_SR, packed);
+	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
 
 	if(SPIX_SR.OVR || SPIX_SR.MODF || SPIX_SR.CRCERR || SPIX_SR.UDR)
 		return 1;

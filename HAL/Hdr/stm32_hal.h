@@ -54,8 +54,40 @@ typedef struct
 
 typedef struct
 {
+	uint8_t RTCPRE : 2;
+	uint8_t CSSON : 1;
+	uint8_t PLLRDY : 1;
+	uint8_t PLLON : 1;
+	uint8_t HSEBYP : 1;
+	uint8_t HSERDY : 1;
+	uint8_t HSEON : 1;
+	uint8_t MSIRDY : 1;
+	uint8_t MSION : 1;
+	uint8_t HSIRDY : 1;
+	uint8_t HSION : 1;
 
-}RCC_CR;
+}STM32_RCC_CR;
+
+typedef struct
+{
+	uint8_t MCOPRE : 3;
+	uint8_t MCOSEL : 3;
+	uint8_t PLLDIV : 2;
+	uint8_t PLLMUL : 4;
+	uint8_t PLLSRC : 1;
+	uint8_t PPRE2 : 3;
+	uint8_t PPRE1 : 3;
+	uint8_t HPRE : 4;
+	uint8_t SWS : 2;
+	uint8_t SW : 2;
+
+}STM32_RCC_CFGR;
+
+uint32_t STM32_Pack_RCC_CR(STM32_RCC_CR *RCC_CR);
+void STM32_UnPack_RCC_CR(STM32_RCC_CR *RCC_CR, uint32_t packed);
+
+uint32_t STM32_Pack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR);
+void STM32_UnPack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR, uint32_t packed);
 
 // --------------------------------------------------------------------------------------------------------//
 // SYSCFG register definition
@@ -73,5 +105,68 @@ typedef struct
 #define SYSCFG_CLK_EN()			(pRCC->APB2ENR |= 1)					// Clock En/Dis
 #define SYSCFG_CLK_DIS()		(pRCC->APB2ENR &= ~1)
 
+
+// --------------------------------------------------------------------------------------------------------//
+// SYSCFG register definition
+// --------------------------------------------------------------------------------------------------------//
+typedef struct
+{
+
+}STM32_RCC_ICSCR;
+
+typedef struct
+{
+
+}STM32_RCC_CIR;
+
+typedef struct
+{
+
+}STM32_RCC_AHBRSTR;
+
+typedef struct
+{
+
+}STM32_RCC_APB2RSTR;
+
+typedef struct
+{
+
+}STM32_RCC_APB1RSTR;
+
+typedef struct
+{
+
+}STM32_RCC_AHBENR;
+
+typedef struct
+{
+
+}STM32_RCC_APB2ENR;
+
+typedef struct
+{
+
+}STM32_RCC_APB1ENR;
+
+typedef struct
+{
+
+}STM32_RCC_AHBLPENR;
+
+typedef struct
+{
+
+}STM32_RCC_APB2LPENR;
+
+typedef struct
+{
+
+}STM32_RCC_APB1LPENR;
+
+typedef struct
+{
+
+}STM32_RCC_CSR;
 
 #endif /* STM32L152XX_H_ */
