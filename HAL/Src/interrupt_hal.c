@@ -48,3 +48,20 @@ void IRQPriorityConfig(uint8_t IRQn, uint8_t IRQPriority)
 
 	*(NVIC_IPR0 + 4*temp1) |= IRQPriority << (8 * temp2);
 }
+
+void EXTI0_IRQHandler (void)
+{
+	if(pEXTI->PR & 1)
+		pEXTI->PR |= 1;
+
+}
+
+void TIM6_IRQHandler (void)
+{
+
+}
+
+void TIM7_IRQHandler (void)
+{
+
+}

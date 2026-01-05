@@ -19,7 +19,11 @@ uint32_t STM32_Pack_RCC_CR(STM32_RCC_CR *RCC_CR)
 	packed |= (RCC_CR->MSION & 0x01) << 8;
 	packed |= (RCC_CR->HSION & 0x01) << 0;
 
-	return packed;
+	uint32_t temp = pRCC->CR;
+	temp &= ~RCC_CR_MASK;
+	temp |= (packed & RCC_CR_MASK);
+
+	return temp;
 }
 
 void STM32_UnPack_RCC_CR(STM32_RCC_CR *RCC_CR, uint32_t packed)
@@ -51,6 +55,10 @@ uint32_t STM32_Pack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR)
 	packed |= (RCC_CFGR->PPRE1 & 0x07) << 8;
 	packed |= (RCC_CFGR->HPRE & 0x0F) << 4;
 	packed |= (RCC_CFGR->SW & 0x03) << 0;
+
+	uint32_t temp = pRCC->CFGR;
+	temp &= ~RCC_CFGR_MASK;
+	temp |= (packed & RCC_CFGR_MASK);
 
 	return packed;
 }

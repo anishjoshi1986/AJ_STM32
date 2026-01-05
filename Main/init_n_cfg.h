@@ -13,10 +13,16 @@
 #include "../HAL/Hdr/spi_hal.h"
 #include "../HAL/Hdr/timer_hal.h"
 
-void init_stm32clk();
+#define SPI1_ENABLE		1
+#define CAN_ENABLE		1
+#define GPIO_ENABLE		1
+#define GYRO1_ENABLE	1
+
+
+void init_stm32clksys();
+void init_stm32timersys();
 void init_stm32spi();
 void init_stm32gpio();
 void init_gyro1();
-void init_stm32timer();
 
 #endif /* MAIN_INIT_N_CFG_H_ */

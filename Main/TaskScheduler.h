@@ -8,6 +8,6 @@
 #ifndef MAIN_TASKSCHEDULER_H_
 #define MAIN_TASKSCHEDULER_H_
 
-
+void taskscheduler();
 
 #endif /* MAIN_TASKSCHEDULER_H_ */

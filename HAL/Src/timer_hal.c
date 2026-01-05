@@ -53,6 +53,16 @@ void BTIMx_ClkCtrl(BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd)
 void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle)
 {
 	// Determine SYSCLK
+
+
 	// Unpack RCC_CFGR and get values of APB1 and AHB prescalers to determine input for TIMx_CLK
+	STM32_RCC_CFGR RCC_CFGR;
+	uint32_t packed = pRCC->CFGR;
+	STM32_UnPack_RCC_CFGR(&RCC_CFGR, packed);
+	float SYSCLK_FREQ = (float)HSI_FREQ / (float)(RCC_CFGR.HPRE * RCC_CFGR.PPRE1);
+
+	pBTIMx_Handle->pBTIMx->PSC = SYSCLK_FREQ / 1000;
+	pBTIMx_Handle->pBTIMx->ARR = pBTIMx_Handle->BTIMx_Cfg.freq;
+
 	// Check if PLL is not ON
 }

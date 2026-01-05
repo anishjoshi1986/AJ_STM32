@@ -6,17 +6,31 @@
  */
 
 #include "init_n_cfg.h"
+#include "TaskScheduler.h"
 
 int main(void)
 {
-	init_stm32timer();
-	init_stm32spi();
-	init_stm32gpio();
-	init_gyro1();
+
+	init_stm32clksys();
+	init_stm32timersys();
+
+	if(SPI1_ENABLE)
+	{
+		init_stm32spi();
+	}
+	if(GPIO_ENABLE)
+	{
+		init_stm32gpio();
+	}
+	if(GYRO1_ENABLE)
+	{
+		init_gyro1();
+	}
+
 
 	while(1)
 	{
-
+		taskscheduler();
 	}
 
 	return 0;

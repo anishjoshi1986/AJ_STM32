@@ -45,13 +45,13 @@ typedef struct
 
 typedef struct
 {
-	uint16_t CNT : 1;
+	uint16_t CNT;
 
 }STM32_BTIMx_CNT;
 
 typedef struct
 {
-	uint16_t PSC : 1;
+	uint16_t PSC;
 
 }STM32_BTIMx_PSC;
 

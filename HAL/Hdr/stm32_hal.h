@@ -26,6 +26,7 @@
 #define APB1					0x40000000U
 #define APB2					0x40010000U
 #define AHB						0x40020000U
+#define HSI_FREQ				16000000U
 
 // ----------------------------------------------------------------------------------------------------//
 // RCC peripheral address on AHB & reg struct - found from memory map/reg boundary addresses in RM
@@ -67,6 +68,7 @@ typedef struct
 	uint8_t HSION : 1;
 
 }STM32_RCC_CR;
+#define RCC_CR_MASK		(0x03 << 29) | (0x01 << 28) | (0x01 << 24) | (0x01 << 18) | (0x01 << 16) | (0x01 << 8) | (0x01 << 0)
 
 typedef struct
 {
@@ -82,6 +84,7 @@ typedef struct
 	uint8_t SW : 2;
 
 }STM32_RCC_CFGR;
+#define RCC_CFGR_MASK		(0x07 << 28) | (0x07 << 24) | (0x03 << 22) | (0x0F << 18) | (0x01 << 16) | (0x07 << 11) | (0x07 << 8) | (0x0F << 4) | (0x03 << 0)
 
 uint32_t STM32_Pack_RCC_CR(STM32_RCC_CR *RCC_CR);
 void STM32_UnPack_RCC_CR(STM32_RCC_CR *RCC_CR, uint32_t packed);

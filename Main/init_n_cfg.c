@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "init_n_cfg.h"
 #include "../HAL/Hdr/interrupt_hal.h"
+#include "../HAL/Hdr/stm32_hal.h"
 
 SPIHandle_st SPI1_Handle;
 GPIOHandle_st SPI1_SCK;
@@ -21,11 +22,65 @@ GPIOHandle_st DiscoBoard_LD3;
 GPIOHandle_st DiscoBoard_LD4;
 GPIOHandle_st PushButton_Inp;
 
-void init_stm32clk()
+
+
+void init_stm32clksys()
 {
+	STM32_RCC_CR RCC_CR = {0};
+	STM32_RCC_CFGR RCC_CFGR = {0};
+
+	RCC_CR.RTCPRE = 0;
+	RCC_CR.CSSON = DISABLE;
+	RCC_CR.PLLON = DISABLE;
+	RCC_CR.HSEBYP = DISABLE;
+	RCC_CR.HSEON = DISABLE;
+	RCC_CR.MSION = DISABLE;
+	RCC_CR.HSION = ENABLE;
+
+	pRCC->CR = STM32_Pack_RCC_CR(&RCC_CR);
+
+	RCC_CFGR.MCOPRE = 0;
+	RCC_CFGR.MCOSEL = 0;
+	RCC_CFGR.PLLDIV = 0;
+	RCC_CFGR.PLLMUL = 0;
+	RCC_CFGR.PLLSRC = 0;
+	RCC_CFGR.PPRE2 = 0;
+	RCC_CFGR.PPRE1 = 0;
+	RCC_CFGR.HPRE = 0;
+	RCC_CFGR.SW = 1;
+
+	pRCC->CFGR = STM32_Pack_RCC_CFGR(&RCC_CFGR);
 	// Set all clock frequencies
 
 }
+
+void init_stm32timersys()
+{
+	BTIMx_Handle_st TS_TIM6;
+	BTIMx_Handle_st TS_TIM7;
+
+	TS_TIM6.pBTIMx = pTIM6;
+	TS_TIM6.BTIMx_Cfg.freq = 1/PERIOD_1MS;
+	TS_TIM6.BTIMx_Cfg.mode = 0;
+	TS_TIM6.BTIMx_Cfg.reload = 0;
+
+	BTIMx_ClkCtrl(&TS_TIM6, ENABLE);
+	BTIMx_Init(&TS_TIM6);
+
+	IRQConfig(IRQ_NO_TIM6, SET);
+
+
+	TS_TIM7.pBTIMx = pTIM7;
+	TS_TIM7.BTIMx_Cfg.freq = 1/PERIOD_10MS;
+	TS_TIM7.BTIMx_Cfg.mode = 0;
+	TS_TIM7.BTIMx_Cfg.reload = 0;
+
+	BTIMx_ClkCtrl(&TS_TIM7, ENABLE);
+	BTIMx_Init(&TS_TIM7);
+
+	IRQConfig(IRQ_NO_TIM7, SET);
+}
+
 
 void init_stm32spi()
 
@@ -155,29 +210,5 @@ void init_stm32gpio()
 
 	IRQConfig(IRQ_NO_EXTI0, SET);
 
-}
-
-void init_stm32timer()
-{
-	BTIMx_Handle_st TS_TIM6;
-
-	TS_TIM6.pBTIMx = pTIM6;
-	TS_TIM6.BTIMx_Cfg.freq = 1/PERIOD_10MS;
-	TS_TIM6.BTIMx_Cfg.mode = 0;
-	TS_TIM6.BTIMx_Cfg.reload = 0;
-
-	BTIMx_ClkCtrl(&TS_TIM6, ENABLE);
-	BTIMx_Init(&TS_TIM6);
-
-	IRQConfig(IRQ_NO_TIM6, SET);
-}
-
-void EXTI0_IRQHandler (void)
-{
-	if(pEXTI->PR & 1)
-		pEXTI->PR |= 1;
-
-	GPIO_TogglePin(&DiscoBoard_LD4);
-	GPIO_TogglePin(&DiscoBoard_LD3);
 }
 
