@@ -94,6 +94,7 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 	SPI_Reset(pSPI_Handle);
 
 	STM32_SPI_CR1 SPI_CR1_temp;
+	STM32_CLKSPDS clk_speeds = {0};
 
 	// Configure comms type
 	if(pSPI_Handle->SPI_Cfg.bustype == SPI_BUSTYPE_FDX)							// Full Duplex
@@ -129,7 +130,8 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 
 	SPI_CR1_temp.SPE = 1;
 
-	SPI_CR1_temp.BR = pSPI_Handle->SPI_Cfg.speed;
+	STM32_Get_CLKSPDS(&clk_speeds);
+	SPI_CR1_temp.BR = clk_speeds.PCLK2/pSPI_Handle->SPI_Cfg.speed;
 
 	SPI_CR1_temp.MSTR = pSPI_Handle->SPI_Cfg.master;
 
