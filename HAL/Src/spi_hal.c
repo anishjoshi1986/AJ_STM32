@@ -218,6 +218,7 @@ uint8_t SPI_Write(SPIHandle_st* pSPI_Handle, uint8_t data)
 	}
 
 	if(pSPI_Handle->SPI_Cfg.dff)
+		//pSPI_Handle->pSPIX->CR1
 		pSPI_Handle->pSPIX->DR = (uint16_t)data;
 	else
 		pSPI_Handle->pSPIX->DR = data;
