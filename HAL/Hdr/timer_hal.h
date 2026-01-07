@@ -13,13 +13,6 @@
 #define TIM6			(APB1 + 0x1000U)
 #define TIM7			(APB1 + 0x1400U)
 
-#define TIM6_EN()		(pRCC->APB1ENR |= 0x10)
-#define TIM6_DIS()		(pRCC->APB1ENR &= ~0x10)
-
-#define TIM7_EN()		(pRCC->APB1ENR |= 0x20)
-#define TIM7_DIS()		(pRCC->APB1ENR &= ~0x20)
-
-
 typedef struct
 {
 	uint8_t ARPE : 1;
@@ -98,7 +91,6 @@ typedef struct
 uint16_t STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1);
 void STM32_Unpack_BTIMx_CNT(STM32_BTIMx_CR1 *BTIMx_CR1, uint16_t packed);
 
-void BTIMx_ClkCtrl(BTIMx_Handle_st *pBTIMx_Handle, uint8_t ClkCmd);
 void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle);
 
 #endif /* HAL_HDR_TIMER_HAL_H_ */

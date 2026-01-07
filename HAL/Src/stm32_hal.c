@@ -236,22 +236,22 @@ void STM32_UnPack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR, uint32_t packed)
 
 void STM32_Get_CLKSPDS(STM32_CLKSPDS *clk_speeds)
 {
-	if(MSION_VAL)
+	if(MSI_ENABLE)
 	{
 		clk_speeds->SYSCLK = MSIRANGE_ARR[MSIRANGE_IND];
 	}
 
-	if(HSION_VAL)
+	if(HSI_ENABLE)
 	{
 		clk_speeds->SYSCLK = HSI_FREQ;
 	}
 
-	if(HSEON_VAL)
+	if(HSE_ENABLE)
 	{
 		clk_speeds->SYSCLK = HSE_FREQ;
 	}
 
-	if(PLLON_VAL)
+	if(PLL_ENABLE)
 	{
 		if(PLLSRC_VAL)
 			clk_speeds->SYSCLK = (HSE_FREQ * PLLMUL_ARR[PLLMUL_IND]) /  (PLLDIV_VAL + 1);

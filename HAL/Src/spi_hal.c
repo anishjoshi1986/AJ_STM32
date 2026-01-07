@@ -219,11 +219,21 @@ uint8_t SPI_Write(SPIHandle_st* pSPI_Handle, uint8_t data)
 			return 1;
 	}
 
+	pSPI_Handle->pSPIX->CR1 |= 0x4000;				// Set BIDIOE bit 14 to 1 to enable transmit only mode
+
 	if(pSPI_Handle->SPI_Cfg.dff)
-		//pSPI_Handle->pSPIX->CR1
 		pSPI_Handle->pSPIX->DR = (uint16_t)data;
 	else
 		pSPI_Handle->pSPIX->DR = data;
+
+	while(SPI_Bsy(pSPI_Handle))
+	{
+		cnt_spibsy++;
+		if(cnt_spibsy > timeout_thres)
+			return 1;
+	}
+
+	pSPI_Handle->pSPIX->CR1 &= ~0x4000;				// Set BIDIOE bit 14 to 0 to enable receive only mode
 
 	return 0;
 

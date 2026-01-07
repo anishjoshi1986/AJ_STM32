@@ -54,15 +54,15 @@ typedef struct
 
 
 // RCC CR Cals
-#define RTCPRE_VAL	0
-#define CSSON_VAL	0
-#define PLLON_VAL	0
-#define HSEBYP_VAL	0
-#define HSEON_VAL	0
-#define MSION_VAL	0
-#define HSION_VAL	1
-#define HSI_FREQ	16000000U
-#define HSE_FREQ	0
+#define RTCPRE_VAL		0
+#define CSS_ENABLE		0
+#define PLL_ENABLE		0
+#define HSEBYP_ENABLE	0
+#define HSE_ENABLE		0
+#define MSI_ENABLE		0
+#define HSI_ENABLE		1
+#define HSI_FREQ		16000000U
+#define HSE_FREQ		0
 
 typedef struct
 {

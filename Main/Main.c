@@ -12,13 +12,14 @@ int main(void)
 {
 
 	init_stm32clksys();
+
 	init_stm32timersys();
 
 	if(SPI1_ENABLE)
 	{
 		init_stm32spi();
 	}
-	if(GPIO_ENABLE)
+	if(GPIOA_ENABLE)
 	{
 		init_stm32gpio();
 	}
