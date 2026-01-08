@@ -32,24 +32,24 @@ void init_stm32clksys()
 	STM32_RCC_APB2ENR RCC_APB2ENR = {0};
 	STM32_RCC_APB1ENR RCC_APB1ENR = {0};
 
-	RCC_CR.RTCPRE = 0;
-	RCC_CR.CSSON = DISABLE;
-	RCC_CR.PLLON = DISABLE;
-	RCC_CR.HSEBYP = DISABLE;
-	RCC_CR.HSEON = DISABLE;
-	RCC_CR.MSION = DISABLE;
-	RCC_CR.HSION = ENABLE;
+	RCC_CR.RTCPRE = RTCPRE_VAL;
+	RCC_CR.CSSON = CSS_ENABLE;
+	RCC_CR.PLLON = PLL_ENABLE;
+	RCC_CR.HSEBYP = HSEBYP_ENABLE;
+	RCC_CR.HSEON = HSE_ENABLE;
+	RCC_CR.MSION = MSI_ENABLE;
+	RCC_CR.HSION = HSI_ENABLE;
 	pRCC->CR = STM32_Pack_RCC_CR(&RCC_CR);
 
-	RCC_CFGR.MCOPRE = 0;
-	RCC_CFGR.MCOSEL = 0;
-	RCC_CFGR.PLLDIV = 0;
-	RCC_CFGR.PLLMUL = 0;
-	RCC_CFGR.PLLSRC = 0;
-	RCC_CFGR.PPRE2 = 0;
-	RCC_CFGR.PPRE1 = 0;
-	RCC_CFGR.HPRE = 0;
-	RCC_CFGR.SW = 1;
+	RCC_CFGR.MCOPRE = MCOPRE_VAL;
+	RCC_CFGR.MCOSEL = MCOSEL_VAL;
+	RCC_CFGR.PLLDIV = PLLDIV_VAL;
+	RCC_CFGR.PLLMUL = PLLMUL_IND;
+	RCC_CFGR.PLLSRC = PLLSRC_VAL;
+	RCC_CFGR.PPRE2 = PPRE2_IND;
+	RCC_CFGR.PPRE1 = PPRE1_IND;
+	RCC_CFGR.HPRE = HPRE_IND;
+	RCC_CFGR.SW = SW_VAL;
 	pRCC->CFGR = STM32_Pack_RCC_CFGR(&RCC_CFGR);
 
 	RCC_AHBENR.FSMCEN = FSMC_ENABLE;
@@ -100,7 +100,6 @@ void init_stm32clksys()
 	RCC_APB2ENR.SYSCFGEN = SYSCFG_ENABLE;
 	pRCC->APB2ENR= STM32_Pack_RCC_APB2ENR(&RCC_APB2ENR);
 
-
 }
 
 void init_stm32timersys()
@@ -115,20 +114,19 @@ void init_stm32timersys()
 	BTIMx_Init(&TS_TIM6);
 	IRQConfig(IRQ_NO_TIM6, SET);
 
-
 	TS_TIM7.pBTIMx = pTIM7;
 	TS_TIM7.BTIMx_Cfg.freq = 1/PERIOD_10MS;
 	TS_TIM7.BTIMx_Cfg.mode = 0;
 	TS_TIM7.BTIMx_Cfg.reload = 0;
 	BTIMx_Init(&TS_TIM7);
 	IRQConfig(IRQ_NO_TIM7, SET);
+
 }
 
 
 void init_stm32spi()
 
 {
-
 	SPI1_Handle.pSPIX = pSPI1;
 	SPI1_Handle.SPI_Cfg.master = TRUE;
 	SPI1_Handle.SPI_Cfg.bustype = SPI_BUSTYPE_HDX;
@@ -139,7 +137,6 @@ void init_stm32spi()
 	SPI1_Handle.SPI_Cfg.cpol = TRUE;
 	SPI1_Handle.SPI_Cfg.ssm = FALSE;
 	SPI1_Handle.SPI_Cfg.crcen = FALSE;
-
 	SPI_Init(&SPI1_Handle);
 
 	SPI1_SCK.pGPIOX = pGPIOA;
@@ -148,6 +145,7 @@ void init_stm32spi()
 	SPI1_SCK.GPIO_PinCfg.altfn = 5;
 	SPI1_SCK.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
 	SPI1_SCK.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
+	GPIO_Init(&SPI1_SCK);
 
 	SPI1_MISO.pGPIOX = pGPIOA;
 	SPI1_MISO.GPIO_PinCfg.pin = GPIO_PIN_6;
@@ -155,6 +153,7 @@ void init_stm32spi()
 	SPI1_MISO.GPIO_PinCfg.altfn = 5;
 	SPI1_MISO.GPIO_PinCfg.otype = GPIO_PUPD_PD;
 	SPI1_MISO.GPIO_PinCfg.pupd = GPIO_PUPD_PD;
+	GPIO_Init(&SPI1_MISO);
 
 	SPI1_MOSI.pGPIOX = pGPIOA;
 	SPI1_MOSI.GPIO_PinCfg.pin = GPIO_PIN_7;
@@ -162,12 +161,6 @@ void init_stm32spi()
 	SPI1_MOSI.GPIO_PinCfg.altfn = 5;
 	SPI1_MOSI.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
 	SPI1_MOSI.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
-
-	GPIO_ClkCtrl(&SPI1_SCK, SET);
-	GPIO_ClkCtrl(&SPI1_MISO, SET);
-	GPIO_ClkCtrl(&SPI1_MOSI, SET);
-	GPIO_Init(&SPI1_SCK);
-	GPIO_Init(&SPI1_MISO);
 	GPIO_Init(&SPI1_MOSI);
 
 }
@@ -231,24 +224,21 @@ void init_stm32gpio()
 	PushButton_Inp.GPIO_PinCfg.mode = GPIO_MODE_INTRE;
 	PushButton_Inp.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
 	PushButton_Inp.GPIO_PinCfg.pupd = GPIO_PUPD_PD;
+	GPIO_Init(&PushButton_Inp);
 
 	DiscoBoard_LD3.pGPIOX = pGPIOB;
 	DiscoBoard_LD3.GPIO_PinCfg.pin = GPIO_PIN_7;
 	DiscoBoard_LD3.GPIO_PinCfg.mode = GPIO_MODE_OUT;
 	DiscoBoard_LD3.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
 	DiscoBoard_LD3.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
+	GPIO_Init(&DiscoBoard_LD3);
 
 	DiscoBoard_LD4.pGPIOX = pGPIOB;
 	DiscoBoard_LD4.GPIO_PinCfg.pin = GPIO_PIN_6;
 	DiscoBoard_LD4.GPIO_PinCfg.mode = GPIO_MODE_OUT;
 	DiscoBoard_LD4.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
 	DiscoBoard_LD4.GPIO_PinCfg.pupd = GPIO_PUPD_NO;
-
-	GPIO_ClkCtrl(&DiscoBoard_LD3, SET);
-	GPIO_ClkCtrl(&DiscoBoard_LD4, SET);
-	GPIO_Init(&DiscoBoard_LD3);
 	GPIO_Init(&DiscoBoard_LD4);
-	GPIO_Init(&PushButton_Inp);
 
 	IRQConfig(IRQ_NO_EXTI0, SET);
 

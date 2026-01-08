@@ -46,8 +46,8 @@
 #define GPIOE_ENABLE	0
 #define GPIOD_ENABLE	0
 #define GPIOC_ENABLE	0
-#define GPIOB_ENABLE	0
-#define GPIOA_ENABLE	0
+#define GPIOB_ENABLE	1
+#define GPIOA_ENABLE	1
 #define GYRO1_ENABLE	0
 
 #define USB_ENABLE		0
