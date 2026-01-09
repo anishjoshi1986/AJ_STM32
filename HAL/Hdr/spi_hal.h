@@ -24,10 +24,12 @@
 #define SPI3_CLK_DIS()			(pRCC->APB1ENR &= ~(1 << 15))
 
 // SPI config macros
-#define SPI_BUSTYPE_FDX		0
-#define SPI_BUSTYPE_HDX		1
-#define SPI_BUSTYPE_SX		2
-#define SPI_RXONLY			1
+#define SPI_BUSTYPE_FDX		0U
+#define SPI_BUSTYPE_HDX		1U
+#define SPI_BUSTYPE_SX		2U
+#define SPI_RXONLY			1U
+
+#define SPI_TIMEOUT_THRES	(U8)254
 
 // --------------------------------------------------------------------------------------------------------//
 // SPI register structs
@@ -35,61 +37,61 @@
 
 typedef struct
 {
-	uint8_t BIDIMODE : 1;
-	uint8_t BIDIOE : 1;
-	uint8_t CRCEN : 1;
-	uint8_t CRCNEXT : 1;
-	uint8_t DFF : 1;
-	uint8_t RXONLY : 1;
-	uint8_t SSM : 1;
-	uint8_t SSI : 1;
-	uint8_t LSBFIRST : 1;
-	uint8_t SPE : 1;
-	uint8_t BR : 3;
-	uint8_t MSTR : 1;
-	uint8_t CPOL : 1;
-	uint8_t CPHA : 1;
+	U8 BIDIMODE : 1;
+	U8 BIDIOE : 1;
+	U8 CRCEN : 1;
+	U8 CRCNEXT : 1;
+	U8 DFF : 1;
+	U8 RXONLY : 1;
+	U8 SSM : 1;
+	U8 SSI : 1;
+	U8 LSBFIRST : 1;
+	U8 SPE : 1;
+	U8 BR : 3;
+	U8 MSTR : 1;
+	U8 CPOL : 1;
+	U8 CPHA : 1;
 
 }STM32_SPI_CR1;
 
 typedef struct
 {
-	uint8_t TXEIE : 1;
-	uint8_t RXNEIE : 1;
-	uint8_t ERRIE : 1;
-	uint8_t FRF : 1;
-	uint8_t RESERVED : 1;
-	uint8_t SSOE : 1;
-	uint8_t TXDMAEN : 1;
-	uint8_t RXDMAEN : 1;
+	U8 TXEIE : 1;
+	U8 RXNEIE : 1;
+	U8 ERRIE : 1;
+	U8 FRF : 1;
+	U8 RESERVED : 1;
+	U8 SSOE : 1;
+	U8 TXDMAEN : 1;
+	U8 RXDMAEN : 1;
 
 }STM32_SPI_CR2;
 
 typedef struct
 {
-	uint8_t FRE : 1;
-	uint8_t BSY : 1;
-	uint8_t OVR : 1;
-	uint8_t MODF : 1;
-	uint8_t CRCERR : 1;
-	uint8_t UDR : 1;
-	uint8_t CHSIDE : 1;
-	uint8_t TXE : 1;
-	uint8_t RXNE : 1;
+	U8 FRE : 1;
+	U8 BSY : 1;
+	U8 OVR : 1;
+	U8 MODF : 1;
+	U8 CRCERR : 1;
+	U8 UDR : 1;
+	U8 CHSIDE : 1;
+	U8 TXE : 1;
+	U8 RXNE : 1;
 
 }STM32_SPI_SR;
 
 typedef struct
 {
-	__vo uint32_t CR1;
-	__vo uint32_t CR2;
-	__vo uint32_t SR;
-	__vo uint32_t DR;
-	__vo uint32_t CRCPR;
-	__vo uint32_t RXCRCR;
-	__vo uint32_t TXCRCR;
-	__vo uint32_t I2SCFGR;
-	__vo uint32_t I2SPR;
+	__vo U32 CR1;
+	__vo U32 CR2;
+	__vo U32 SR;
+	__vo U32 DR;
+	__vo U32 CRCPR;
+	__vo U32 RXCRCR;
+	__vo U32 TXCRCR;
+	__vo U32 I2SCFGR;
+	__vo U32 I2SPR;
 
 }STM32_SPIRegDef_st;
 
@@ -99,15 +101,15 @@ typedef struct
 
 typedef struct
 {
-	uint8_t master;							// Master, slave
-	uint8_t bustype; 						// Duplex, simplex, half duplex
-	uint8_t rxonly;							// Receive data only
-	uint8_t speed;							// SPI clock speed
-	uint8_t dff;							// Data frame format - send 8/16 bits
-	uint8_t cpha;
-	uint8_t cpol;
-	uint8_t ssm;							// Slave select management - sw/hw slave select
-	uint8_t crcen;							// CRC Enable
+	U8 master;							// Master, slave
+	U8 bustype; 						// Duplex, simplex, half duplex
+	U8 rxonly;							// Receive data only
+	U8 speed;							// SPI clock speed
+	U8 dff;							// Data frame format - send 8/16 bits
+	U8 cpha;
+	U8 cpol;
+	U8 ssm;							// Slave select management - sw/hw slave select
+	U8 crcen;							// CRC Enable
 
 }SPICfg_st;
 
@@ -131,18 +133,18 @@ typedef struct
 // SPI register level functions
 // --------------------------------------------------------------------------------------------------------//
 
-uint16_t STM32_Pack_SPI_CR1(STM32_SPI_CR1 *SPIX_CR1);
-void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR, uint16_t packed);
+U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1 *SPIX_CR1_CFG);
+void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed);
 
-void SPI_ClkCtrl(SPIHandle_st* pSPI_Handle, uint8_t ClkCmd);
+void SPI_ClkCtrl(SPIHandle_st* pSPI_Handle, U8 ClkCmd);
 void SPI_Init(SPIHandle_st* pSPI_Handle);
 void SPI_Reset(SPIHandle_st* pSPI_Handle);
 
-uint8_t SPI_Bsy(SPIHandle_st* pSPI_Handle);
-uint8_t SPI_RXMT(SPIHandle_st* pSPI_Handle);
-uint8_t SPI_ErrCheck(SPIHandle_st* pSPI_Handle);
+U8 SPI_Bsy(SPIHandle_st* pSPI_Handle);
+U8 SPI_RXMT(SPIHandle_st* pSPI_Handle);
+U8 SPI_ErrCheck(SPIHandle_st* pSPI_Handle);
 
-uint8_t SPI_Write(SPIHandle_st* pSPI_Handle, uint8_t data);
+U8 SPI_Write(SPIHandle_st* pSPI_Handle, U8 data);
 uint16_t SPI_Read(SPIHandle_st* pSPI_Handle);
 
 #endif

@@ -32,20 +32,20 @@
 
 typedef struct
 {
-	__vo uint32_t CR;
-	__vo uint32_t ICSCR;
-	__vo uint32_t CFGR;
-	__vo uint32_t CIR;
-	__vo uint32_t AHBRSTR;
-	__vo uint32_t APB2RSTR;
-	__vo uint32_t APB1RSTR;
-	__vo uint32_t AHBENR;
-	__vo uint32_t APB2ENR;
-	__vo uint32_t APB1ENR;
-	__vo uint32_t AHBLPENR;
-	__vo uint32_t APB2LPENR;
-	__vo uint32_t APB1LPENR;
-	__vo uint32_t CSR;
+	__vo U32 CR;
+	__vo U32 ICSCR;
+	__vo U32 CFGR;
+	__vo U32 CIR;
+	__vo U32 AHBRSTR;
+	__vo U32 APB2RSTR;
+	__vo U32 APB1RSTR;
+	__vo U32 AHBENR;
+	__vo U32 APB2ENR;
+	__vo U32 APB1ENR;
+	__vo U32 AHBLPENR;
+	__vo U32 APB2LPENR;
+	__vo U32 APB1LPENR;
+	__vo U32 CSR;
 
 }STM32_RCCRegDef_st;
 
@@ -66,21 +66,21 @@ typedef struct
 
 typedef struct
 {
-	uint8_t RTCPRE : 2;
-	uint8_t CSSON : 1;
-	uint8_t PLLRDY : 1;
-	uint8_t PLLON : 1;
-	uint8_t HSEBYP : 1;
-	uint8_t HSERDY : 1;
-	uint8_t HSEON : 1;
-	uint8_t MSIRDY : 1;
-	uint8_t MSION : 1;
-	uint8_t HSIRDY : 1;
-	uint8_t HSION : 1;
+	U8 RTCPRE : 2;
+	U8 CSSON : 1;
+	U8 PLLRDY : 1;
+	U8 PLLON : 1;
+	U8 HSEBYP : 1;
+	U8 HSERDY : 1;
+	U8 HSEON : 1;
+	U8 MSIRDY : 1;
+	U8 MSION : 1;
+	U8 HSIRDY : 1;
+	U8 HSION : 1;
 
 }STM32_RCC_CR;
-#define RCC_CR_MASK		((0x03 << 29) | (0x01 << 28) | (0x01 << 24) | \
-						(0x01 << 18) | (0x01 << 16) | (0x01 << 8) | (0x01 << 0))
+#define RCC_CR_MASK		(U32)((0x03U << 29) | (1U << 28) | (1U << 24) | \
+						(1U << 18) | (1U << 16) | (1U << 8) | (1U << 0))
 
 
 // RCC ICSCR Cals
@@ -90,11 +90,11 @@ typedef struct
 
 typedef struct
 {
-	uint8_t MSITRIM : 8;
-	uint8_t MSIRANGE : 3;
-	uint8_t HSITRIM : 5;
+	U8 MSITRIM : 8;
+	U8 MSIRANGE : 3;
+	U8 HSITRIM : 5;
 }STM32_RCC_ICSCR;
-#define RCC_ICSCR_MASK	((0xFF << 24) | (0x07 << 13) | (0x1F << 8))
+#define RCC_ICSCR_MASK	(U32)((0xFF << 24) | (0x07U << 13) | (0x1F << 8))
 
 
 // RCC CFGR Cals
@@ -109,21 +109,21 @@ typedef struct
 #define SW_VAL		0
 typedef struct
 {
-	uint8_t MCOPRE : 3;
-	uint8_t MCOSEL : 3;
-	uint8_t PLLDIV : 2;
-	uint8_t PLLMUL : 4;
-	uint8_t PLLSRC : 1;
-	uint8_t PPRE2 : 3;
-	uint8_t PPRE1 : 3;
-	uint8_t HPRE : 4;
-	uint8_t SWS : 2;
-	uint8_t SW : 2;
+	U8 MCOPRE : 3;
+	U8 MCOSEL : 3;
+	U8 PLLDIV : 2;
+	U8 PLLMUL : 4;
+	U8 PLLSRC : 1;
+	U8 PPRE2 : 3;
+	U8 PPRE1 : 3;
+	U8 HPRE : 4;
+	U8 SWS : 2;
+	U8 SW : 2;
 
 }STM32_RCC_CFGR;
-#define RCC_CFGR_MASK		((0x07 << 28) | (0x07 << 24) | (0x03 << 22) | \
-							(0x0F << 18) | (0x01 << 16) | (0x07 << 11) | \
-							(0x07 << 8) | (0x0F << 4) | (0x03 << 0))
+#define RCC_CFGR_MASK		(U32)((0x07U << 28) | (0x07U << 24) | (0x03U << 22) | \
+							(0x0FU << 18) | (1U << 16) | (0x07U << 11) | \
+							(0x07U << 8) | (0x0FU << 4) | (0x03U << 0))
 
 
 // RCC_AHBENR Cals
@@ -143,27 +143,27 @@ typedef struct
 #define GPIOAEN_VAL		0
 typedef struct
 {
-	uint8_t FSMCEN : 1;
-	uint8_t AESEN : 1;
-	uint8_t DMA2EN : 1;
-	uint8_t DMA1EN : 1;
-	uint8_t FLITFEN : 1;
-	uint8_t CRCEN : 1;
-	uint8_t GPIOGEN : 1;
-	uint8_t GPIOFEN : 1;
-	uint8_t GPIOHEN : 1;
-	uint8_t GPIOEEN : 1;
-	uint8_t GPIODEN : 1;
-	uint8_t GPIOCEN : 1;
-	uint8_t GPIOBEN : 1;
-	uint8_t GPIOAEN : 1;
+	U8 FSMCEN : 1;
+	U8 AESEN : 1;
+	U8 DMA2EN : 1;
+	U8 DMA1EN : 1;
+	U8 FLITFEN : 1;
+	U8 CRCEN : 1;
+	U8 GPIOGEN : 1;
+	U8 GPIOFEN : 1;
+	U8 GPIOHEN : 1;
+	U8 GPIOEEN : 1;
+	U8 GPIODEN : 1;
+	U8 GPIOCEN : 1;
+	U8 GPIOBEN : 1;
+	U8 GPIOAEN : 1;
 
 }STM32_RCC_AHBENR;
-#define RCC_AHBENR_MASK			((0x01 << 30) | (0x01 << 27) | (0x01 << 25) | \
-								(0x01 << 24) | (0x01 << 15) | (0x01 << 12) | \
-								(0x01 << 7) | (0x01 << 6) | (0x01 << 5) | \
-								(0x01 << 4) | (0x01 << 3) | (0x01 << 2) | \
-								(0x01 << 1) | (0x01 << 0))
+#define RCC_AHBENR_MASK			(U32)((1U << 30) | (1U << 27) | (1U << 25) | \
+								(1U << 24) | (1U << 15) | (1U << 12) | \
+								(1U << 7) | (1U << 6) | (1U << 5) | \
+								(1U << 4) | (1U << 3) | (1U << 2) | \
+								(1U << 1) | (1U << 0))
 
 
 // RCC APB2ENR Cals
@@ -177,19 +177,19 @@ typedef struct
 #define SYSCFGEN_VAL	0
 typedef struct
 {
-	uint8_t USART1EN : 1;
-	uint8_t SPIEN : 1;
-	uint8_t SDIOEN : 1;
-	uint8_t ADC1EN : 1;
-	uint8_t TIM11EN : 1;
-	uint8_t TIM10EN : 1;
-	uint8_t TIM9EN : 1;
-	uint8_t SYSCFGEN : 1;
+	U8 USART1EN : 1;
+	U8 SPIEN : 1;
+	U8 SDIOEN : 1;
+	U8 ADC1EN : 1;
+	U8 TIM11EN : 1;
+	U8 TIM10EN : 1;
+	U8 TIM9EN : 1;
+	U8 SYSCFGEN : 1;
 
 }STM32_RCC_APB2ENR;
-#define RCC_APB2ENR_MASK			((0x01 << 14) | (0x01 << 12) | (0x01 << 11) | \
-									(0x01 << 9) | (0x01 << 4) | (0x01 << 3) | \
-									(0x01 << 2) | (0x01 << 0))
+#define RCC_APB2ENR_MASK			(U32)((1U << 14) | (1U << 12) | (1U << 11) | \
+									(1U << 9) | (1U << 4) | (1U << 3) | \
+									(1U << 2) | (1U << 0))
 
 
 // RCC APB1ENR Cals
@@ -215,65 +215,65 @@ typedef struct
 #define TIM2EN_VAL		0
 typedef struct
 {
-	uint8_t COMPEN : 1;
-	uint8_t DACEN : 1;
-	uint8_t PWREN : 1;
-	uint8_t USBEN : 1;
-	uint8_t I2C2EN : 1;
-	uint8_t I2C1EN : 1;
-	uint8_t UART5EN : 1;
-	uint8_t UART4EN : 1;
-	uint8_t USART3EN : 1;
-	uint8_t USART2EN : 1;
-	uint8_t SPI3EN : 1;
-	uint8_t SPI2EN : 1;
-	uint8_t WWDEN : 1;
-	uint8_t LCDEN : 1;
-	uint8_t TIM7EN : 1;
-	uint8_t TIM6EN : 1;
-	uint8_t TIM5EN : 1;
-	uint8_t TIM4EN : 1;
-	uint8_t TIM3EN : 1;
-	uint8_t TIM2EN : 1;
+	U8 COMPEN : 1;
+	U8 DACEN : 1;
+	U8 PWREN : 1;
+	U8 USBEN : 1;
+	U8 I2C2EN : 1;
+	U8 I2C1EN : 1;
+	U8 UART5EN : 1;
+	U8 UART4EN : 1;
+	U8 USART3EN : 1;
+	U8 USART2EN : 1;
+	U8 SPI3EN : 1;
+	U8 SPI2EN : 1;
+	U8 WWDEN : 1;
+	U8 LCDEN : 1;
+	U8 TIM7EN : 1;
+	U8 TIM6EN : 1;
+	U8 TIM5EN : 1;
+	U8 TIM4EN : 1;
+	U8 TIM3EN : 1;
+	U8 TIM2EN : 1;
 
 }STM32_RCC_APB1ENR;
-#define RCC_APB1ENR_MASK			((0x01 << 31) | (0x01 << 29) | (0x01 << 28) | \
-									(0x01 << 23) | (0x01 << 22) | (0x01 << 21) | \
-									(0x01 << 20) | (0x01 << 19) | (0x01 << 18) | \
-									(0x01 << 17) | (0x01 << 15) | (0x01 << 14) | \
-									(0x01 << 11) | (0x01 << 9) | (0x01 << 5) | \
-									(0x01 << 4) | (0x01 << 3) | (0x01 << 2) | \
-									(0x01 << 1) | (0x01 << 0))
+#define RCC_APB1ENR_MASK			(U32)((1U << 31) | (1U << 29) | (1U << 28) | \
+									(1U << 23) | (1U << 22) | (1U << 21) | \
+									(1U << 20) | (1U << 19) | (1U << 18) | \
+									(1U << 17) | (1U << 15) | (1U << 14) | \
+									(1U << 11) | (1U << 9) | (1U << 5) | \
+									(1U << 4) | (1U << 3) | (1U << 2) | \
+									(1U << 1) | (1U << 0))
 
 
 // Pack - Unpack functions
-uint32_t STM32_Pack_RCC_CR(STM32_RCC_CR *RCC_CR);
-void STM32_UnPack_RCC_CR(STM32_RCC_CR *RCC_CR, uint32_t packed);
+U32 STM32_Pack_RCC_CR(STM32_RCC_CR *RCC_CR_CFG);
+void STM32_UnPack_RCC_CR(STM32_RCC_CR *RCC_CR_CFG, U32 packed);
 
-uint32_t STM32_Pack_RCC_ICSCR(STM32_RCC_ICSCR *RCC_ICSCR);
-void STM32_UnPack_RCC_ICSCR(STM32_RCC_ICSCR *RCC_ICSCR, uint32_t packed);
+U32 STM32_Pack_RCC_ICSCR(STM32_RCC_ICSCR *RCC_ICSCR_CFG);
+void STM32_UnPack_RCC_ICSCR(STM32_RCC_ICSCR *RCC_ICSCR_CFG, U32 packed);
 
-uint32_t STM32_Pack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR);
-void STM32_UnPack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR, uint32_t packed);
+U32 STM32_Pack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR_CFG);
+void STM32_UnPack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR_CFG, U32 packed);
 
-uint32_t STM32_Pack_RCC_AHBENR(STM32_RCC_AHBENR *RCC_AHBENR);
-void STM32_UnPack_RCC_AHBENR(STM32_RCC_AHBENR *RCC_AHBENR, uint32_t packed);
+U32 STM32_Pack_RCC_AHBENR(STM32_RCC_AHBENR *RCC_AHBENR_CFG);
+void STM32_UnPack_RCC_AHBENR(STM32_RCC_AHBENR *RCC_AHBENR_CFG, U32 packed);
 
-uint32_t STM32_Pack_RCC_APB2ENR(STM32_RCC_APB2ENR *RCC_APB2ENR);
-void STM32_UnPack_RCC_APB2ENR(STM32_RCC_APB2ENR *RCC_APB2ENR, uint32_t packed);
+U32 STM32_Pack_RCC_APB2ENR(STM32_RCC_APB2ENR *RCC_APB2ENR_CFG);
+void STM32_UnPack_RCC_APB2ENR(STM32_RCC_APB2ENR *RCC_APB2ENR_CFG, U32 packed);
 
-uint32_t STM32_Pack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR);
-void STM32_UnPack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR, uint32_t packed);
+U32 STM32_Pack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR_CFG);
+void STM32_UnPack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR_CFG, U32 packed);
 
 typedef struct
 {
-	uint32_t ADCCLK;
-	uint32_t SYSCLK;
-	uint32_t HCLK;
-	uint32_t PCLK1;
-	uint32_t PCLK2;
-	uint32_t TIMxCLK1;
-	uint32_t TIMxCLK2;
+	U32 ADCCLK;
+	U32 SYSCLK;
+	U32 HCLK;
+	U32 PCLK1;
+	U32 PCLK2;
+	U32 TIMxCLK1;
+	U32 TIMxCLK2;
 
 }STM32_CLKSPDS;
 
@@ -284,9 +284,9 @@ void STM32_Get_CLKSPDS(STM32_CLKSPDS *clk_speeds);
 // --------------------------------------------------------------------------------------------------------//
 typedef struct
 {
-	__vo uint32_t MEMRMP;
-	__vo uint32_t PMC;
-	__vo uint32_t EXTICR[4];
+	__vo U32 MEMRMP;
+	__vo U32 PMC;
+	__vo U32 EXTICR[4];
 }STM32_SYSCFGRegDef_st;
 
 #define SYSCFG					(APB2 + 0x0000)

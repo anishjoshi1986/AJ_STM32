@@ -11,46 +11,46 @@
 // STM32 SPI pack/unpack registers
 // --------------------------------------------------------------------------------------------------------//
 
-uint16_t STM32_Pack_SPI_CR1(STM32_SPI_CR1* SPIX_CR1)
+U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1* SPIX_CR1_CFG)
 {
-	uint16_t packed = 0;
+	U32 packed = 0;
 
-	packed |= (SPIX_CR1->BIDIMODE & 0x01) << 15;
-	packed |= (SPIX_CR1->BIDIOE & 0x01) << 14;
-	packed |= (SPIX_CR1->CRCEN & 0x01) << 13;
-	packed |= (SPIX_CR1->CRCNEXT & 0x01) << 12;
-	packed |= (SPIX_CR1->DFF & 0x01) << 11;
-	packed |= (SPIX_CR1->RXONLY & 0x01) << 10;
-	packed |= (SPIX_CR1->SSM & 0x01) << 9;
-	packed |= (SPIX_CR1->SSI & 0x01) << 8;
-	packed |= (SPIX_CR1->LSBFIRST & 0x01) << 7;
-	packed |= (SPIX_CR1->SPE & 0x01) << 6;
-	packed |= (SPIX_CR1->BR & 0x07) << 3;
-	packed |= (SPIX_CR1->MSTR & 0x01) << 2;
-	packed |= (SPIX_CR1->CPOL & 0x01) << 1;
-	packed |= (SPIX_CR1->CPHA & 0x01) << 0;
+	packed |= (U32)(SPIX_CR1_CFG->BIDIMODE & 1U) << 15;
+	packed |= (U32)(SPIX_CR1_CFG->BIDIOE & 1U) << 14;
+	packed |= (U32)(SPIX_CR1_CFG->CRCEN & 1U) << 13;
+	packed |= (U32)(SPIX_CR1_CFG->CRCNEXT & 1U) << 12;
+	packed |= (U32)(SPIX_CR1_CFG->DFF & 1U) << 11;
+	packed |= (U32)(SPIX_CR1_CFG->RXONLY & 1U) << 10;
+	packed |= (U32)(SPIX_CR1_CFG->SSM & 1U) << 9;
+	packed |= (U32)(SPIX_CR1_CFG->SSI & 1U) << 8;
+	packed |= (U32)(SPIX_CR1_CFG->LSBFIRST & 1U) << 7;
+	packed |= (U32)(SPIX_CR1_CFG->SPE & 1U) << 6;
+	packed |= (U32)(SPIX_CR1_CFG->BR & 0x07U) << 3;
+	packed |= (U32)(SPIX_CR1_CFG->MSTR & 1U) << 2;
+	packed |= (U32)(SPIX_CR1_CFG->CPOL & 1U) << 1;
+	packed |= (U32)(SPIX_CR1_CFG->CPHA & 1U) << 0;
 
 	return packed;
 }
 
-void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR, uint16_t packed)
+void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed)
 {
-	SPIX_SR->FRE = (packed >> 8) & 0x01;
-	SPIX_SR->BSY = (packed >> 7) & 0x01;
-	SPIX_SR->OVR = (packed >> 6) & 0x01;
-	SPIX_SR->MODF = (packed >> 5) & 0x01;
-	SPIX_SR->CRCERR = (packed >> 4) & 0x01;
-	SPIX_SR->UDR = (packed >> 3) & 0x01;
-	SPIX_SR->CHSIDE = (packed >> 2) & 0x01;
-	SPIX_SR->TXE = (packed >> 1) & 0x01;
-	SPIX_SR->RXNE = (packed >> 0) & 0x01;
+	SPIX_SR_CFG->FRE = (packed >> 8) & 1U;
+	SPIX_SR_CFG->BSY = (packed >> 7) & 1U;
+	SPIX_SR_CFG->OVR = (packed >> 6) & 1U;
+	SPIX_SR_CFG->MODF = (packed >> 5) & 1U;
+	SPIX_SR_CFG->CRCERR = (packed >> 4) & 1U;
+	SPIX_SR_CFG->UDR = (packed >> 3) & 1U;
+	SPIX_SR_CFG->CHSIDE = (packed >> 2) & 1U;
+	SPIX_SR_CFG->TXE = (packed >> 1) & 1U;
+	SPIX_SR_CFG->RXNE = (packed >> 0) & 1U;
 }
 
 // --------------------------------------------------------------------------------------------------------//
 // SPI clock control
 // --------------------------------------------------------------------------------------------------------//
 
-void SPI_ClkCtrl(SPIHandle_st* pSPI_Handle, uint8_t ClkCmd)
+void SPI_ClkCtrl(SPIHandle_st* pSPI_Handle, U8 ClkCmd)
 {
 	if(ClkCmd == SET)
 	{
@@ -164,9 +164,9 @@ void SPI_Reset(SPIHandle_st* pSPI_Handle)
 // SPI register level operations - check for busy, check RX empty, check for errors
 // --------------------------------------------------------------------------------------------------------//
 
-uint8_t SPI_Bsy(SPIHandle_st* pSPI_Handle)
+U8 SPI_Bsy(SPIHandle_st* pSPI_Handle)
 {
-	uint16_t packed = pSPI_Handle->pSPIX->SR;
+	U16 packed = pSPI_Handle->pSPIX->SR;
 	STM32_SPI_SR SPIX_SR;
 
 	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
@@ -177,9 +177,9 @@ uint8_t SPI_Bsy(SPIHandle_st* pSPI_Handle)
 		return 0;
 }
 
-uint8_t SPI_RXMT(SPIHandle_st* pSPI_Handle)
+U8 SPI_RXMT(SPIHandle_st* pSPI_Handle)
 {
-	uint16_t packed = pSPI_Handle->pSPIX->SR;
+	U16 packed = pSPI_Handle->pSPIX->SR;
 	STM32_SPI_SR SPIX_SR;
 
 	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
@@ -190,9 +190,9 @@ uint8_t SPI_RXMT(SPIHandle_st* pSPI_Handle)
 		return 0;
 }
 
-uint8_t SPI_ErrCheck(SPIHandle_st* pSPI_Handle)
+U8 SPI_ErrCheck(SPIHandle_st* pSPI_Handle)
 {
-	uint16_t packed = pSPI_Handle->pSPIX->SR;
+	U16 packed = pSPI_Handle->pSPIX->SR;
 	STM32_SPI_SR SPIX_SR;
 
 	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
@@ -207,50 +207,44 @@ uint8_t SPI_ErrCheck(SPIHandle_st* pSPI_Handle)
 // SPI read write
 // --------------------------------------------------------------------------------------------------------//
 
-uint8_t SPI_Write(SPIHandle_st* pSPI_Handle, uint8_t data)
+U8 SPI_Write(SPIHandle_st* pSPI_Handle, U8 data)
 {
-	uint8_t cnt_spibsy = 0;
-	uint8_t timeout_thres = 254;
+	U8 cnt_spibsy = 0;
 
 	while(SPI_Bsy(pSPI_Handle))
 	{
 		cnt_spibsy++;
-		if(cnt_spibsy > timeout_thres)
+		if(cnt_spibsy > SPI_TIMEOUT_THRES)
 			return 1;
 	}
 
-	pSPI_Handle->pSPIX->CR1 |= 0x4000;				// Set BIDIOE bit 14 to 1 to enable transmit only mode
-
 	if(pSPI_Handle->SPI_Cfg.dff)
-		pSPI_Handle->pSPIX->DR = (uint16_t)data;
+		pSPI_Handle->pSPIX->DR = (U16)data;
 	else
 		pSPI_Handle->pSPIX->DR = data;
 
 	while(SPI_Bsy(pSPI_Handle))
 	{
 		cnt_spibsy++;
-		if(cnt_spibsy > timeout_thres)
+		if(cnt_spibsy > SPI_TIMEOUT_THRES)
 			return 1;
 	}
-
-	pSPI_Handle->pSPIX->CR1 &= ~0x4000;				// Set BIDIOE bit 14 to 0 to enable receive only mode
 
 	return 0;
 
 }
 
-uint16_t SPI_Read(SPIHandle_st* pSPI_Handle)
+U16 SPI_Read(SPIHandle_st* pSPI_Handle)
 {
-	uint8_t cnt_spibsy = 0;
-	uint8_t timeout_thres = 254;
+	U8 cnt_spibsy = 0;
 
 	while(SPI_RXMT(pSPI_Handle))
 	{
 		cnt_spibsy++;
-		if(cnt_spibsy > timeout_thres)
+		if(cnt_spibsy > SPI_TIMEOUT_THRES)
 		return 1;
 	}
 
-	return (uint16_t)pSPI_Handle->pSPIX->DR;
+	return (U16)pSPI_Handle->pSPIX->DR;
 
 }
