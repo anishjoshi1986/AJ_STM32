@@ -109,15 +109,11 @@ void init_stm32timersys()
 
 	TS_TIM6.pBTIMx = pTIM6;
 	TS_TIM6.BTIMx_Cfg.freq = 1/PERIOD_1MS;
-	TS_TIM6.BTIMx_Cfg.mode = 0;
-	TS_TIM6.BTIMx_Cfg.reload = 0;
 	BTIMx_Init(&TS_TIM6);
 	IRQConfig(IRQ_NO_TIM6, SET);
 
 	TS_TIM7.pBTIMx = pTIM7;
 	TS_TIM7.BTIMx_Cfg.freq = 1/PERIOD_10MS;
-	TS_TIM7.BTIMx_Cfg.mode = 0;
-	TS_TIM7.BTIMx_Cfg.reload = 0;
 	BTIMx_Init(&TS_TIM7);
 	IRQConfig(IRQ_NO_TIM7, SET);
 

@@ -14,15 +14,17 @@
 
 #define __vo					volatile
 
-#define TRUE		1
-#define FALSE		0
-#define SET			TRUE
-#define RESET		FALSE
-#define ENABLE		TRUE
-#define DISABLE		FALSE
+#define TRUE					1
+#define FALSE					0
+#define SET						TRUE
+#define RESET					FALSE
+#define ENABLE					TRUE
+#define DISABLE					FALSE
 
 #define PERIOD_100MS			0.1F
 #define PERIOD_10MS				0.01F
 #define PERIOD_1MS				0.001F
+
+#define UINT16_T_MAX			65536
 
 #endif /* HAL_HDR_GENERIC_MACROS_H_ */

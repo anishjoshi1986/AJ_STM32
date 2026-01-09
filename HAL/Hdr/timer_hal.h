@@ -13,6 +13,11 @@
 #define TIM6			(APB1 + 0x1000U)
 #define TIM7			(APB1 + 0x1400U)
 
+#define ARPE_BUF		1
+#define OPM_ENABLE		0
+#define URS_ENABLE		1
+#define UDIS_ENABLE		0
+#define	CNT_ENABLE		1
 typedef struct
 {
 	uint8_t ARPE : 1;
@@ -23,6 +28,8 @@ typedef struct
 
 }STM32_BTIMx_CR1;
 
+#define UDE_ENABLE		0
+#define UIE_ENABLE		0
 typedef struct
 {
 	uint8_t UDE : 1;
@@ -30,6 +37,7 @@ typedef struct
 
 }STM32_BTIMx_DIER;
 
+#define UIF_RESET		0
 typedef struct
 {
 	uint8_t UIF : 1;
@@ -48,6 +56,7 @@ typedef struct
 
 }STM32_BTIMx_PSC;
 
+#define MAX_ARR			10
 typedef struct
 {
 	uint16_t ARR;
@@ -76,9 +85,9 @@ typedef struct
 
 typedef struct
 {
-	uint8_t mode;
-	uint8_t reload;
+	uint8_t interrupt;
 	uint8_t freq;
+
 }BTIMx_Cfg_st;
 
 typedef struct
@@ -89,7 +98,10 @@ typedef struct
 }BTIMx_Handle_st;
 
 uint16_t STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1);
-void STM32_Unpack_BTIMx_CNT(STM32_BTIMx_CR1 *BTIMx_CR1, uint16_t packed);
+void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, uint16_t packed);
+
+uint16_t STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER);
+void STM32_Unpack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER, uint16_t packed);
 
 void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle);
 
