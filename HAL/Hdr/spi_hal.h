@@ -52,7 +52,7 @@ typedef struct
 	U8 CPOL : 1;
 	U8 CPHA : 1;
 
-}STM32_SPI_CR1;
+}STM32_SPI_CR1_Cfg;
 
 typedef struct
 {
@@ -65,7 +65,7 @@ typedef struct
 	U8 TXDMAEN : 1;
 	U8 RXDMAEN : 1;
 
-}STM32_SPI_CR2;
+}STM32_SPI_CR2_Cfg;
 
 typedef struct
 {
@@ -79,7 +79,7 @@ typedef struct
 	U8 TXE : 1;
 	U8 RXNE : 1;
 
-}STM32_SPI_SR;
+}STM32_SPI_SR_Cfg;
 
 typedef struct
 {
@@ -133,8 +133,8 @@ typedef struct
 // SPI register level functions
 // --------------------------------------------------------------------------------------------------------//
 
-static U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1 *SPIX_CR1_CFG);
-static void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed);
+U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1_Cfg *SPIX_CR1_CFG);
+void STM32_Unpack_SPI_SR(STM32_SPI_SR_Cfg *SPIX_SR_CFG, U32 packed);
 
 void SPI_ClkCtrl(SPIHandle_st* pSPI_Handle, U8 ClkCmd);
 void SPI_Init(SPIHandle_st* pSPI_Handle);

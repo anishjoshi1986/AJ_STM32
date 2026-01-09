@@ -11,7 +11,7 @@
 // STM32 SPI pack/unpack registers
 // --------------------------------------------------------------------------------------------------------//
 
-static U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1* SPIX_CR1_CFG)
+U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1_Cfg* SPIX_CR1_CFG)
 {
 	U32 packed = 0;
 
@@ -33,7 +33,7 @@ static U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1* SPIX_CR1_CFG)
 	return packed;
 }
 
-static void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed)
+void STM32_Unpack_SPI_SR(STM32_SPI_SR_Cfg* SPIX_SR_CFG, U32 packed)
 {
 	SPIX_SR_CFG->FRE = (packed >> 8) & 1U;
 	SPIX_SR_CFG->BSY = (packed >> 7) & 1U;
@@ -47,45 +47,6 @@ static void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed)
 }
 
 // --------------------------------------------------------------------------------------------------------//
-// SPI clock control
-// --------------------------------------------------------------------------------------------------------//
-
-void SPI_ClkCtrl(SPIHandle_st* pSPI_Handle, U8 ClkCmd)
-{
-	if(ClkCmd == SET)
-	{
-		if(pSPI_Handle->pSPIX == pSPI1)
-		{
-			SPI1_CLK_EN();
-		}
-		else if(pSPI_Handle->pSPIX == pSPI2)
-		{
-			SPI2_CLK_EN();
-		}
-		else if(pSPI_Handle->pSPIX == pSPI3)
-		{
-			SPI3_CLK_EN();
-		}
-
-	else
-	{
-		if(pSPI_Handle->pSPIX == pSPI1)
-		{
-			SPI1_CLK_DIS();
-		}
-		else if(pSPI_Handle->pSPIX == pSPI2)
-		{
-			SPI2_CLK_DIS();
-		}
-		else if(pSPI_Handle->pSPIX == pSPI3)
-		{
-			SPI3_CLK_DIS();
-		}
-	}
-	}
-}
-
-// --------------------------------------------------------------------------------------------------------//
 // SPI config initialize
 // --------------------------------------------------------------------------------------------------------//
 
@@ -93,7 +54,7 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 {
 	SPI_Reset(pSPI_Handle);
 
-	STM32_SPI_CR1 SPI_CR1_temp;
+	STM32_SPI_CR1_Cfg SPI_CR1_temp;
 	STM32_CLKSPDS clk_speeds = {0};
 
 	// Configure comms type
@@ -131,7 +92,7 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 	SPI_CR1_temp.SPE = 1;
 
 	STM32_Get_CLKSPDS(&clk_speeds);
-	SPI_CR1_temp.BR = clk_speeds.PCLK2/pSPI_Handle->SPI_Cfg.speed;
+	SPI_CR1_temp.BR = clk_speeds.PCLK2_Hz/pSPI_Handle->SPI_Cfg.speed;
 
 	SPI_CR1_temp.MSTR = pSPI_Handle->SPI_Cfg.master;
 
@@ -145,7 +106,7 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 
 void SPI_Reset(SPIHandle_st* pSPI_Handle)
 {
-	STM32_SPI_CR1 SPI_CR1_temp;
+	STM32_SPI_CR1_Cfg SPI_CR1_temp;
 
 	SPI_CR1_temp.MSTR = 0;
 	SPI_CR1_temp.BIDIMODE = 0;
@@ -167,7 +128,7 @@ void SPI_Reset(SPIHandle_st* pSPI_Handle)
 U8 SPI_Bsy(SPIHandle_st* pSPI_Handle)
 {
 	U16 packed = pSPI_Handle->pSPIX->SR;
-	STM32_SPI_SR SPIX_SR;
+	STM32_SPI_SR_Cfg SPIX_SR;
 
 	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
 
@@ -180,7 +141,7 @@ U8 SPI_Bsy(SPIHandle_st* pSPI_Handle)
 U8 SPI_RXMT(SPIHandle_st* pSPI_Handle)
 {
 	U16 packed = pSPI_Handle->pSPIX->SR;
-	STM32_SPI_SR SPIX_SR;
+	STM32_SPI_SR_Cfg SPIX_SR;
 
 	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
 
@@ -193,7 +154,7 @@ U8 SPI_RXMT(SPIHandle_st* pSPI_Handle)
 U8 SPI_ErrCheck(SPIHandle_st* pSPI_Handle)
 {
 	U16 packed = pSPI_Handle->pSPIX->SR;
-	STM32_SPI_SR SPIX_SR;
+	STM32_SPI_SR_Cfg SPIX_SR;
 
 	STM32_Unpack_SPI_SR(&SPIX_SR, packed);
 

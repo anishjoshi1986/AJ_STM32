@@ -7,12 +7,12 @@
 
 #include "../Hdr/stm32_hal.h"
 
-float MSIRANGE_ARR[7] = {65.536, 131.072, 262.144, 524.288, 1048, 2097, 4194};
-float PLLMUL_ARR[9] = {3, 4, 6, 8, 12, 16, 24, 32, 48};
-float HPRE_ARR[9] = {1, 2, 4, 8, 16, 64, 128, 256, 512};
-float PPRE_ARR[5] = {1, 2, 4, 8, 16};
+U32 MSIRANGE_Hz_ARR[7] = {65536, 131072, 262144, 524288, 1048000, 2097000, 4194000};
+U8 PLLMUL_ARR[9] = {3, 4, 6, 8, 12, 16, 24, 32, 48};
+U16 HPRE_ARR[9] = {1, 2, 4, 8, 16, 64, 128, 256, 512};
+U8 PPRE_ARR[5] = {1, 2, 4, 8, 16};
 
-U32 STM32_Pack_RCC_CR(STM32_RCC_CR *RCC_CR_CFG)
+U32 STM32_Pack_RCC_CR(STM32_RCC_CR_Cfg *RCC_CR_CFG)
 {
 	U32 packed = 0;
 
@@ -27,7 +27,7 @@ U32 STM32_Pack_RCC_CR(STM32_RCC_CR *RCC_CR_CFG)
 	return packed;
 }
 
-void STM32_UnPack_RCC_CR(STM32_RCC_CR *RCC_CR_CFG, U32 packed)
+void STM32_UnPack_RCC_CR(STM32_RCC_CR_Cfg *RCC_CR_CFG, U32 packed)
 {
 	RCC_CR_CFG->RTCPRE = (packed >> 29) & 0x03U;
 	RCC_CR_CFG->CSSON = (packed >> 28) & 1U;
@@ -44,7 +44,7 @@ void STM32_UnPack_RCC_CR(STM32_RCC_CR *RCC_CR_CFG, U32 packed)
 }
 
 
-U32 STM32_Pack_RCC_ICSCR(STM32_RCC_ICSCR *RCC_ICSCR_CFG)
+U32 STM32_Pack_RCC_ICSCR(STM32_RCC_ICSCR_Cfg *RCC_ICSCR_CFG)
 {
 	U32 packed = 0;
 
@@ -55,7 +55,7 @@ U32 STM32_Pack_RCC_ICSCR(STM32_RCC_ICSCR *RCC_ICSCR_CFG)
 	return packed;
 }
 
-void STM32_UnPack_RCC_ICSCR(STM32_RCC_ICSCR *RCC_ICSCR_CFG, U32 packed)
+void STM32_UnPack_RCC_ICSCR(STM32_RCC_ICSCR_Cfg *RCC_ICSCR_CFG, U32 packed)
 {
 	RCC_ICSCR_CFG->MSITRIM = (packed >> 24) & 0xFF;
 	RCC_ICSCR_CFG->MSIRANGE = (packed >> 13) & 0x07U;
@@ -64,7 +64,7 @@ void STM32_UnPack_RCC_ICSCR(STM32_RCC_ICSCR *RCC_ICSCR_CFG, U32 packed)
 }
 
 
-U32 STM32_Pack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR_CFG)
+U32 STM32_Pack_RCC_CFGR(STM32_RCC_CFGR_Cfg *RCC_CFGR_CFG)
 {
 	U32 packed = 0;
 
@@ -81,7 +81,7 @@ U32 STM32_Pack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR_CFG)
 	return packed;
 }
 
-void STM32_UnPack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR_CFG, U32 packed)
+void STM32_UnPack_RCC_CFGR(STM32_RCC_CFGR_Cfg *RCC_CFGR_CFG, U32 packed)
 {
 	RCC_CFGR_CFG->MCOPRE = (packed >> 28) & 0x07U;
 	RCC_CFGR_CFG->MCOSEL = (packed >> 24) & 0x07U;
@@ -97,7 +97,7 @@ void STM32_UnPack_RCC_CFGR(STM32_RCC_CFGR *RCC_CFGR_CFG, U32 packed)
 }
 
 
-U32 STM32_Pack_RCC_AHBENR(STM32_RCC_AHBENR *RCC_AHBENR_CFG)
+U32 STM32_Pack_RCC_AHBENR(STM32_RCC_AHBENR_Cfg *RCC_AHBENR_CFG)
 {
 	U32 packed = 0;
 
@@ -120,7 +120,7 @@ U32 STM32_Pack_RCC_AHBENR(STM32_RCC_AHBENR *RCC_AHBENR_CFG)
 	return packed;
 }
 
-void STM32_UnPack_RCC_AHBENR(STM32_RCC_AHBENR *RCC_AHBENR_CFG, U32 packed)
+void STM32_UnPack_RCC_AHBENR(STM32_RCC_AHBENR_Cfg *RCC_AHBENR_CFG, U32 packed)
 {
 	RCC_AHBENR_CFG->FSMCEN = (packed >> 30) & 1U;
 	RCC_AHBENR_CFG->AESEN = (packed >> 27) & 1U;
@@ -140,7 +140,7 @@ void STM32_UnPack_RCC_AHBENR(STM32_RCC_AHBENR *RCC_AHBENR_CFG, U32 packed)
 }
 
 
-U32 STM32_Pack_RCC_APB2ENR(STM32_RCC_APB2ENR *RCC_APB2ENR_CFG)
+U32 STM32_Pack_RCC_APB2ENR(STM32_RCC_APB2ENR_Cfg *RCC_APB2ENR_CFG)
 {
 	U32 packed = 0;
 
@@ -156,7 +156,7 @@ U32 STM32_Pack_RCC_APB2ENR(STM32_RCC_APB2ENR *RCC_APB2ENR_CFG)
 	return packed;
 }
 
-void STM32_UnPack_RCC_APB2ENR(STM32_RCC_APB2ENR *RCC_APB2ENR_CFG, U32 packed)
+void STM32_UnPack_RCC_APB2ENR(STM32_RCC_APB2ENR_Cfg *RCC_APB2ENR_CFG, U32 packed)
 {
 	RCC_APB2ENR_CFG->USART1EN = (packed >> 15) & 1U;
 	RCC_APB2ENR_CFG->SPIEN = (packed >> 12) & 1U;
@@ -169,7 +169,7 @@ void STM32_UnPack_RCC_APB2ENR(STM32_RCC_APB2ENR *RCC_APB2ENR_CFG, U32 packed)
 }
 
 
-U32 STM32_Pack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR_CFG)
+U32 STM32_Pack_RCC_APB1ENR(STM32_RCC_APB1ENR_Cfg *RCC_APB1ENR_CFG)
 {
 	U32 packed = 0;
 
@@ -197,7 +197,7 @@ U32 STM32_Pack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR_CFG)
 	return packed;
 }
 
-void STM32_UnPack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR_CFG, U32 packed)
+void STM32_UnPack_RCC_APB1ENR(STM32_RCC_APB1ENR_Cfg *RCC_APB1ENR_CFG, U32 packed)
 {
 	RCC_APB1ENR_CFG->COMPEN = (packed >> 31) & 1U;
 	RCC_APB1ENR_CFG->DACEN = (packed >> 29) & 1U;
@@ -222,9 +222,9 @@ void STM32_UnPack_RCC_APB1ENR(STM32_RCC_APB1ENR *RCC_APB1ENR_CFG, U32 packed)
 
 }
 
-void STM32_ClkSys_Init(STM32_RCC_CR *RCC_CR_CFG, STM32_RCC_CFGR *RCC_CFGR_CFG, \
-		STM32_RCC_AHBENR *RCC_AHBENR_CFG, STM32_RCC_APB1ENR *RCC_APB1ENR_CFG, \
-		STM32_RCC_APB2ENR *RCC_APB2ENR_CFG)
+void STM32_ClkSys_Init(STM32_RCC_CR_Cfg *RCC_CR_CFG, STM32_RCC_CFGR_Cfg *RCC_CFGR_CFG, \
+		STM32_RCC_AHBENR_Cfg *RCC_AHBENR_CFG, STM32_RCC_APB1ENR_Cfg *RCC_APB1ENR_CFG, \
+		STM32_RCC_APB2ENR_Cfg *RCC_APB2ENR_CFG)
 {
 	pRCC->CR = (pRCC->CR & ~RCC_CR_MASK) | (STM32_Pack_RCC_CR(RCC_CR_CFG) & RCC_CR_MASK);
 
@@ -242,42 +242,42 @@ void STM32_Get_CLKSPDS(STM32_CLKSPDS *clk_speeds)
 {
 	if(MSI_ENABLE)
 	{
-		clk_speeds->SYSCLK = MSIRANGE_ARR[MSIRANGE_IND];
+		clk_speeds->SYSCLK_Hz = MSIRANGE_Hz_ARR[MSIRANGE_IND];
 	}
 
 	if(HSI_ENABLE)
 	{
-		clk_speeds->SYSCLK = HSI_FREQ;
+		clk_speeds->SYSCLK_Hz = HSI_FREQ_Hz;
 	}
 
 	if(HSE_ENABLE)
 	{
-		clk_speeds->SYSCLK = HSE_FREQ;
+		clk_speeds->SYSCLK_Hz = HSE_FREQ_Hz;
 	}
 
 	if(PLL_ENABLE)
 	{
 		if(PLLSRC_VAL)
-			clk_speeds->SYSCLK = (HSE_FREQ * PLLMUL_ARR[PLLMUL_IND]) /  (PLLDIV_VAL + 1);
+			clk_speeds->SYSCLK_Hz = (HSE_FREQ_Hz * PLLMUL_ARR[PLLMUL_IND]) /  (PLLDIV_VAL + 1);
 		else
-			clk_speeds->SYSCLK = (HSI_FREQ * PLLMUL_ARR[PLLMUL_IND]) /  (PLLDIV_VAL + 1);
+			clk_speeds->SYSCLK_Hz = (HSI_FREQ_Hz * PLLMUL_ARR[PLLMUL_IND]) /  (PLLDIV_VAL + 1);
 	}
 
-	clk_speeds->ADCCLK = HSI_FREQ;
+	clk_speeds->ADCCLK_Hz = HSI_FREQ_Hz;
 
-	clk_speeds->HCLK = clk_speeds->SYSCLK / HPRE_ARR[HPRE_IND];
+	clk_speeds->HCLK_Hz = clk_speeds->SYSCLK_Hz / HPRE_ARR[HPRE_IND];
 
-	clk_speeds->PCLK1 = clk_speeds->HCLK / PPRE_ARR[PPRE1_IND];
+	clk_speeds->PCLK1_Hz = clk_speeds->HCLK_Hz / PPRE_ARR[PPRE1_IND];
 
-	clk_speeds->PCLK2 = clk_speeds->HCLK / PPRE_ARR[PPRE2_IND];
+	clk_speeds->PCLK2_Hz = clk_speeds->HCLK_Hz / PPRE_ARR[PPRE2_IND];
 
 	if(PPRE_ARR[PPRE1_IND] == 1)
-		clk_speeds->TIMxCLK1 = clk_speeds->PCLK1;
+		clk_speeds->TIMxCLK1_Hz = clk_speeds->PCLK1_Hz;
 	else
-		clk_speeds->TIMxCLK1 = 2 * clk_speeds->PCLK1;
+		clk_speeds->TIMxCLK1_Hz = 2U * clk_speeds->PCLK1_Hz;
 
 	if(PPRE_ARR[PPRE2_IND] == 1)
-		clk_speeds->TIMxCLK2 = clk_speeds->PCLK2;
+		clk_speeds->TIMxCLK2_Hz = clk_speeds->PCLK2_Hz;
 	else
-		clk_speeds->TIMxCLK2 = 2 * clk_speeds->PCLK2;
+		clk_speeds->TIMxCLK2_Hz = 2U * clk_speeds->PCLK2_Hz;
 }

@@ -7,7 +7,7 @@
 
 #include "../Hdr/timer_hal.h"
 
-static U32 STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1)
+U32 STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1_Cfg *BTIMx_CR1)
 {
 	U32 packed = 0;
 
@@ -20,7 +20,7 @@ static U32 STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1)
 	return packed;
 }
 
-static void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, U32 packed)
+void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1_Cfg *BTIMx_CR1, U32 packed)
 {
 	BTIMx_CR1->ARPE = (packed >> 7) & 1U;
 	BTIMx_CR1->OPM = (packed >> 3) & 1U;
@@ -30,7 +30,7 @@ static void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, U32 packed)
 
 }
 
-static U32 STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER)
+U32 STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER_Cfg *BTIMx_DIER)
 {
 	U32 packed = 0;
 
@@ -40,7 +40,7 @@ static U32 STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER)
 	return packed;
 }
 
-static void STM32_Unpack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER, U32 packed)
+void STM32_Unpack_BTIMx_DIER(STM32_BTIMx_DIER_Cfg *BTIMx_DIER, U32 packed)
 {
 	BTIMx_DIER->UDE = (packed >> 8) & 1U;
 	BTIMx_DIER->UIE = (packed >> 0) & 1U;
@@ -50,9 +50,11 @@ static void STM32_Unpack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER, U32 packed)
 void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle)
 {
 	STM32_CLKSPDS clk_speeds = {0};
+	STM32_BTIMx_CR1_Cfg BTIMx_CR1 = {0};
+	STM32_BTIMx_DIER_Cfg BTIMx_DIER = {0};
+
 	STM32_Get_CLKSPDS(&clk_speeds);
 
-	STM32_BTIMx_CR1 BTIMx_CR1 = {0};
 	BTIMx_CR1.ARPE = ARPEBUF_ENABLE;
 	BTIMx_CR1.OPM = OPM_ENABLE;
 	BTIMx_CR1.URS = URS_ENABLE;
@@ -61,17 +63,18 @@ void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle)
 	U32 temp = pBTIMx_Handle->pBTIMx->CR1;
 	pBTIMx_Handle->pBTIMx->CR1 = (temp & ~BTIMx_CR1_MASK) | (STM32_Pack_BTIMx_CR1(&BTIMx_CR1) & BTIMx_CR1_MASK);
 
-	U32 prescaler = clk_speeds.TIMxCLK1 / (pBTIMx_Handle->BTIMx_Cfg.freq) / MAX_ARR;
+	U32 prescaler = clk_speeds.TIMxCLK1_Hz / (pBTIMx_Handle->BTIMx_Cfg.freq) / MAX_ARR;
 	if(prescaler < UINT16_T_MAX)
 		pBTIMx_Handle->pBTIMx->PSC = prescaler;
 	else
 		pBTIMx_Handle->pBTIMx->PSC = UINT16_T_MAX;
 
-	pBTIMx_Handle->pBTIMx->ARR = MAX_ARR;
+	pBTIMx_Handle->pBTIMx->ARR = (U32)MAX_ARR;
 
-	STM32_BTIMx_DIER BTIMx_DIER = {0};
+
 	BTIMx_DIER.UDE = UDE_ENABLE;
 	BTIMx_DIER.UIE = UIE_ENABLE;
-	pBTIMx_Handle->pBTIMx->DIER = STM32_Pack_BTIMx_DIER(&BTIMx_DIER);
+	temp = pBTIMx_Handle->pBTIMx->DIER;
+	pBTIMx_Handle->pBTIMx->DIER = (temp & ~BTIMx_DIER_MASK) | (STM32_Pack_BTIMx_DIER(&BTIMx_DIER) & BTIMx_DIER_MASK);
 
 }
