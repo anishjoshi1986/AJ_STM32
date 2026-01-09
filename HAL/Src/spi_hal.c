@@ -11,7 +11,7 @@
 // STM32 SPI pack/unpack registers
 // --------------------------------------------------------------------------------------------------------//
 
-U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1* SPIX_CR1_CFG)
+static U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1* SPIX_CR1_CFG)
 {
 	U32 packed = 0;
 
@@ -33,7 +33,7 @@ U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1* SPIX_CR1_CFG)
 	return packed;
 }
 
-void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed)
+static void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed)
 {
 	SPIX_SR_CFG->FRE = (packed >> 8) & 1U;
 	SPIX_SR_CFG->BSY = (packed >> 7) & 1U;

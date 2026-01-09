@@ -278,6 +278,7 @@ typedef struct
 }STM32_CLKSPDS;
 
 void STM32_Get_CLKSPDS(STM32_CLKSPDS *clk_speeds);
+void STM32_ClkSys_Init();
 
 // --------------------------------------------------------------------------------------------------------//
 // SYSCFG register definition

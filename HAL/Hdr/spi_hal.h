@@ -133,8 +133,8 @@ typedef struct
 // SPI register level functions
 // --------------------------------------------------------------------------------------------------------//
 
-U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1 *SPIX_CR1_CFG);
-void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed);
+static U32 STM32_Pack_SPI_CR1(STM32_SPI_CR1 *SPIX_CR1_CFG);
+static void STM32_Unpack_SPI_SR(STM32_SPI_SR* SPIX_SR_CFG, U32 packed);
 
 void SPI_ClkCtrl(SPIHandle_st* pSPI_Handle, U8 ClkCmd);
 void SPI_Init(SPIHandle_st* pSPI_Handle);

@@ -7,7 +7,7 @@
 
 #include "../Hdr/timer_hal.h"
 
-U32 STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1)
+static U32 STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1)
 {
 	U32 packed = 0;
 
@@ -20,7 +20,7 @@ U32 STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1)
 	return packed;
 }
 
-void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, U32 packed)
+static void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, U32 packed)
 {
 	BTIMx_CR1->ARPE = (packed >> 7) & 1U;
 	BTIMx_CR1->OPM = (packed >> 3) & 1U;
@@ -30,7 +30,7 @@ void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, U32 packed)
 
 }
 
-U32 STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER)
+static U32 STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER)
 {
 	U32 packed = 0;
 
@@ -40,7 +40,7 @@ U32 STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER)
 	return packed;
 }
 
-void STM32_Unpack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER, U32 packed)
+static void STM32_Unpack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER, U32 packed)
 {
 	BTIMx_DIER->UDE = (packed >> 8) & 1U;
 	BTIMx_DIER->UIE = (packed >> 0) & 1U;

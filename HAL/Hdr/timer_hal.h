@@ -101,11 +101,11 @@ typedef struct
 
 }BTIMx_Handle_st;
 
-U32 STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1);
-void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, U32 packed);
+static U32 STM32_Pack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1);
+static void STM32_Unpack_BTIMx_CR1(STM32_BTIMx_CR1 *BTIMx_CR1, U32 packed);
 
-U32 STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER);
-void STM32_Unpack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER, U32 packed);
+static U32 STM32_Pack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER);
+static void STM32_Unpack_BTIMx_DIER(STM32_BTIMx_DIER *BTIMx_DIER, U32 packed);
 
 void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle);
 
