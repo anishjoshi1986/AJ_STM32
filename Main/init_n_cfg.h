@@ -8,6 +8,8 @@
 #ifndef INIT_N_CFG_H_
 #define INIT_N_CFG_H_
 
+#include "../HAL/Hdr/interrupt_hal.h"
+
 #include "../Drivers/Hdr/gyro1_drv.h"
 #include "../HAL/Hdr/gpio_hal.h"
 #include "../HAL/Hdr/spi_hal.h"
@@ -86,5 +88,6 @@ void init_stm32timersys();
 void init_stm32spi();
 void init_stm32gpio();
 void init_gyro1();
+void IRQ_init();
 
 #endif /* MAIN_INIT_N_CFG_H_ */

@@ -25,6 +25,6 @@
 #define PERIOD_10MS				0.01F
 #define PERIOD_1MS				0.001F
 
-#define UINT16_T_MAX			65536
+#define UINT16_T_MAX			(uint16_t)65536
 
 #endif /* HAL_HDR_GENERIC_MACROS_H_ */

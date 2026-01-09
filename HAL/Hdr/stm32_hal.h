@@ -79,7 +79,8 @@ typedef struct
 	uint8_t HSION : 1;
 
 }STM32_RCC_CR;
-#define RCC_CR_MASK		((0x03 << 29) | (0x01 << 28) | (0x01 << 24) | (0x01 << 18) | (0x01 << 16) | (0x01 << 8) | (0x01 << 0))
+#define RCC_CR_MASK		((0x03 << 29) | (0x01 << 28) | (0x01 << 24) | \
+						(0x01 << 18) | (0x01 << 16) | (0x01 << 8) | (0x01 << 0))
 
 
 // RCC ICSCR Cals
@@ -120,7 +121,9 @@ typedef struct
 	uint8_t SW : 2;
 
 }STM32_RCC_CFGR;
-#define RCC_CFGR_MASK		((0x07 << 28) | (0x07 << 24) | (0x03 << 22) | (0x0F << 18) | (0x01 << 16) | (0x07 << 11) | (0x07 << 8) | (0x0F << 4) | (0x03 << 0))
+#define RCC_CFGR_MASK		((0x07 << 28) | (0x07 << 24) | (0x03 << 22) | \
+							(0x0F << 18) | (0x01 << 16) | (0x07 << 11) | \
+							(0x07 << 8) | (0x0F << 4) | (0x03 << 0))
 
 
 // RCC_AHBENR Cals
@@ -156,6 +159,11 @@ typedef struct
 	uint8_t GPIOAEN : 1;
 
 }STM32_RCC_AHBENR;
+#define RCC_AHBENR_MASK			((0x01 << 30) | (0x01 << 27) | (0x01 << 25) | \
+								(0x01 << 24) | (0x01 << 15) | (0x01 << 12) | \
+								(0x01 << 7) | (0x01 << 6) | (0x01 << 5) | \
+								(0x01 << 4) | (0x01 << 3) | (0x01 << 2) | \
+								(0x01 << 1) | (0x01 << 0))
 
 
 // RCC APB2ENR Cals
@@ -179,6 +187,9 @@ typedef struct
 	uint8_t SYSCFGEN : 1;
 
 }STM32_RCC_APB2ENR;
+#define RCC_APB2ENR_MASK			((0x01 << 14) | (0x01 << 12) | (0x01 << 11) | \
+									(0x01 << 9) | (0x01 << 4) | (0x01 << 3) | \
+									(0x01 << 2) | (0x01 << 0))
 
 
 // RCC APB1ENR Cals
@@ -226,6 +237,13 @@ typedef struct
 	uint8_t TIM2EN : 1;
 
 }STM32_RCC_APB1ENR;
+#define RCC_APB1ENR_MASK			((0x01 << 31) | (0x01 << 29) | (0x01 << 28) | \
+									(0x01 << 23) | (0x01 << 22) | (0x01 << 21) | \
+									(0x01 << 20) | (0x01 << 19) | (0x01 << 18) | \
+									(0x01 << 17) | (0x01 << 15) | (0x01 << 14) | \
+									(0x01 << 11) | (0x01 << 9) | (0x01 << 5) | \
+									(0x01 << 4) | (0x01 << 3) | (0x01 << 2) | \
+									(0x01 << 1) | (0x01 << 0))
 
 
 // Pack - Unpack functions

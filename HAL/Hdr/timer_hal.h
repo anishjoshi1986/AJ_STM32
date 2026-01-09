@@ -10,14 +10,14 @@
 
 #include "stm32_hal.h"
 
-#define TIM6			(APB1 + 0x1000U)
-#define TIM7			(APB1 + 0x1400U)
+#define TIM6				(APB1 + 0x1000U)
+#define TIM7				(APB1 + 0x1400U)
 
-#define ARPE_BUF		1
-#define OPM_ENABLE		0
-#define URS_ENABLE		1
-#define UDIS_ENABLE		0
-#define	CNT_ENABLE		1
+#define ARPEBUF_ENABLE		1
+#define OPM_ENABLE			0
+#define URS_ENABLE			1
+#define UDIS_ENABLE			0
+#define	CNT_ENABLE			1
 typedef struct
 {
 	uint8_t ARPE : 1;
@@ -86,7 +86,7 @@ typedef struct
 typedef struct
 {
 	uint8_t interrupt;
-	uint8_t freq;
+	uint16_t freq;
 
 }BTIMx_Cfg_st;
 
