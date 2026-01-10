@@ -31,7 +31,7 @@ typedef struct
 							(1U << 1) | (1U << 0))
 
 #define UDE_ENABLE		0U
-#define UIE_ENABLE		0U
+#define UIE_ENABLE		1U
 typedef struct
 {
 	U8 UDE : 1;

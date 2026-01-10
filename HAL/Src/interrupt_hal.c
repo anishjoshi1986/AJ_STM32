@@ -28,15 +28,15 @@ void IRQConfig(uint8_t IRQn, uint8_t En)
 	{
 		if(IRQn <= 31)
 		{
-			*NVIC_ISER0 &= (1 << IRQn);
+			*NVIC_ICER0 |= (1 << IRQn);
 		}
 		else if(IRQn > 31 && IRQn <= 63)
 		{
-			*NVIC_ISER1 &= (1 << (IRQn % 32));
+			*NVIC_ICER1 |= (1 << (IRQn % 32));
 		}
 		else if(IRQn > 63)
 		{
-			*NVIC_ISER2 &= (1 << (IRQn % 32));
+			*NVIC_ICER2 |= (1 << (IRQn % 32));
 		}
 	}
 }

@@ -55,15 +55,7 @@ void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle)
 
 	STM32_Get_CLKSPDS(&clk_speeds);
 
-	BTIMx_CR1.ARPE = ARPEBUF_ENABLE;
-	BTIMx_CR1.OPM = OPM_ENABLE;
-	BTIMx_CR1.URS = URS_ENABLE;
-	BTIMx_CR1.UDIS = UDIS_ENABLE;
-	BTIMx_CR1.CEN = CNT_ENABLE;
-	U32 temp = pBTIMx_Handle->pBTIMx->CR1;
-	pBTIMx_Handle->pBTIMx->CR1 = (temp & ~BTIMx_CR1_MASK) | (STM32_Pack_BTIMx_CR1(&BTIMx_CR1) & BTIMx_CR1_MASK);
-
-	U32 prescaler = clk_speeds.TIMxCLK1_Hz / (pBTIMx_Handle->BTIMx_Cfg.freq) / MAX_ARR;
+	U32 prescaler = clk_speeds.TIMxCLK1_Hz / (pBTIMx_Handle->BTIMx_Cfg.freq * MAX_ARR) - 1U;
 	if(prescaler < UINT16_T_MAX)
 		pBTIMx_Handle->pBTIMx->PSC = prescaler;
 	else
@@ -74,7 +66,16 @@ void BTIMx_Init(BTIMx_Handle_st *pBTIMx_Handle)
 
 	BTIMx_DIER.UDE = UDE_ENABLE;
 	BTIMx_DIER.UIE = UIE_ENABLE;
-	temp = pBTIMx_Handle->pBTIMx->DIER;
+	U32 temp = pBTIMx_Handle->pBTIMx->DIER;
 	pBTIMx_Handle->pBTIMx->DIER = (temp & ~BTIMx_DIER_MASK) | (STM32_Pack_BTIMx_DIER(&BTIMx_DIER) & BTIMx_DIER_MASK);
+
+
+	BTIMx_CR1.ARPE = ARPEBUF_ENABLE;
+	BTIMx_CR1.OPM = OPM_ENABLE;
+	BTIMx_CR1.URS = URS_ENABLE;
+	BTIMx_CR1.UDIS = UDIS_ENABLE;
+	BTIMx_CR1.CEN = CNT_ENABLE;
+	temp = pBTIMx_Handle->pBTIMx->CR1;
+	pBTIMx_Handle->pBTIMx->CR1 = (temp & ~BTIMx_CR1_MASK) | (STM32_Pack_BTIMx_CR1(&BTIMx_CR1) & BTIMx_CR1_MASK);
 
 }

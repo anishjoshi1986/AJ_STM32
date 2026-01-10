@@ -29,6 +29,8 @@ int main(void)
 
 	IRQ_init();
 
+	// Multiple clocks accidentally turned ON
+
 
 	while(1)
 	{
