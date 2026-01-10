@@ -12,8 +12,6 @@ int main(void)
 {
 	init_stm32clksys();
 
-	init_stm32timersys();
-
 	if(SPI1_ENABLE)
 	{
 		init_stm32spi();
@@ -28,6 +26,8 @@ int main(void)
 	}
 
 	IRQ_init();
+
+	init_stm32timersys();
 
 	// Multiple clocks accidentally turned ON
 
