@@ -199,7 +199,7 @@ void init_gyro1()
 	U8 reg4_w_status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG4_ADDR, Gyro1_Pack_CTRL_REG4(&CTRL_REG4));
 	U8 reg5_w_status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG5_ADDR, Gyro1_Pack_CTRL_REG5(&CTRL_REG5));
 
-	U8 err = !(reg1_w_status && reg2_w_status && reg3_w_status && reg4_w_status && reg5_w_status);
+	U8 err = !(reg1_w_status & reg2_w_status & reg3_w_status & reg4_w_status & reg5_w_status);
 
 	printf("%d",err);
 
