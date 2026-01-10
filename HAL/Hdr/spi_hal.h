@@ -147,4 +147,6 @@ U8 SPI_ErrCheck(SPIHandle_st* pSPI_Handle);
 U8 SPI_Write(SPIHandle_st* pSPI_Handle, U8 data);
 uint16_t SPI_Read(SPIHandle_st* pSPI_Handle);
 
+U8 find_ind(U16 value);
+
 #endif

@@ -118,7 +118,7 @@ void init_stm32spi()
 	SPI1_Handle.SPI_Cfg.master = TRUE;
 	SPI1_Handle.SPI_Cfg.bustype = SPI_BUSTYPE_HDX;
 	SPI1_Handle.SPI_Cfg.rxonly = FALSE;
-	SPI1_Handle.SPI_Cfg.speed = 7;
+	SPI1_Handle.SPI_Cfg.speed = SPI1_BR;
 	SPI1_Handle.SPI_Cfg.dff = FALSE;
 	SPI1_Handle.SPI_Cfg.cpha = TRUE;
 	SPI1_Handle.SPI_Cfg.cpol = TRUE;
