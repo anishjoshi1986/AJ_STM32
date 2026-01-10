@@ -55,7 +55,7 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 {
 	SPI_Reset(pSPI_Handle);
 
-	STM32_SPI_CR1_Cfg SPI_CR1_temp;
+	STM32_SPI_CR1_Cfg SPI_CR1_temp = {0};
 
 	// Configure comms type
 	if(pSPI_Handle->SPI_Cfg.bustype == SPI_BUSTYPE_FDX)							// Full Duplex
@@ -105,16 +105,7 @@ void SPI_Init(SPIHandle_st* pSPI_Handle)
 
 void SPI_Reset(SPIHandle_st* pSPI_Handle)
 {
-	STM32_SPI_CR1_Cfg SPI_CR1_temp;
-
-	SPI_CR1_temp.MSTR = 0;
-	SPI_CR1_temp.BIDIMODE = 0;
-	SPI_CR1_temp.RXONLY = 0;
-	SPI_CR1_temp.BR = 0;
-	SPI_CR1_temp.DFF = 0;									// Data frame format
-	SPI_CR1_temp.CPOL = 0;
-	SPI_CR1_temp.CPHA = 0;
-	SPI_CR1_temp.CRCEN = 0;
+	STM32_SPI_CR1_Cfg SPI_CR1_temp = {0};
 
 	pSPI_Handle->pSPIX->CR1 = STM32_Pack_SPI_CR1(&SPI_CR1_temp);
 
@@ -183,13 +174,6 @@ U8 SPI_Write(SPIHandle_st* pSPI_Handle, U8 data)
 	else
 		pSPI_Handle->pSPIX->DR = data;
 
-	while(SPI_Bsy(pSPI_Handle))
-	{
-		cnt_spibsy++;
-		if(cnt_spibsy > SPI_TIMEOUT_THRES)
-			return 1;
-	}
-
 	return 0;
 
 }
@@ -202,7 +186,7 @@ U16 SPI_Read(SPIHandle_st* pSPI_Handle)
 	{
 		cnt_spibsy++;
 		if(cnt_spibsy > SPI_TIMEOUT_THRES)
-		return 1;
+		return 0xFFFF;
 	}
 
 	return (U16)pSPI_Handle->pSPIX->DR;
