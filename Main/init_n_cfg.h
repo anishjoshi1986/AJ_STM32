@@ -19,8 +19,8 @@
 #define TIM3_ENABLE						0U
 #define TIM4_ENABLE						0U
 #define TIM5_ENABLE						0U
-#define TIM6_ENABLE						0U
-#define TIM7_ENABLE						0U
+#define TIM6_ENABLE						1U
+#define TIM7_ENABLE						1U
 #define TIM9_ENABLE						0U
 #define TIM10_ENABLE					0U
 #define TIM11_ENABLE					0U

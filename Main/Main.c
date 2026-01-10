@@ -10,7 +10,6 @@
 
 int main(void)
 {
-
 	init_stm32clksys();
 
 	init_stm32timersys();
@@ -27,6 +26,8 @@ int main(void)
 	{
 		init_gyro1();
 	}
+
+	IRQ_init();
 
 
 	while(1)

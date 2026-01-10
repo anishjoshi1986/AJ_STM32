@@ -21,16 +21,16 @@
 #define I16						int16_t
 #define I32						int32_t
 
-#define TRUE					(U8)1
-#define FALSE					(U8)0
+#define TRUE					1U
+#define FALSE					0U
 #define SET						TRUE
 #define RESET					FALSE
 #define ENABLE					TRUE
 #define DISABLE					FALSE
 
-#define PERIOD_100MS			0.1F
-#define PERIOD_10MS				0.01F
-#define PERIOD_1MS				0.001F
+#define FREQ_100MS				10U
+#define FREQ_10MS				100U
+#define FREQ_1MS				1000U
 
 #define UINT16_T_MAX			(U32)65536
 

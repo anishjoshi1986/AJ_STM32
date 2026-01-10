@@ -101,11 +101,11 @@ void init_stm32timersys()
 	BTIMx_Handle_st TS_TIM7_CFG;
 
 	TS_TIM6_CFG.pBTIMx = pTIM6;
-	TS_TIM6_CFG.BTIMx_Cfg.freq = (U16)(1/PERIOD_1MS);
+	TS_TIM6_CFG.BTIMx_Cfg.freq = (U16)FREQ_1MS;
 	BTIMx_Init(&TS_TIM6_CFG);
 
 	TS_TIM7_CFG.pBTIMx = pTIM7;
-	TS_TIM7_CFG.BTIMx_Cfg.freq = (U16)(1/PERIOD_10MS);
+	TS_TIM7_CFG.BTIMx_Cfg.freq = (U16)FREQ_10MS;
 	BTIMx_Init(&TS_TIM7_CFG);
 
 }
@@ -193,13 +193,14 @@ void init_gyro1()
 	CTRL_REG5.INT_Sel = 0x01;
 	CTRL_REG5.Out_Sel = 0x01;
 
-	uint8_t Gyro1_Init_Status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG1_ADDR, Gyro1_Pack_CTRL_REG1(&CTRL_REG1)) ||
-			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG2_ADDR, Gyro1_Pack_CTRL_REG2(&CTRL_REG2)) ||
-			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG3_ADDR, Gyro1_Pack_CTRL_REG3(&CTRL_REG3)) ||
-			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG4_ADDR, Gyro1_Pack_CTRL_REG4(&CTRL_REG4)) ||
-			Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG5_ADDR, Gyro1_Pack_CTRL_REG5(&CTRL_REG5));
+	U8 reg1_w_status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG1_ADDR, Gyro1_Pack_CTRL_REG1(&CTRL_REG1));
+	U8 reg2_w_status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG2_ADDR, Gyro1_Pack_CTRL_REG2(&CTRL_REG2));
+	U8 reg3_w_status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG3_ADDR, Gyro1_Pack_CTRL_REG3(&CTRL_REG3));
+	U8 reg4_w_status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG4_ADDR, Gyro1_Pack_CTRL_REG4(&CTRL_REG4));
+	U8 reg5_w_status = Gyro1_Write(&Gyro1_Handle, GYRO1_CTRL_REG5_ADDR, Gyro1_Pack_CTRL_REG5(&CTRL_REG5));
 
-	uint8_t err = !Gyro1_Init_Status;
+	U8 err = !(reg1_w_status && reg2_w_status && reg3_w_status && reg4_w_status && reg5_w_status);
+
 	printf("%d",err);
 
 }

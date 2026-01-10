@@ -126,21 +126,6 @@ typedef struct
 							(0x07U << 8) | (0x0FU << 4) | (0x03U << 0))
 
 
-// RCC_AHBENR Cals
-#define FSMCEN_VAL		0U
-#define AESEN_VAL		0U
-#define DMA2EN_VAL		0U
-#define DMA1EN_VAL		0U
-#define FLITFEN_VAL		0U
-#define CRCEN_VAL		0U
-#define GPIOGEN_VAL		0U
-#define GPIOFEN_VAL		0U
-#define GPIOHEN_VAL		0U
-#define GPIOEEN_VAL		0U
-#define GPIODEN_VAL		0U
-#define GPIOCEN_VAL		0U
-#define GPIOBEN_VAL		0U
-#define GPIOAEN_VAL		0U
 typedef struct
 {
 	U8 FSMCEN : 1;
@@ -166,15 +151,6 @@ typedef struct
 								(1U << 1) | (1U << 0))
 
 
-// RCC APB2ENR Cals
-#define USART1EN_VAL	0U
-#define SPI1EN_VAL		1U
-#define SDIOEN_VAL		0U
-#define ADC1EN_VAL		0U
-#define TIM11EN_VAL		0U
-#define TIM10EN_VAL		0U
-#define TIM9EN_VAL		0U
-#define SYSCFGEN_VAL	0U
 typedef struct
 {
 	U8 USART1EN : 1;
@@ -192,27 +168,6 @@ typedef struct
 									(1U << 2) | (1U << 0))
 
 
-// RCC APB1ENR Cals
-#define COMPEN_VAL		0U
-#define DACEN_VAL		0U
-#define PWREN_VAL		0U
-#define USBEN_VAL		0U
-#define I2C2EN_VAL		0U
-#define I2C1EN_VAL		0U
-#define UART5EN_VAL		0U
-#define UART4EN_VAL		0U
-#define USART3EN_VAL	0U
-#define USART2EN_VAL	0U
-#define SPI3EN_VAL		0U
-#define SPI2EN_VAL		0U
-#define WWDEN_VAL		0U
-#define LCDEN_VAL		0U
-#define TIM7EN_VAL		1U
-#define TIM6EN_VAL		1U
-#define TIM5EN_VAL		0U
-#define TIM4EN_VAL		0U
-#define TIM3EN_VAL		0U
-#define TIM2EN_VAL		0U
 typedef struct
 {
 	U8 COMPEN : 1;
