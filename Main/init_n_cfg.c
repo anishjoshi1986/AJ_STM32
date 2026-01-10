@@ -138,7 +138,7 @@ void init_stm32spi()
 	SPI1_MISO.GPIO_PinCfg.pin = GPIO_PIN_6;
 	SPI1_MISO.GPIO_PinCfg.mode = GPIO_MODE_ALTFN;
 	SPI1_MISO.GPIO_PinCfg.altfn = 5;
-	SPI1_MISO.GPIO_PinCfg.otype = GPIO_PUPD_PD;
+	SPI1_MISO.GPIO_PinCfg.otype = GPIO_OTYPE_PP;
 	SPI1_MISO.GPIO_PinCfg.pupd = GPIO_PUPD_PD;
 	GPIO_Init(&SPI1_MISO);
 
