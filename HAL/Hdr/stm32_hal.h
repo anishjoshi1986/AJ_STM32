@@ -106,7 +106,7 @@ typedef struct
 #define PPRE2_IND	0U
 #define PPRE1_IND	0U
 #define HPRE_IND	0U
-#define SW_VAL		0U
+#define SW_VAL		1U
 typedef struct
 {
 	U8 MCOPRE : 3;
